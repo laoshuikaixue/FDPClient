@@ -466,3 +466,6 @@ module.PackSpoofer.description=防止服务器强制您下载其资源包
 
 module.AntiBan.name=反客服封禁
 module.AntiBan.description=BlocksMC上的反客服,如果检测到已知客服，则自动离开游戏
+
+module.SpinBot.name=旋转机器人
+module.SpinBot.description=CS-GO感觉但是客户端（由旧solegit提供）
