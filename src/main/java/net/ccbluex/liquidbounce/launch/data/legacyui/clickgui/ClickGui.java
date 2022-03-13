@@ -15,8 +15,12 @@ import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ModuleEle
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.Style;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.SlowlyStyle;
 import net.ccbluex.liquidbounce.launch.options.LegacyUiLaunchOption;
+import net.ccbluex.liquidbounce.utils.render.Animation;
+import net.ccbluex.liquidbounce.utils.render.EaseUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.input.Mouse;
@@ -24,6 +28,7 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ClickGui extends GuiScreen {
 
@@ -32,6 +37,7 @@ public class ClickGui extends GuiScreen {
     private Panel clickedPanel;
     private int mouseX;
     private int mouseY;
+    private int scroll;
 
     public ClickGui() {
         final int width = 100;
@@ -53,9 +59,17 @@ public class ClickGui extends GuiScreen {
         }
     }
 
+    Animation anims;
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        final double scale = LiquidBounce.moduleManager.getModule(ClickGUIModule.class).scaleValue.get();
+        if (anims == null)
+            anims = new Animation(EaseUtils.EnumEasingType.BACK, EaseUtils.EnumEasingOrder.FAST_AT_START_AND_END, 1.5, 2, 600L).start();
+        final double scale = Objects.requireNonNull(LiquidBounce.moduleManager.getModule(ClickGUIModule.class)).scaleValue.get();
+
+        GlStateManager.ortho(0.0D, anims.getValue(), 0.0, anims.getValue(), -10, 10);
+        GlStateManager.translate(0, scroll, 0);
+        mouseY -= scroll;
 
         mouseX /= scale;
         mouseY /= scale;
@@ -64,6 +78,9 @@ public class ClickGui extends GuiScreen {
         this.mouseY = mouseY;
 
         drawDefaultBackground();
+        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+        RenderUtils.drawRect(0, sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight() - scroll + 100, -804253680);
+        RenderUtils.drawRect(sr.getScaledWidth(), 0, sr.getScaledWidth() + 100, sr.getScaledHeight() - scroll + 100, -804253680);
 
         GlStateManager.scale(scale, scale, scale);
 
@@ -83,25 +100,32 @@ public class ClickGui extends GuiScreen {
             }
         }
 
+
+        GlStateManager.disableLighting();
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.scale(1, 1, 1);
         if (Mouse.hasWheel()) {
             int wheel = Mouse.getDWheel();
 
             for (int i = panels.size() - 1; i >= 0; i--)
                 if (panels.get(i).handleScroll(mouseX, mouseY, wheel))
-                    break;
+                    return;
+            if (wheel < 0) {
+                scroll -= 15;
+            } else if (wheel > 0) {
+                scroll += 15;
+                if (scroll > 0) {
+                    scroll = 0;
+                }
+            }
         }
-
-        GlStateManager.disableLighting();
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.scale(1, 1, 1);
-
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         final double scale = LiquidBounce.moduleManager.getModule(ClickGUIModule.class).scaleValue.get();
-
+        mouseY -= scroll;
         mouseX /= scale;
         mouseY /= scale;
 
@@ -130,7 +154,7 @@ public class ClickGui extends GuiScreen {
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         final double scale = LiquidBounce.moduleManager.getModule(ClickGUIModule.class).scaleValue.get();
-
+        mouseY -= scroll;
         mouseX /= scale;
         mouseY /= scale;
 
@@ -175,6 +199,7 @@ public class ClickGui extends GuiScreen {
     @Override
     public void onGuiClosed() {
         LiquidBounce.fileManager.saveConfig(LegacyUiLaunchOption.getClickGuiConfig());
+        anims = null;
     }
 
     @Override

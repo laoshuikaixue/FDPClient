@@ -475,3 +475,9 @@ module.SilentDisconnect.description=Don't display GuiDisconnect when you disconn
 
 module.Performance.name=Performance
 module.Performance.description=Make the game faster
+
+module.AutoKit.name=AutoKit
+module.AutoKit.description=Automatically selects kits for you in BlocksMC Skywars.
+
+module.NewNameTags.name=NewNameTags
+module.NewNameTags.description=Render the name tag

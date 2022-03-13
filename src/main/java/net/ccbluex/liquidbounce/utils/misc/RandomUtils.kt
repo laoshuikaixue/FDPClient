@@ -10,6 +10,10 @@ import java.util.*
 object RandomUtils {
     private val random = Random()
 
+    fun nextBoolean(): Boolean {
+        return Random().nextBoolean()
+    }
+
     fun nextInt(startInclusive: Int, endExclusive: Int): Int {
         return if (endExclusive - startInclusive <= 0) {
             startInclusive

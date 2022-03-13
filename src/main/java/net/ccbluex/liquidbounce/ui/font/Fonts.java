@@ -26,6 +26,12 @@ public class Fonts {
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
 
+    @FontDetails(fontName = "SFUI Regular", fontSize = 35, fileName = "sfui.ttf")
+    public static GameFontRenderer fontSFUI35;
+
+    @FontDetails(fontName = "SFUI Regular", fontSize = 40, fileName = "sfui.ttf")
+    public static GameFontRenderer fontSFUI40;
+
 //    @FontDetails(fontName = "Huge", fontSize = 60, fileName = "regular.ttf")
 //    public static GameFontRenderer font60;
 
