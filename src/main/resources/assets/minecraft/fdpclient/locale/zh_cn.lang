@@ -469,3 +469,6 @@ module.AntiBan.description=BlocksMC上的反客服,如果检测到已知客服�
 
 module.SpinBot.name=旋转机器人
 module.SpinBot.description=CS-GO感觉但是客户端（由旧solegit提供）
+
+module.AntiAFK.name=防止挂机
+module.AntiAFK.description=防止你因为挂机而被踢
