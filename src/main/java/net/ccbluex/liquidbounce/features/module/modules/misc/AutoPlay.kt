@@ -153,14 +153,14 @@ class AutoPlay : Module() {
                 "huayutinggg" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {
                         queueAutoPlay {
-                            mc.thePlayer.sendChatMessage("@ [${LiquidBounce.CLIENT_NAME}] GG")
+                            mc.thePlayer.sendChatMessage("@ GG")
                         }
 //                        LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
                 "huayuting32" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {
-                        mc.thePlayer.sendChatMessage("@ [${LiquidBounce.CLIENT_NAME}] GG")
+                        mc.thePlayer.sendChatMessage("@ GG")
                         queueAutoPlay {
                             mc.thePlayer.sendChatMessage("/game bwxp-32")
                         }
@@ -168,7 +168,7 @@ class AutoPlay : Module() {
                 }
                 "huayuting64" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {
-                        mc.thePlayer.sendChatMessage("@ [${LiquidBounce.CLIENT_NAME}] GG")
+                        mc.thePlayer.sendChatMessage("@ GG")
                         queueAutoPlay {
                             mc.thePlayer.sendChatMessage("/game bwxp-64")
                         }
