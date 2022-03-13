@@ -34,6 +34,12 @@ object ColorUtils {
         }
     }
 
+    @JvmStatic
+    fun LiquidSlowly(time: Long, count: Int, qd: Float, sq: Float): Color? {
+        val color = Color(Color.HSBtoRGB((time.toFloat() + count * -3000000f) / 2 / 1.0E9f, qd, sq))
+        return Color(color.red / 255.0f * 1, color.green / 255.0f * 1, color.blue / 255.0f * 1, color.alpha / 255.0f)
+    }
+
     fun stripColor(input: String): String {
         return COLOR_PATTERN.matcher(input).replaceAll("")
     }
