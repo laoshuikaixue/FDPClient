@@ -195,7 +195,7 @@ object LiquidBounce {
 
     private fun checkUpdate() {
         try {
-            val get = HttpUtils.get("https://api.github.com/repos/UnlegitMC/FDPClient/commits/${gitInfo["git.branch"]}")
+            val get = HttpUtils.get("https://api.github.com/repos/laoshuikaixue/FDPClient/commits/${gitInfo["git.branch"]}")
 
             val jsonObj = JsonParser()
                 .parse(get).asJsonObject

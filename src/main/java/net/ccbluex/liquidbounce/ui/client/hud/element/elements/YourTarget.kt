@@ -37,7 +37,7 @@ class YourTarget : Element() {
     private val gredValue = IntegerValue("GradientRed", 255, 0, 255)
     private val ggreenValue = IntegerValue("GradientGreen", 255, 0, 255)
     private val gblueValue = IntegerValue("GradientBlue", 255, 0, 255)
-    private val fontValue = FontValue("Font", Fonts.fontSFUI35)
+    private val fontValue = FontValue("Font", Fonts.fontSFUI30)
     val fontRenderer = fontValue.get()
     private var easingHealth: Float = 0F
     private var lastTarget: Entity? = null
