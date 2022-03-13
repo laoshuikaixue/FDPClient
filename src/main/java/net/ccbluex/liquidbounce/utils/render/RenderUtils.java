@@ -91,6 +91,37 @@ public final class RenderUtils extends MinecraftInstance {
         glEndList();
     }
 
+    public static int Astolfo(int var2) {
+        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
+        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), 0.5F, 1.0F).getRGB();
+    }
+
+    public static void drawCircleRect(float x, float y, float x1, float y1, float radius, int color) {
+        glColor(color);
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_CULL_FACE);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glPushMatrix();
+        glLineWidth(1F);
+        glBegin(GL_POLYGON);
+
+        float xRadius = (float) Math.min((x1 - x) * 0.5, radius);
+        float yRadius = (float) Math.min((y1 - y) * 0.5, radius);
+        quickPolygonCircle(x+xRadius,y+yRadius, xRadius, yRadius,180,270,4);
+        quickPolygonCircle(x1-xRadius,y+yRadius, xRadius, yRadius,90,180,4);
+        quickPolygonCircle(x1-xRadius,y1-yRadius, xRadius, yRadius,0,90,4);
+        quickPolygonCircle(x+xRadius,y1-yRadius, xRadius, yRadius,270,360,4);
+
+        glEnd();
+        glPopMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_CULL_FACE);
+        glDisable(GL_LINE_SMOOTH);
+        glColor4f(1F, 1F, 1F, 1F);
+    }
+
     public static void drawExhiRect(float x, float y, float x2, float y2) {
         drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, Color.black.getRGB());
         drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50, 50, 50).getRGB());

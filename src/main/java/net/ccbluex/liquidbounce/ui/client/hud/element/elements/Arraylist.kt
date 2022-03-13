@@ -64,7 +64,7 @@ class Arraylist(
     private val backgroundColorAlphaValue = IntegerValue("Background-Alpha", 100, 0, 255)
     private val backgroundExpand = IntegerValue("Background-Expand", 2, 0, 10)
     private val rainbowSpeed = IntegerValue("RainbowSpeed", 1, 1, 10)
-    private val rectValue = ListValue("Rect", arrayOf("None", "Left", "Right", "Outline", "Special", "Top"), "None")
+    private val rectValue = ListValue("Rect", arrayOf("None", "Left", "LeftPro", "Right", "Outline", "Special", "Top"), "None")
     private val caseValue = ListValue("Case", arrayOf("Upper", "Normal", "Lower"), "Normal")
     private val spaceValue = FloatValue("Space", 0F, 0F, 5F)
     private val textHeightValue = FloatValue("TextHeight", 11F, 1F, 20F)
@@ -199,6 +199,7 @@ class Arraylist(
                         when (rectMode.lowercase()) {
                             "left" -> RenderUtils.drawRect(xPos - 5, yPos, xPos - 2, yPos + textHeight,
                                 rectColor)
+                            "leftpro" -> RenderUtils.drawCircleRect(xPos - 3 - backgroundExpand.get(), yPos + 0.5F, xPos - 2 - backgroundExpand.get(), yPos + textHeight - 0.5F, 1F ,rectColor)
                             "right" -> RenderUtils.drawRect(-3F, yPos, 0F,
                                 yPos + textHeight, rectColor)
                             "outline" -> {
