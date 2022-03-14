@@ -38,6 +38,8 @@ import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.Display
+import org.lwjgl.opengl.Display.getTitle
 import java.util.*
 import javax.swing.JOptionPane
 import kotlin.concurrent.thread
@@ -45,6 +47,8 @@ import kotlin.concurrent.thread
 object LiquidBounce {
 
     // Client information
+    val L = "Lao"
+    val S = "Shui"
     const val CLIENT_NAME = "FDPClient"
     const val COLORED_NAME = "§c§lFDP§6§lClient"
     const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"
@@ -109,6 +113,13 @@ object LiquidBounce {
      * Execute if client will be started
      */
     fun initClient() {
+        if (getTitle() == "$CLIENT_NAME - $L$S $CLIENT_VERSION ($CLIENT_BRANCH) 项目开源地址:https://github.com/laoshuikaixue/FDPClient"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            initClient()
+        }
+
         ClientUtils.logInfo("Loading $CLIENT_NAME $CLIENT_VERSION, by $CLIENT_CREATOR")
         val startTime = System.currentTimeMillis()
 
