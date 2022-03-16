@@ -493,3 +493,6 @@ module.SpinBot.description=CS-GO Feeling but client side (by the old solegit)
 
 module.AntiAFK.name=AntiFAK
 module.AntiAFK.description=Prevents you from getting kicked for being AFK
+
+module.PlayerHealthSend.name=PlayerHealthSend
+module.PlayerHealthSend.description=Debug Health

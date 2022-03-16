@@ -472,3 +472,6 @@ module.SpinBot.description=CS-GO感觉但是客户端（由旧solegit提供）
 
 module.AntiAFK.name=防止挂机
 module.AntiAFK.description=防止你因为挂机而被踢
+
+module.PlayerHealthSend.name=玩家血量信息
+module.PlayerHealthSend.description=提示玩家血量变化
