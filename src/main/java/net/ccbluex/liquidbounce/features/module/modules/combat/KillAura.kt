@@ -133,7 +133,7 @@ class KillAura : Module() {
     // TODO: Divide AAC Opinion into three separated opinions
 
     // Rotations
-    private val rotationModeValue = ListValue("RotationMode", arrayOf("None", "LiquidBounce", "ForceCenter", "SmoothCenter", "SmoothLiquid", "LockView", "OldMatrix"), "LiquidBounce")
+    private val rotationModeValue = ListValue("RotationMode", arrayOf("None", "LiquidBounce", "ForceCenter", "SmoothCenter", "SmoothLiquid", "LockView", "OldMatrix", "Normal"), "LiquidBounce")
     // TODO: RotationMode Bypass Intave
 
     private val maxTurnSpeedValue: FloatValue = object : FloatValue("MaxTurnSpeed", 180f, 1f, 180f) {
@@ -866,6 +866,7 @@ class KillAura : Module() {
             "LockView" -> RotationUtils.limitAngleChange(RotationUtils.serverRotation, directRotation, (180.0).toFloat())
             "SmoothCenter", "SmoothLiquid", "OldMatrix" -> RotationUtils.limitAngleChange(RotationUtils.serverRotation, directRotation, (calculateSpeed).toFloat())
             "Test" -> RotationUtils.limitAngleChange(RotationUtils.serverRotation, directRotation, (calculateSpeed).toFloat())
+            "Normal" -> RotationUtils.searchCenter2(boundingBox, predictValue.get(), mc.thePlayer.getDistanceToEntityBox(entity) < throughWallsRangeValue.get(), maxRange).rotation
             else -> return true
         }
 

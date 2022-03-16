@@ -6,6 +6,7 @@
 package net.ccbluex.liquidbounce.utils
 
 import net.ccbluex.liquidbounce.event.MoveEvent
+import net.minecraft.entity.Entity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.util.AxisAlignedBB
 import kotlin.math.cos
@@ -16,6 +17,14 @@ object MovementUtils : MinecraftInstance() {
 
     fun getSpeed(): Float {
         return sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ).toFloat()
+    }
+
+    fun getSpeed2(): Double {
+        return getSpeed2(mc.thePlayer)
+    }
+
+    fun getSpeed2(entity: Entity): Double {
+        return Math.sqrt(entity.motionX * entity.motionX + entity.motionZ * entity.motionZ)
     }
 
     fun strafe() {
