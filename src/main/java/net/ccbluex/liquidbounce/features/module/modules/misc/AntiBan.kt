@@ -24,7 +24,7 @@ class AntiBan : Module() {
     override fun onInitialize() {
         thread {
             try {
-                obStaffs = HttpUtils.get("https://wysi-foundation.github.io/LiquidCloud/LiquidBounce/staffs.txt")
+                obStaffs = HttpUtils.get("https://gitee.com/insaneNMSL/bmcstaff/raw/master/stafflist")
                 println("[Staff list] " + obStaffs)
             } catch (e: Exception) {
                 // ignore fr fr
