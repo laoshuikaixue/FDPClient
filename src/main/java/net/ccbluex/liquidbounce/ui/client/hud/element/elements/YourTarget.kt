@@ -11,7 +11,6 @@ import net.ccbluex.liquidbounce.utils.Palette
 import net.ccbluex.liquidbounce.utils.render.GLUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtil
 import net.ccbluex.liquidbounce.value.FloatValue
-import net.ccbluex.liquidbounce.value.FontValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiChat
@@ -37,8 +36,7 @@ class YourTarget : Element() {
     private val gredValue = IntegerValue("GradientRed", 255, 0, 255)
     private val ggreenValue = IntegerValue("GradientGreen", 255, 0, 255)
     private val gblueValue = IntegerValue("GradientBlue", 255, 0, 255)
-    private val fontValue = FontValue("Font", Fonts.fontComfortaa35)
-    val fontRenderer = fontValue.get()
+    
     private var easingHealth: Float = 0F
     private var lastTarget: Entity? = null
     val counter1 = intArrayOf(50)
@@ -73,9 +71,9 @@ class YourTarget : Element() {
             counter2[0] = counter2[0].coerceIn(0, 100)
             if (customColor != null) {
                 RenderUtil.drawGradientSideways(1.5, 34.0, ((target.health / target.maxHealth) * width).toDouble(),
-                    42.0, Palette.fade2(customColor,counter1[0], fontRenderer.FONT_HEIGHT).rgb,
-                    Palette.fade2(customColor1, counter2[0], fontRenderer.FONT_HEIGHT).rgb)
-                fontRenderer.drawStringWithShadow(BigDecimal((target.health / target.maxHealth * 100).toDouble()).setScale(1, BigDecimal.ROUND_HALF_UP).toString() + "%", width / 2F - 10, 34F, Color.white.rgb)
+                    42.0, Palette.fade2(customColor,counter1[0], Fonts.minecraftFont.FONT_HEIGHT).rgb,
+                    Palette.fade2(customColor1, counter2[0], Fonts.minecraftFont.FONT_HEIGHT).rgb)
+                Fonts.minecraftFont.drawStringWithShadow(BigDecimal((target.health / target.maxHealth * 100).toDouble()).setScale(1, BigDecimal.ROUND_HALF_UP).toString() + "%", width / 2F - 10, 34F, Color.white.rgb)
             }
 
 
@@ -83,7 +81,7 @@ class YourTarget : Element() {
             // Draw info
             val playerInfo = mc.netHandler.getPlayerInfo(target.uniqueID)
             if (playerInfo != null) {
-                fontRenderer.drawString(target.name, 36, 4, 0xffffff)
+                Fonts.minecraftFont.drawString(target.name, 36, 4, 0xffffff)
                 //  GlStateManager.scale(0.5,0.5,0.5);
                 renderArmor((target as EntityPlayer?)!!)
                 // Draw head
