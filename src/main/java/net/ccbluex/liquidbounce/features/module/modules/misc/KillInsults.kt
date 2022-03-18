@@ -14,6 +14,7 @@ import net.ccbluex.liquidbounce.utils.FileUtils
 import net.ccbluex.liquidbounce.utils.misc.RandomUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.ListValue
+import net.ccbluex.liquidbounce.value.TextValue
 import net.minecraft.entity.player.EntityPlayer
 import java.io.File
 import java.nio.charset.StandardCharsets
@@ -21,15 +22,17 @@ import java.nio.file.Files
 
 @ModuleInfo(name = "KillInsults", category = ModuleCategory.MISC)
 object KillInsults : Module() {
+    private val prefixValue = TextValue("Prefix", "@")
 
     val modeValue = ListValue(
         "Mode", arrayOf(
             "Clear",
             "WithWords",
             "RawWords"
-        ), "RawWords"
+        ), "Clear"
     )
     private val waterMarkValue = BoolValue("WaterMark", true)
+    private val waterMark2Value = BoolValue("Add front watermark", false)
 
     private val insultFile = File(LiquidBounce.fileManager.dir, "insult.json")
     var insultWords = mutableListOf<String>()
@@ -99,6 +102,9 @@ object KillInsults : Module() {
         var message = msg.replace("%name%", name)
         if (waterMarkValue.get()) {
             message = "[FDPClient] $message"
+        }
+        if (waterMark2Value.get()) {
+            message = "[FDPClient] " + prefixValue.get() + " $message"
         }
         mc.thePlayer.sendChatMessage(message)
     }

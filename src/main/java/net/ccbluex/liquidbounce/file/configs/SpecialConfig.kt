@@ -27,7 +27,7 @@ class SpecialConfig(file: File) : FileConfig(file) {
         ServerSpoof.address = "redesky.com"
         GuiBackground.enabled = true
         GuiBackground.particles = false
-        GuiAltManager.randomAltField.text = "F%nD%nP%n_%s%s%s"
+        GuiAltManager.randomAltField.text = "L%na%no%n_S%sh%su%si"
         useGlyphFontRenderer = false
         ProxyManager.isEnable = false
         ProxyManager.proxy = "127.0.0.1:10808"

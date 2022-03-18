@@ -26,7 +26,41 @@ public class Fonts {
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
 
-    @FontDetails(fontName = "SFUI Regular", fontSize = 35, fileName = "sfui.ttf")
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 28, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN28;
+
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 30, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN30;
+
+    @FontDetails(fontName = "Roboto Regular", fontSize = 28, fileName = "Roboto-Bold.ttf")
+    public static GameFontRenderer fontRoboto28;
+
+    @FontDetails(fontName = "Roboto Regular", fontSize = 30, fileName = "Roboto-Bold.ttf")
+    public static GameFontRenderer fontRoboto30;
+
+    @FontDetails(fontName = "Roboto Regular", fontSize = 50, fileName = "Roboto-Bold.ttf")
+    public static GameFontRenderer fontRoboto50;
+
+
+    @FontDetails(fontName = "Comfortaa Regular", fontSize = 28, fileName = "Comfortaa.ttf")
+    public static GameFontRenderer fontComfortaa28;
+
+    @FontDetails(fontName = "Comfortaa Regular", fontSize = 30, fileName = "Comfortaa.ttf")
+    public static GameFontRenderer fontComfortaa30;
+
+    @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 30, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
+    public static GameFontRenderer fontXiYuanGBT30;
+
+    @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 35, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
+    public static GameFontRenderer fontXiYuanGBT35;
+
+    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 28, fileName = "Whitney-Light.ttf")
+    public static GameFontRenderer fontWhitneyLight28;
+
+    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 30, fileName = "Whitney-Light.ttf")
+    public static GameFontRenderer fontWhitneyLight30;
+
+    @FontDetails(fontName = "SFUI Regular", fontSize = 30, fileName = "sfui.ttf")
     public static GameFontRenderer fontSFUI30;
 
     @FontDetails(fontName = "SFUI Regular", fontSize = 35, fileName = "sfui.ttf")
@@ -106,6 +140,11 @@ public class Fonts {
     private static void initFonts() {
         try {
             initSingleFont("regular.ttf","assets/minecraft/fdpclient/font/regular.ttf");
+            initSingleFont("Comfortaa.ttf","assets/minecraft/fdpclient/font/Comfortaa.ttf");
+            initSingleFont("GEETYPE-XiYuanGBT-Flash.ttf","assets/minecraft/fdpclient/font/GEETYPE-XiYuanGBT-Flash.ttf");
+            initSingleFont("Roboto-Bold.ttf","assets/minecraft/fdpclient/font/Roboto-Bold.ttf");
+            initSingleFont("SFTHIN.ttf","assets/minecraft/fdpclient/font/SFTHIN.ttf");
+            initSingleFont("Whitney-Light.ttf","assets/minecraft/fdpclient/font/Whitney-Light.ttf");
         }catch(IOException e) {
             e.printStackTrace();
         }

@@ -49,6 +49,7 @@ object LiquidBounce {
     // Client information
     val L = "Lao"
     val S = "Shui"
+    val WEBSITE = "https://github.com/laoshuikaixue/FDPClient"
     const val CLIENT_NAME = "FDPClient"
     const val COLORED_NAME = "§c§lFDP§6§lClient"
     const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"
@@ -113,7 +114,7 @@ object LiquidBounce {
      * Execute if client will be started
      */
     fun initClient() {
-        if (getTitle() == "$CLIENT_NAME - $L$S $CLIENT_VERSION ($CLIENT_BRANCH) 项目开源地址:https://github.com/laoshuikaixue/FDPClient"){
+        if (getTitle() == "$CLIENT_NAME - $L$S $CLIENT_VERSION ($CLIENT_BRANCH) 项目开源地址:$WEBSITE"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")

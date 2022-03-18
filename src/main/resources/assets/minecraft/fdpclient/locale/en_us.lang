@@ -496,3 +496,6 @@ module.AntiAFK.description=Prevents you from getting kicked for being AFK
 
 module.PlayerHealthSend.name=PlayerHealthSend
 module.PlayerHealthSend.description=Debug Health
+
+module.BestTargetStrafe.name=BestTargetStrafe
+module.BestTargetStrafe.description=BestTargetStrafe

@@ -174,12 +174,8 @@ public abstract class MixinGuiNewChat {
                                         GL11.glTranslatef((float) (-(l + 4) * EaseUtils.INSTANCE.easeInQuart(((j1+mc.timer.renderPartialTicks) - 180) / 20.0)), 0F, 0F);
                                     }
                                 }
-
-                                if(hud.getChatRectValue().get()) {
-                                    RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
-                                }
                                 GlStateManager.enableBlend();
-                                (canFont ? Fonts.font40 : this.mc.fontRendererObj).drawString(chatline.getChatComponent().getFormattedText(), (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), false);
+                                (canFont ? Fonts.fontXiYuanGBT35 : this.mc.fontRendererObj).drawString(chatline.getChatComponent().getFormattedText(), (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), false);
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
 
@@ -198,7 +194,7 @@ public abstract class MixinGuiNewChat {
                     int k1 = j1 * j1 / l2;
                     if (l2 != j1) {
                         l1 = j3 > 0 ? 170 : 96;
-                        int l3 = this.isScrolled ? 13382451 : 3355562;
+                        int l3 = this.isScrolled ? 13352451 : 3355562;
                         RenderUtils.drawRect(0, -j3, 2, -j3 - k1, l3 + (l1 << 24));
                         RenderUtils.drawRect(2, -j3, 1, -j3 - k1, 13421772 + (l1 << 24));
                     }
@@ -223,8 +219,8 @@ public abstract class MixinGuiNewChat {
                 lvt_7_1_ = MathHelper.floor_float((float) lvt_7_1_ / lvt_5_1_);
                 if(lvt_6_1_ >= 0 && lvt_7_1_ >= 0) {
                     int lvt_8_1_ = Math.min(this.getLineCount(), this.drawnChatLines.size());
-                    if(lvt_6_1_ <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && lvt_7_1_ < Fonts.font40.FONT_HEIGHT * lvt_8_1_ + lvt_8_1_) {
-                        int lvt_9_1_ = lvt_7_1_ / Fonts.font40.FONT_HEIGHT + this.scrollPos;
+                    if(lvt_6_1_ <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && lvt_7_1_ < Fonts.fontXiYuanGBT35.FONT_HEIGHT * lvt_8_1_ + lvt_8_1_) {
+                        int lvt_9_1_ = lvt_7_1_ / Fonts.fontXiYuanGBT35.FONT_HEIGHT + this.scrollPos;
                         if(lvt_9_1_ >= 0 && lvt_9_1_ < this.drawnChatLines.size()) {
                             ChatLine lvt_10_1_ = this.drawnChatLines.get(lvt_9_1_);
                             int lvt_11_1_ = 0;
@@ -233,7 +229,7 @@ public abstract class MixinGuiNewChat {
                             while(lvt_12_1_.hasNext()) {
                                 IChatComponent lvt_13_1_ = (IChatComponent) lvt_12_1_.next();
                                 if(lvt_13_1_ instanceof ChatComponentText) {
-                                    lvt_11_1_ += Fonts.font40.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) lvt_13_1_).getChatComponentText_TextValue(), false));
+                                    lvt_11_1_ += Fonts.fontXiYuanGBT35.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) lvt_13_1_).getChatComponentText_TextValue(), false));
                                     if(lvt_11_1_ > lvt_6_1_) {
                                         callbackInfo.setReturnValue(lvt_13_1_);
                                         return;

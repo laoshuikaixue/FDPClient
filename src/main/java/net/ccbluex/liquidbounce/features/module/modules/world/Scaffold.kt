@@ -12,7 +12,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.movement.Speed
 import net.ccbluex.liquidbounce.injection.access.StaticStorage
-import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
+import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.*
 import net.ccbluex.liquidbounce.utils.block.BlockUtils
 import net.ccbluex.liquidbounce.utils.block.PlaceInfo
@@ -28,8 +28,8 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.block.BlockAir
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.client.settings.GameSettings
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
@@ -40,6 +40,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
 import org.lwjgl.input.Keyboard
+import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.*
 
@@ -177,6 +178,9 @@ class Scaffold : Module() {
     private val counterDisplayValue = BoolValue("Counter", true)
     private val markValue = BoolValue("Mark", false)
 
+    private var progress = 0f
+    private var lastMS = 0L
+
     /**
      * MODULE
      */
@@ -223,6 +227,8 @@ class Scaffold : Module() {
      * Enable module
      */
     override fun onEnable() {
+        progress = 0f
+        lastMS = System.currentTimeMillis()
         slot = mc.thePlayer.inventory.currentItem
         doSpoof = false
         if (mc.thePlayer == null) return
@@ -753,34 +759,65 @@ class Scaffold : Module() {
      *
      * @param event
      */
+    @JvmName("getBlocksAmount2")
+    private fun getBlocksAmount2(): Int {
+        var amount = 0
+        for (i in 36..44) {
+            val itemStack = mc.thePlayer.inventoryContainer.getSlot(i).stack
+            if (itemStack != null && itemStack.item is ItemBlock) {
+                val block = (itemStack.item as ItemBlock).getBlock()
+                if (!InventoryUtils.BLOCK_BLACKLIST.contains(block) && block.isFullCube) amount += itemStack.stackSize
+            }
+        }
+        return amount
+    }
     @EventTarget
     fun onRender2D(event: Render2DEvent) {
+        progress = (System.currentTimeMillis() - lastMS).toFloat() / 100f
+        if (progress >= 1) progress = 1f
+        val scaledResolution = ScaledResolution(mc)
+        val info = getBlocksAmount2().toString() + " blocks"
+        val infoWidth = Fonts.fontRoboto30.getStringWidth(info)
         if (counterDisplayValue.get()) {
-            GlStateManager.pushMatrix()
-            val info = LanguageManager.getAndFormat("ui.scaffold.blocks", blocksAmount)
-            val slot = InventoryUtils.findAutoBlockBlock()
-            val height = event.scaledResolution.scaledHeight
-            val width = event.scaledResolution.scaledWidth
-            var stack = barrier
-            if (slot != -1) {
-                if (mc.thePlayer.inventory.getCurrentItem() != null) {
-                    val handItem = mc.thePlayer.inventory.getCurrentItem().item
-                    if (handItem is ItemBlock && InventoryUtils.canPlaceBlock(handItem.block)) {
-                        stack = mc.thePlayer.inventory.getCurrentItem()
-                    }
-                }
-                if (stack == barrier) {
-                    stack = mc.thePlayer.inventory.getStackInSlot(InventoryUtils.findAutoBlockBlock() - 36)
-                    if (stack == null) {
-                        stack = barrier
-                    }
-                }
-            }
-            RenderHelper.enableGUIStandardItemLighting()
-            mc.renderItem.renderItemIntoGUI(stack, width / 2 - mc.fontRendererObj.getStringWidth(info), (height * 0.6 - mc.fontRendererObj.FONT_HEIGHT * 0.5).toInt())
-            RenderHelper.disableStandardItemLighting()
-            mc.fontRendererObj.drawCenteredString(info, width / 2f, height * 0.6f, Color.WHITE.rgb, false)
-            GlStateManager.popMatrix()
+            GlStateManager.translate(0f, -14f - progress * 4f, 0f)
+            //GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_BLEND)
+            GL11.glDisable(GL11.GL_TEXTURE_2D)
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+            GL11.glEnable(GL11.GL_LINE_SMOOTH)
+            GL11.glColor4f(0.25f, 0.25f, 0.25f, progress)
+            GL11.glBegin(GL11.GL_TRIANGLE_FAN)
+            GL11.glVertex2d(
+                (scaledResolution.scaledWidth / 2 - 3).toDouble(),
+                (scaledResolution.scaledHeight - 60).toDouble()
+            )
+            GL11.glVertex2d(
+                (scaledResolution.scaledWidth / 2).toDouble(),
+                (scaledResolution.scaledHeight - 57).toDouble()
+            )
+            GL11.glVertex2d(
+                (scaledResolution.scaledWidth / 2 + 3).toDouble(),
+                (scaledResolution.scaledHeight - 60).toDouble()
+            )
+            GL11.glEnd()
+            GL11.glEnable(GL11.GL_TEXTURE_2D)
+            GL11.glDisable(GL11.GL_BLEND)
+            GL11.glDisable(GL11.GL_LINE_SMOOTH)
+            //GL11.glPopMatrix();
+            RenderUtils.drawRoundedRect(
+                (scaledResolution.scaledWidth / 2 - infoWidth / 2 - 4).toFloat(),
+                (scaledResolution.scaledHeight - 60).toFloat(),
+                (scaledResolution.scaledWidth / 2 + infoWidth / 2 + 4).toFloat(),
+                (scaledResolution.scaledHeight - 74).toFloat(),
+                2.5f,
+                Color(0.25f, 0.25f, 0.25f, progress).rgb
+            )
+            GlStateManager.resetColor()
+            Fonts.fontSFUI35.drawCenteredString(
+                info, scaledResolution.scaledWidth / 2 + 0.1f,
+                (scaledResolution.scaledHeight - 70).toFloat(), Color(1f, 1f, 1f, 0.8f * progress).rgb, false
+            )
+            GlStateManager.translate(0f, 14f + progress * 4f, 0f)
         }
     }
 
@@ -800,7 +837,7 @@ class Scaffold : Module() {
             )
             val placeInfo = get(blockPos)
             if (BlockUtils.isReplaceable(blockPos) && placeInfo != null) {
-                RenderUtils.drawBlockBox(blockPos, Color(68, 117, 255, 100), false, true, 1f)
+                RenderUtils.drawBlockBox(blockPos, Color(0xC47DC4), false, true, 0.8f)
                 break
             }
         }
