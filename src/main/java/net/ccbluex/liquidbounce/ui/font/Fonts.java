@@ -48,6 +48,12 @@ public class Fonts {
     @FontDetails(fontName = "Comfortaa Regular", fontSize = 30, fileName = "Comfortaa.ttf")
     public static GameFontRenderer fontComfortaa30;
 
+    @FontDetails(fontName = "Comfortaa Regular", fontSize = 35, fileName = "Comfortaa.ttf")
+    public static GameFontRenderer fontComfortaa35;
+
+    @FontDetails(fontName = "Comfortaa Regular", fontSize = 40, fileName = "Comfortaa.ttf")
+    public static GameFontRenderer fontComfortaa40;
+
     @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 30, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
     public static GameFontRenderer fontXiYuanGBT30;
 
