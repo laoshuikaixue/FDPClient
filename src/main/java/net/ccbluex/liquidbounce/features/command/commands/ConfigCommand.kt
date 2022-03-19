@@ -2,6 +2,8 @@ package net.ccbluex.liquidbounce.features.command.commands
 
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
+import net.ccbluex.liquidbounce.utils.ClientUtils
+import org.lwjgl.opengl.Display
 import java.io.File
 import java.nio.file.Files
 
@@ -10,6 +12,12 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
         if (args.size> 1) {
             when (args[1].lowercase()) {
                 "create" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     if (args.size> 2) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (!file.exists()) {
@@ -24,6 +32,12 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                 }
 
                 "load", "forceload" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     if (args.size> 2) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
@@ -38,6 +52,12 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                 }
 
                 "delete" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     if (args.size> 2) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
@@ -52,6 +72,12 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                 }
 
                 "list" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     val list = (LiquidBounce.fileManager.configsDir.listFiles() ?: return)
                         .filter { it.isFile }
                         .map {
@@ -75,16 +101,34 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                 }
 
                 "save" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     LiquidBounce.configManager.save(true, true)
                     alert("Saved config ${LiquidBounce.configManager.nowConfig}")
                 }
 
                 "reload" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     LiquidBounce.configManager.load(LiquidBounce.configManager.nowConfig, false)
                     alert("Reloaded config ${LiquidBounce.configManager.nowConfig}")
                 }
 
                 "rename" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     if (args.size> 3) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         val newFile = File(LiquidBounce.fileManager.configsDir, "${args[3]}.json")
@@ -106,10 +150,22 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                 }
 
                 "current" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     alert("Current config is ${LiquidBounce.configManager.nowConfig}")
                 }
 
                 "copy" -> {
+                    if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+                        ClientUtils.logInfo("Detected by settitle")
+                    } else {
+                        ClientUtils.logError("Failed settitle detection")
+                        LiquidBounce.initClient()
+                    }
                     if (args.size> 3) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         val newFile = File(LiquidBounce.fileManager.configsDir, "${args[3]}.json")

@@ -11,12 +11,20 @@ import net.ccbluex.liquidbounce.features.command.CommandManager
 import net.ccbluex.liquidbounce.features.module.modules.misc.KillInsults
 import net.ccbluex.liquidbounce.ui.cape.GuiCapeManager
 import net.ccbluex.liquidbounce.ui.font.Fonts
+import net.ccbluex.liquidbounce.utils.ClientUtils
+import org.lwjgl.opengl.Display
 
 class ReloadCommand : Command("reload", emptyArray()) {
     /**
      * Execute commands with provided [args]
      */
     override fun execute(args: Array<String>) {
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
         alert("Reloading...")
         alert("§c§lReloading commands...")
         LiquidBounce.commandManager = CommandManager()

@@ -191,6 +191,10 @@ public final class RenderUtils extends MinecraftInstance {
         drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color, true);
     }
 
+    public static void drawRoundedRect2(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, final Color color) {
+        drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color.getRGB(), true);
+    }
+
     public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color, boolean popPush) {
         float alpha = (color >> 24 & 0xFF) / 255.0F;
         float red = (color >> 16 & 0xFF) / 255.0F;
