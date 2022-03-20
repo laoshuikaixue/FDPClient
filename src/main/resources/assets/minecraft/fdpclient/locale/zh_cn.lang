@@ -478,3 +478,6 @@ module.PlayerHealthSend.description=提示玩家血量变化
 
 module.BestTargetStrafe2.name=更好的目标移动
 module.BestTargetStrafe2.description=更好的自动让你绕着目标移动
+
+module.KeepArmor.name=保持当前装备
+module.KeepArmor.description=自动装备库存中最好的盔甲

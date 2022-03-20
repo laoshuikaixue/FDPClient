@@ -499,3 +499,6 @@ module.PlayerHealthSend.description=Debug Health
 
 module.BestTargetStrafe.name=BestTargetStrafe
 module.BestTargetStrafe.description=BestTargetStrafe
+
+module.KeepArmor.name=KeepArmor
+module.KeepArmor.description=Automatically equips the best armor in your inventory

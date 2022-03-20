@@ -18,7 +18,7 @@ class BlocksMcBHop : SpeedMode("BlocksMcBHop") {
                 MovementUtils.strafe(0.41F)
                 if (mc.thePlayer.onGround) {
                     mc.thePlayer.jump()
-                    mc.thePlayer.motionY = 0.210999998688698
+                    mc.thePlayer.motionY = 0.310999998688698
                     event.y = 0.42
                 }
             }
