@@ -481,3 +481,6 @@ module.BestTargetStrafe2.description=更好的自动让你绕着目标移动
 
 module.KeepArmor.name=保持当前装备
 module.KeepArmor.description=自动装备库存中最好的盔甲
+
+module.Effects.name=药水效果
+module.Effects.description=显示当前药水效果的列表

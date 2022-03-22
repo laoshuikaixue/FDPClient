@@ -502,3 +502,6 @@ module.BestTargetStrafe.description=BestTargetStrafe
 
 module.KeepArmor.name=KeepArmor
 module.KeepArmor.description=Automatically equips the best armor in your inventory
+
+module.Effects.name=Effects
+module.Effects.description=Shows a list of active potion effects

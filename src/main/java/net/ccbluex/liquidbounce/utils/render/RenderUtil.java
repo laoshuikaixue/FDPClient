@@ -1226,7 +1226,6 @@ public final class RenderUtil extends MinecraftInstance {
         return new Color(r, g, b, alpha).getRGB();
     }
 
-
     public static Color reAlpha(Color cIn, float alpha){
         return new Color(cIn.getRed()/255f,cIn.getGreen()/255f,cIn.getBlue()/255f,cIn.getAlpha() / 255f * alpha);
     }
