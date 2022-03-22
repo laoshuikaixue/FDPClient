@@ -12,6 +12,7 @@ import net.ccbluex.liquidbounce.ui.font.Fonts;
 import net.ccbluex.liquidbounce.utils.render.Colors;
 import net.ccbluex.liquidbounce.utils.render.RenderUtil;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
+import net.ccbluex.liquidbounce.value.FloatValue;
 import net.ccbluex.liquidbounce.value.IntegerValue;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,13 +21,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @ModuleInfo(name = "Effects", category = ModuleCategory.RENDER)
 public class Effects extends Module {
+    public static final FloatValue bordRad = new FloatValue("BorderRadius",6F,0F,8F);
     public static final IntegerValue r = new IntegerValue("R", 0, 0, 255);
     public static final IntegerValue g = new IntegerValue("G", 160, 0, 255);
     public static final IntegerValue b = new IntegerValue("B", 255, 0, 255);
@@ -135,7 +136,7 @@ public class Effects extends Module {
             int x1 = (int) ((width - 6) * 1.33f);
             int y1 = (int) ((height - 52 - this.mc.fontRendererObj.FONT_HEIGHT + x + 5) * 1.33F);
 
-            RenderUtils.drawRect(width - 120, height - 60 + x, width - 10, height - 30 + x,
+            RenderUtils.drawRoundedRect(width - 120, height - 60 + x, width - 10, height - 30 + x, bordRad.get(),
                     RenderUtil.reAlpha(Colors.BLACK.c, 0.41f));
 
             if (potion.hasStatusIcon()) {
