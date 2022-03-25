@@ -21,6 +21,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

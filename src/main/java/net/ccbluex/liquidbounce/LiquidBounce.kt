@@ -38,7 +38,6 @@ import net.ccbluex.liquidbounce.utils.misc.MiscUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.util.ResourceLocation
-import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.Display.getTitle
 import java.util.*
 import javax.swing.JOptionPane

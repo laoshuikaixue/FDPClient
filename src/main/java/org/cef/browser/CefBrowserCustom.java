@@ -1,16 +1,5 @@
 package org.cef.browser;
 
-import java.awt.Component;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
-
 import net.ccbluex.liquidbounce.ui.cef.CefRenderManager;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import org.cef.CefClient;
@@ -19,6 +8,14 @@ import org.cef.handler.CefRenderHandler;
 import org.cef.handler.CefScreenInfo;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Keyboard;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * CefBrowserOsr but with custom rendering
