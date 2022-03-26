@@ -48,18 +48,13 @@ public abstract class MixinGuiMultiplayer extends MixinGuiScreen {
                 }));
         this.updatePortalText();
         buttonList.add(new GuiButton(997, 5, 8, 98, 20, "%ui.antiForge%"));
-        buttonList.add(new GuiButton(998, width - 104, 8, 98, 20, "%ui.serverSpoof%"));
+        buttonList.add(new GuiButton(998, 108, 8, 98, 20, "%ui.serverSpoof%"));
         buttonList.add(new GuiButton(999, width - 208, 8, 98, 20, "Proxy"));
 //        buttonList.add(new GuiButton(999, width - 208, 8, 98, 20, "Proxy"));
     }
     @Inject(method = "actionPerformed", at = @At("HEAD"))
     private void actionPerformed(GuiButton button, CallbackInfo callbackInfo) {
         switch(button.id) {
-            case 1337:
-                BungeeCordSpoof.enabled = !BungeeCordSpoof.enabled;
-                bungeeCordSpoofButton.displayString = (BungeeCordSpoof.enabled ? "§a" : "§c") + "BungeeCord Spoof";
-                LiquidBounce.fileManager.saveAllConfigs();
-                break;
             case 997:
                 mc.displayGuiScreen(new GuiAntiForge((GuiScreen) (Object) this));
                 break;
