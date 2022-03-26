@@ -5,6 +5,8 @@
  */
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
+import de.enzaxd.viaforge.ViaForge
+import de.enzaxd.viaforge.protocol.ProtocolCollection
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
@@ -93,6 +95,7 @@ class Text(
                 "zdp" -> return mc.thePlayer.posZ.toString()
                 "velocity" -> return DECIMAL_FORMAT.format(sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ))
                 "ping" -> return "${mc.thePlayer.ping}"
+                "portalVersion" -> ProtocolCollection.getProtocolById(ViaForge.getInstance().version).getName()
                 "speed" -> return DECIMAL_FORMAT.format(MovementUtils.bps)
                 "attackDist" -> return if (LiquidBounce.combatManager.target != null) mc.thePlayer.getDistanceToEntity(LiquidBounce.combatManager.target).toString() + " Blocks" else "Hasn't attacked"
             }
