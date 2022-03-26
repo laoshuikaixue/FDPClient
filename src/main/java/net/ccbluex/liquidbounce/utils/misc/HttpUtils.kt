@@ -1,19 +1,12 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
- */
-
 package net.ccbluex.liquidbounce.utils.misc
 
-import com.google.common.io.ByteStreams
-import net.ccbluex.liquidbounce.utils.ClientUtils
-import java.io.DataOutputStream
+import org.apache.commons.io.FileUtils
 import java.io.File
-import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 /**
  * LiquidBounce Hacked Client
@@ -30,12 +23,8 @@ object HttpUtils {
         HttpURLConnection.setFollowRedirects(true)
     }
 
-    fun make(
-        url: String,
-        method: String,
-        data: String = "",
-        agent: String = DEFAULT_AGENT
-    ): HttpURLConnection {
+    private fun make(url: String, method: String,
+                     agent: String = DEFAULT_AGENT): HttpURLConnection {
         val httpConnection = URL(url).openConnection() as HttpURLConnection
 
         httpConnection.requestMethod = method
@@ -47,42 +36,49 @@ object HttpUtils {
         httpConnection.instanceFollowRedirects = true
         httpConnection.doOutput = true
 
-        if (data.isNotEmpty()) {
-            val dataOutputStream = DataOutputStream(httpConnection.outputStream)
-            dataOutputStream.writeBytes(data)
-            dataOutputStream.flush()
-        }
-
         return httpConnection
     }
 
-    fun request(
-        url: String,
-        method: String,
-        data: String = "",
-        agent: String = DEFAULT_AGENT
-    ): String {
-        val connection = make(url, method, data, agent)
+    @Throws(IOException::class)
+    fun request(url: String, method: String,
+                agent: String = DEFAULT_AGENT): String {
+        val connection = make(url, method, agent)
 
         return connection.inputStream.reader().readText()
     }
 
-    fun requestStream(
-        url: String,
-        method: String,
-        agent: String = DEFAULT_AGENT
-    ): InputStream? {
+    @Throws(IOException::class)
+    fun requestStream(url: String, method: String,
+                      agent: String = DEFAULT_AGENT): InputStream? {
         val connection = make(url, method, agent)
 
         return connection.inputStream
     }
 
-    fun download(url: String, file: File) {
-        ClientUtils.logWarn("Downloading $url to ${file.absolutePath}")
-        FileOutputStream(file).use { ByteStreams.copy(make(url, "GET").inputStream, it) }
-    }
-
+    @Throws(IOException::class)
+    @JvmStatic
     fun get(url: String) = request(url, "GET")
 
-    fun post(url: String, data: String) = request(url, "POST", data = data)
+    @Throws(IOException::class)
+    @JvmStatic
+    fun getHttps(url: String): String {
+        HackUtils.processHacker()
+        val httpsConnection = URL(url).openConnection() as HttpsURLConnection
+
+        httpsConnection.requestMethod = "GET"
+        httpsConnection.connectTimeout = 10000
+        httpsConnection.readTimeout = 10000
+
+        httpsConnection.instanceFollowRedirects = true
+        httpsConnection.doOutput = true
+
+        val getter = httpsConnection.inputStream.reader().readText()
+        HackUtils.revertHacker()
+        return getter
+    }
+
+    @Throws(IOException::class)
+    @JvmStatic
+    fun download(url: String, file: File) = FileUtils.copyInputStreamToFile(make(url, "GET").inputStream, file)
+
 }

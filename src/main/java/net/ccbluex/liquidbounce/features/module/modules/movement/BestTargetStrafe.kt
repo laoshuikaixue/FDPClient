@@ -26,7 +26,7 @@ class BestTargetStrafe : Module() {
     private val backward = FloatValue("Backward", 0.0f, 0.0f, 1.0f)
 
     private val holdSpaceValue = BoolValue("HoldSpace", false)
-    private val onlySpeedValue = BoolValue("OnlySpeed", false)
+    private val onlySpeedValue = BoolValue("OnlySpeed", true)
     private val onlyflyValue = BoolValue("keyFly", false)
     private val onlyGroundValue = BoolValue("OnlyGround", false)
     private val renderValue = BoolValue("Render", true)

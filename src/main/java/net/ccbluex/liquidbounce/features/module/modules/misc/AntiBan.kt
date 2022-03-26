@@ -10,24 +10,53 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.NotifyType
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils
-import net.minecraft.network.play.server.S14PacketEntity
-import net.minecraft.network.play.server.S1DPacketEntityEffect
+import net.ccbluex.liquidbounce.utils.timer.MSTimer
+import net.minecraft.network.play.server.*
 
 import kotlin.concurrent.thread
 
 @ModuleInfo(name = "AntiBan", category = ModuleCategory.MISC)
 class AntiBan : Module() {
 
-    private var obStaffs = "none"
+    private var obStaffs = "_"
     private var detected = false
+    private var totalCount = 0
+    private var finishedCheck = false
+
+    private var updater = MSTimer()
+
+    private var staff_main: String
+    private var staff_fallback: String
+
+    init {
+        staff_main = "https://add-my-brain.exit-scammed.repl.co/staff/"
+        staff_fallback = "https://gitee.com/insaneNMSL/bmcstaff/raw/master/stafflist"
+    }
 
     override fun onInitialize() {
         thread {
             try {
-                obStaffs = HttpUtils.get("https://gitee.com/insaneNMSL/bmcstaff/raw/master/stafflist")
-                println("[Staff list] " + obStaffs)
+                while (!finishedCheck) {
+                    obStaffs = HttpUtils.getHttps(staff_main)
+
+                    if (obStaffs.contains("checking", true)) {
+                        println("am waiting for a while, the server is checking")
+                        updater.reset()
+                        while (!updater.hasTimePassed(30000L)) {}
+                    } else {
+                        totalCount = obStaffs.filter { it.isWhitespace() }.count()
+                        println("[Staff/main] ${obStaffs}")
+                        finishedCheck = true
+                    }
+                }
+                println("finished checking, closing thread...")
             } catch (e: Exception) {
-                // ignore fr fr
+                e.printStackTrace()
+                println("switching to local staff source instead...")
+
+                obStaffs = HttpUtils.get(staff_fallback)
+                totalCount = obStaffs.filter { it.isWhitespace() }.count()
+                println("[Staff/fallback] ${obStaffs}")
             }
         }
     }
@@ -50,7 +79,37 @@ class AntiBan : Module() {
             val entity = mc.theWorld.getEntityByID(packet.entityId)
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    LiquidBounce.hud.addNotification(Notification(name, "Detected BlocksMC staff members with invis. You should quit ASAP.", NotifyType.ERROR, 8000))
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through effect packet!", NotifyType.ERROR, 5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S18PacketEntityTeleport) {
+            val entity = mc.theWorld.getEntityByID(packet.entityId)
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through teleportation packet!", NotifyType.ERROR, 5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S20PacketEntityProperties) {
+            val entity = mc.theWorld.getEntityByID(packet.entityId)
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through properties packet!", NotifyType.ERROR, 5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S0BPacketAnimation) {
+            val entity = mc.theWorld.getEntityByID(packet.getEntityID())
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through animation packet!", NotifyType.ERROR, 5000))
                     mc.thePlayer.sendChatMessage("/leave")
                     detected = true
                 }
@@ -61,11 +120,47 @@ class AntiBan : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    LiquidBounce.hud.addNotification(Notification(name, "Detected BlocksMC staff members. You should quit ASAP.", NotifyType.ERROR,8000))
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through update packet!", NotifyType.ERROR, 5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S19PacketEntityStatus) {
+            val entity = packet.getEntity(mc.theWorld)
+
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through status packet!", NotifyType.ERROR, 5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S19PacketEntityHeadLook) {
+            val entity = packet.getEntity(mc.theWorld)
+
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through head packet!", NotifyType.ERROR,5000))
+                    mc.thePlayer.sendChatMessage("/leave")
+                    detected = true
+                }
+            }
+        }
+        if (packet is S49PacketUpdateEntityNBT) {
+            val entity = packet.getEntity(mc.theWorld)
+
+            if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
+                if (!detected) {
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through nbt packet!", NotifyType.ERROR,5000))
                     mc.thePlayer.sendChatMessage("/leave")
                     detected = true
                 }
             }
         }
     }
+
+    override val tag: String
+        get() = "${totalCount}"
 }
