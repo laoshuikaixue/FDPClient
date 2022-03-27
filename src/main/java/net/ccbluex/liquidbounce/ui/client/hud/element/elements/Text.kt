@@ -17,6 +17,7 @@ import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.CPSCounter
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.ServerUtils
+import net.ccbluex.liquidbounce.utils.SessionUtils
 import net.ccbluex.liquidbounce.utils.extensions.ping
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
@@ -47,6 +48,8 @@ class Text(
         val HOUR_FORMAT = SimpleDateFormat("HH:mm")
 
         val DECIMAL_FORMAT = DecimalFormat("#.##")
+
+        val DECIMAL_FORMAT2 = DecimalFormat("#.#")
     }
 
     val displayString = TextValue("DisplayText", "")
@@ -95,7 +98,6 @@ class Text(
                 "zdp" -> return mc.thePlayer.posZ.toString()
                 "velocity" -> return DECIMAL_FORMAT.format(sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ))
                 "ping" -> return "${mc.thePlayer.ping}"
-                "portalVersion" -> ProtocolCollection.getProtocolById(ViaForge.getInstance().version).getName()
                 "speed" -> return DECIMAL_FORMAT.format(MovementUtils.bps)
                 "attackDist" -> return if (LiquidBounce.combatManager.target != null) mc.thePlayer.getDistanceToEntity(LiquidBounce.combatManager.target).toString() + " Blocks" else "Hasn't attacked"
             }
@@ -113,6 +115,9 @@ class Text(
             "cps", "lcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.LEFT).toString()
             "mcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.MIDDLE).toString()
             "rcps" -> return CPSCounter.getCPS(CPSCounter.MouseButton.RIGHT).toString()
+            "portalVersion" -> ProtocolCollection.getProtocolById(ViaForge.getInstance().version).getName()
+            "sessionTime" -> return SessionUtils.getFormatSessionTime()
+            "worldTime" -> return SessionUtils.getFormatWorldTime()
             else -> null // Null = don't replace
         }
     }
