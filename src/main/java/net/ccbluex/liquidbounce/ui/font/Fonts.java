@@ -41,9 +41,6 @@ public class Fonts {
     @FontDetails(fontName = "Roboto Regular", fontSize = 50, fileName = "Roboto-Bold.ttf")
     public static GameFontRenderer fontRoboto50;
 
-    @FontDetails(fontName = "Icon Regular", fontSize = 16, fileName = "Icon.ttf")
-    public static GameFontRenderer fontSessionInfo16;
-
     @FontDetails(fontName = "Comfortaa Regular", fontSize = 28, fileName = "Comfortaa.ttf")
     public static GameFontRenderer fontComfortaa28;
 

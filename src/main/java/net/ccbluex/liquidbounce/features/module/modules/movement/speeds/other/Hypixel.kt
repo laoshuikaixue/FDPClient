@@ -15,12 +15,11 @@ class Hypixel : SpeedMode("Hypixel") {
         mc.gameSettings.keyBindJump.pressed = false
         if (MovementUtils.isMoving()) {
             if (MoveUtils.isOnGround(0.01) && mc.thePlayer.isCollidedVertically) {
-                MovementUtils.strafe(0.2149f)
+                MovementUtils.strafe(0.1849f)
                 MoveUtils.setMotion(null, Math.max(0.275, MoveUtils.defaultSpeed() * 0.9))
                 mc.thePlayer.jump()
             }
         }else if (!MovementUtils.isMoving()) {
-            mc.timer.timerSpeed = 1.00f
             mc.thePlayer.motionX = 0.0
             mc.thePlayer.motionZ = 0.0
         }
