@@ -11,15 +11,18 @@ import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 
 class Hypixel : SpeedMode("Hypixel") {
-    private val onGround = BoolValue("OnGround", true)
     override fun onPreMotion() {
+        mc.gameSettings.keyBindJump.pressed = false
         if (MovementUtils.isMoving()) {
             if (MoveUtils.isOnGround(0.01) && mc.thePlayer.isCollidedVertically) {
+                MovementUtils.strafe(0.2149f)
                 MoveUtils.setMotion(null, Math.max(0.275, MoveUtils.defaultSpeed() * 0.9))
                 mc.thePlayer.jump()
-            } else if (!onGround.get()) {
-                MoveUtils.setMotion(null, MovementUtils.getSpeed2())
             }
+        }else if (!MovementUtils.isMoving()) {
+            mc.timer.timerSpeed = 1.00f
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
         }
     }
 }
