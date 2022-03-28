@@ -1,9 +1,15 @@
 package net.ccbluex.liquidbounce.utils
 
+import java.security.SecureRandom
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 object MathUtils {
+    fun getRandomInRange(min: Int, max: Int): Float {
+        val random = SecureRandom()
+        return random.nextFloat() * (max - min) + min
+    }
+
     fun radians(degrees: Double): Double {
         return degrees * Math.PI / 180
     }

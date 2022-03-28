@@ -505,3 +505,6 @@ module.KeepArmor.description=Automatically equips the best armor in your invento
 
 module.Effects.name=Effects
 module.Effects.description=Shows a list of active potion effects
+
+module.ResetVL.name=ResetVL
+module.ResetVL.description=Unflags you on servers

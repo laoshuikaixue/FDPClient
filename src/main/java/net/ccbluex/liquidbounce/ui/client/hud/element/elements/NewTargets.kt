@@ -27,16 +27,12 @@ import kotlin.math.pow
 
 @ElementInfo(name = "NewTargets", blur = true)
 class NewTargets : Element() {
-    private val decimalFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
     private val decimalFormat2 = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))
-    private val decimalFormat3 = DecimalFormat("0.#", DecimalFormatSymbols(Locale.ENGLISH))
     private val styleValue = ListValue("Style", arrayOf("Flux", "Novoline", "Slowly", "Rise", "Exhibition"), "Rise")
     private val fadeSpeed = FloatValue("FadeSpeed", 2F, 1F, 9F)
-    private val blurStrength = FloatValue("Blur-Strength", 0F, 0F, 30F)
     private val tSlideAnim = BoolValue("TSlide-Animation", true)
     private val showUrselfWhenChatOpen = BoolValue("DisplayWhenChat", true)
     private val riseShadow = BoolValue("Rise-Shadow", true)
-    private val riseShadowLegacy = BoolValue("Rise-Shadow-Legacy", true)
     private val shadowStrengthValue = IntegerValue("Rise-Shadow-Strength", 4, 1, 40)
     private val riseParticle = BoolValue("Rise-Particle", true)
     private val riseParticleFade = BoolValue("Rise-Particle-Fade", true)

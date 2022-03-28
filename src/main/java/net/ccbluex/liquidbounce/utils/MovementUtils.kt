@@ -8,10 +8,12 @@ package net.ccbluex.liquidbounce.utils
 import net.ccbluex.liquidbounce.event.MoveEvent
 import net.minecraft.entity.Entity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.potion.Potion
 import net.minecraft.util.AxisAlignedBB
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
+
 
 object MovementUtils : MinecraftInstance() {
 
@@ -203,5 +205,88 @@ object MovementUtils : MinecraftInstance() {
             posY += 8.0
         }
         mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true))
+    }
+
+    fun getBaseMoveSpeed(): Double {
+        var baseSpeed = mc.thePlayer.capabilities.walkSpeed * 2.873
+        if (mc.thePlayer.isPotionActive(Potion.moveSlowdown)) {
+            baseSpeed /= 1.0 + 0.2 * (mc.thePlayer.getActivePotionEffect(Potion.moveSlowdown).amplifier + 1)
+        }
+        if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            baseSpeed *= 1.0 + 0.2 * (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1)
+        }
+        return baseSpeed
+    }
+
+    fun setSpeed3(moveEvent: MoveEvent?, moveSpeed: Double) {
+        setSpeed3(
+            moveEvent!!, moveSpeed, mc.thePlayer.rotationYaw,
+            mc.thePlayer.movementInput.moveStrafe.toDouble(), mc.thePlayer.movementInput.moveForward.toDouble()
+        )
+    }
+
+    fun setSpeed3(moveSpeed: Double, yaw: Float, strafe: Double, forward: Double) {
+        var yaw = yaw
+        var strafe = strafe
+        var forward = forward
+        if (forward != 0.0) {
+            if (strafe > 0.0) {
+                yaw += (if (forward > 0.0) -45 else 45).toFloat()
+            } else if (strafe < 0.0) {
+                yaw += (if (forward > 0.0) 45 else -45).toFloat()
+            }
+            strafe = 0.0
+            if (forward > 0.0) {
+                forward = 1.0
+            } else if (forward < 0.0) {
+                forward = -1.0
+            }
+        }
+        if (strafe > 0.0) {
+            strafe = 1.0
+        } else if (strafe < 0.0) {
+            strafe = -1.0
+        }
+        val mx = Math.cos(Math.toRadians((yaw + 90.0f).toDouble()))
+        val mz = Math.sin(Math.toRadians((yaw + 90.0f).toDouble()))
+        mc.thePlayer.motionX = forward * moveSpeed * mx + strafe * moveSpeed * mz
+        mc.thePlayer.motionZ = forward * moveSpeed * mz - strafe * moveSpeed * mx
+    }
+
+    fun setSpeed3(moveSpeed: Int) {
+        setSpeed3(
+            moveSpeed.toDouble(),
+            mc.thePlayer.rotationYaw,
+            mc.thePlayer.movementInput.moveStrafe.toDouble(),
+            mc.thePlayer.movementInput.moveForward.toDouble()
+        )
+    }
+
+    fun setSpeed3(moveEvent: MoveEvent, moveSpeed: Double, yaw: Float, strafe: Double, forward: Double) {
+        var yaw = yaw
+        var strafe = strafe
+        var forward = forward
+        if (forward != 0.0) {
+            if (strafe > 0.0) {
+                yaw += (if (forward > 0.0) -45 else 45).toFloat()
+            } else if (strafe < 0.0) {
+                yaw += (if (forward > 0.0) 45 else -45).toFloat()
+            }
+            strafe = 0.0
+            if (forward > 0.0) {
+                forward = 1.0
+            } else if (forward < 0.0) {
+                forward = -1.0
+            }
+        }
+        if (strafe > 0.0) {
+            strafe = 1.0
+        } else if (strafe < 0.0) {
+            strafe = -1.0
+        }
+        val mx = Math.cos(Math.toRadians((yaw + 90.0f).toDouble()))
+        val mz = Math.sin(Math.toRadians((yaw + 90.0f).toDouble()))
+        moveEvent.x = forward * moveSpeed * mx + strafe * moveSpeed * mz
+        moveEvent.z = forward * moveSpeed * mz - strafe * moveSpeed * mx
     }
 }

@@ -187,6 +187,51 @@ public final class RenderUtils extends MinecraftInstance {
         glPopAttrib();
     }
 
+    // This method colors the next avalible texture with a specified alpha value ranging from 0-1
+    public static void color(int color, float alpha) {
+        float r = (float) (color >> 16 & 255) / 255.0F;
+        float g = (float) (color >> 8 & 255) / 255.0F;
+        float b = (float) (color & 255) / 255.0F;
+        GlStateManager.color(r, g, b, alpha);
+    }
+
+    // Colors the next texture without a specified alpha value
+    public static void color(int color) {
+        color(color, (float) (color >> 24 & 255) / 255.0F);
+    }
+
+    // TODO: Replace this with a shader as GL_POINTS is not consistent with gui scales
+    public static void drawGoodCircle(double x, double y, float radius, int color) {
+        color(color);
+        GLUtil.setup2DRendering(() -> {
+            glEnable(GL_POINT_SMOOTH);
+            glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+            glPointSize(radius * (2 * mc.gameSettings.guiScale));
+            GLUtil.render(GL_POINTS, () -> glVertex2d(x, y));
+        });
+    }
+
+    // Bad rounded rect method but the shader one requires scaling that sucks
+    public static void tenacityrenderRoundedRect(float x, float y, float width, float height, float radius, int color) {
+        drawGoodCircle(x + radius, y + radius, radius, color);
+        drawGoodCircle(x + width - radius, y + radius, radius, color);
+        drawGoodCircle(x + radius, y + height - radius, radius, color);
+        drawGoodCircle(x + width - radius, y + height - radius, radius, color);
+
+        TENACITYGUI.drawRect2(x + radius, y, width - radius * 2, height, color);
+        TENACITYGUI.drawRect2(x, y + radius, width, height - radius * 2, color);
+    }
+
+    public static void tenacityrenderRoundedRect2(float x, float y, float width, float height, float radius, final Color color) {
+        drawGoodCircle(x + radius, y + radius, radius, color.getRGB());
+        drawGoodCircle(x + width - radius, y + radius, radius, color.getRGB());
+        drawGoodCircle(x + radius, y + height - radius, radius, color.getRGB());
+        drawGoodCircle(x + width - radius, y + height - radius, radius, color.getRGB());
+
+        TENACITYGUI.drawRect2(x + radius, y, width - radius * 2, height, color.getRGB());
+        TENACITYGUI.drawRect2(x, y + radius, width, height - radius * 2, color.getRGB());
+    }
+
     public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color) {
         drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color, true);
     }

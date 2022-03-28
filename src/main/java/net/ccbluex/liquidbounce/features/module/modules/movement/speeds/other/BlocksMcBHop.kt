@@ -14,10 +14,10 @@ class BlocksMcBHop : SpeedMode("BlocksMcBHop") {
         if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava && !mc.thePlayer.isInWater && !mc.thePlayer.isOnLadder && mc.thePlayer.ridingEntity == null) {
             if (MovementUtils.isMoving()) {
                 mc.gameSettings.keyBindJump.pressed = false
-                MovementUtils.strafe(0.41F)
                 if (mc.thePlayer.onGround) {
+                    MovementUtils.strafe(0.41F)
                     mc.thePlayer.jump()
-                    mc.thePlayer.motionY = 0.310999998688698
+                    mc.thePlayer.motionY = 0.330999998688698
                     event.y = 0.42
                 }
             }

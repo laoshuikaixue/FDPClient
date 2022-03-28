@@ -6,7 +6,6 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.client;
 
 import com.guimc.fuckpcl.PCLChecker;
-import de.enzaxd.viaforge.ViaForge;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.*;
 import net.ccbluex.liquidbounce.features.module.modules.client.Modules;
@@ -27,7 +26,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.main.GameConfiguration;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.particle.EffectRenderer;
@@ -96,35 +94,12 @@ public abstract class MixinMinecraft {
     @Shadow
     private boolean fullscreen;
 
-    @Shadow
-    public int displayWidth;
-
-    @Shadow
-    public int displayHeight;
     /**
      * @author XiGuaGeGe
      */
     @Overwrite
     public int getLimitFramerate() {
         return this.gameSettings.limitFramerate;
-    }
-
-    @Inject(method = "<init>", at = @At("RETURN"))
-    public void injectConstructor(GameConfiguration p_i45547_1_, CallbackInfo ci) {
-        try {
-            ViaForge.getInstance().start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Inject(method = "run", at = @At("HEAD"))
-    private void init(CallbackInfo callbackInfo) {
-        if(displayWidth < 1067)
-            displayWidth = 1067;
-
-        if(displayHeight < 622)
-            displayHeight = 622;
     }
 
     @Inject(method = "startGame", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;checkGLError(Ljava/lang/String;)V", ordinal = 2, shift = At.Shift.AFTER))

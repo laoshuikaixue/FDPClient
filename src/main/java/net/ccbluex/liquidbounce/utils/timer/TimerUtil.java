@@ -33,6 +33,10 @@ public class TimerUtil {
         return System.nanoTime() / 1000000L;
     }
 
+    public boolean hasTimeElapsed(long time) {
+        return System.currentTimeMillis() - lastMS > time;
+    }
+
     public boolean isDelayComplete(long delay) {
         if (System.currentTimeMillis() - this.lastMS > delay)
             return true;

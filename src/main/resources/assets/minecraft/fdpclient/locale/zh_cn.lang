@@ -484,3 +484,6 @@ module.KeepArmor.description=自动装备库存中最好的盔甲
 
 module.Effects.name=药水效果
 module.Effects.description=显示当前药水效果的列表
+
+module.ResetVL.name=重置VL
+module.ResetVL.description=解除服务器上的延迟

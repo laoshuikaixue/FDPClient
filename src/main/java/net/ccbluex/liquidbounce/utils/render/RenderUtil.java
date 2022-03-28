@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,6 +62,31 @@ public final class RenderUtil extends MinecraftInstance {
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         drawRect(x + width, y1 - width, x1 - width, y1, borderColor);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+    public static Framebuffer createFrameBuffer(Framebuffer framebuffer) {
+        if (framebuffer == null || framebuffer.framebufferWidth != mc.displayWidth || framebuffer.framebufferHeight != mc.displayHeight) {
+            if (framebuffer != null) {
+                framebuffer.deleteFramebuffer();
+            }
+            return new Framebuffer(mc.displayWidth, mc.displayHeight, true);
+        }
+        return framebuffer;
+    }
+    // Sometimes colors get messed up in for loops, so we use this method to reset it to allow new colors to be used
+    public static void resetColor() {
+        GlStateManager.color(1, 1, 1, 1);
+    }
+    // This method colors the next avalible texture with a specified alpha value ranging from 0-1
+    public static void color(int color, float alpha) {
+        float r = (float) (color >> 16 & 255) / 255.0F;
+        float g = (float) (color >> 8 & 255) / 255.0F;
+        float b = (float) (color & 255) / 255.0F;
+        GlStateManager.color(r, g, b, alpha);
+    }
+
+    // Colors the next texture without a specified alpha value
+    public static void color(int color) {
+        color(color, (float) (color >> 24 & 255) / 255.0F);
     }
     public static void drawTexturedRect(final float x, final float y, final float width, final float height, final String image) {
         GL11.glPushMatrix();
