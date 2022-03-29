@@ -141,4 +141,6 @@ public abstract class MixinGuiScreen {
         RenderHelper.enableStandardItemLighting();
         GlStateManager.enableRescaleNormal();
     }
+
+    protected abstract void injectedActionPerformed(GuiButton button);
 }

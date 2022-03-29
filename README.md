@@ -77,3 +77,12 @@ Please use original code if you can, and no direct code steals, but we welcome s
 ### Useless features
 Useless features means feature only you think its usable ,or feature can be have with config change.  
 Like the "TimerSpeed" option to InfiniteAura, this feature can be added with bind Timer to the key with InfiniteAura, or use macro system in FDP Client.
+
+
+## Contributing
+
+We appreciate contributions. So if you want to support us, feel free to make changes to LiquidBounce+'s source code and submit a pull request. Currently, our main goals are the following:
+1. Enhance the vision of the project.
+2. Re-work most of the render code.
+
+If you have experience in one or more of these fields, we would highly appreciate your support.
