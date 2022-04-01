@@ -87,7 +87,7 @@ public abstract class MixinSplashProgressRunnable {
 
             if(progress != 1f) {
                 GL11.glColor4f(0f, 0f, 0f, 0.3f);
-                RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, ColorUtils.INSTANCE.rainbow());
+                RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, (int) rectRadius);
             }
 
             if(progress != 0f) {
