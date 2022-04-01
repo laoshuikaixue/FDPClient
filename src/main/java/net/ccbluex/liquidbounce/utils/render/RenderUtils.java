@@ -446,7 +446,7 @@ public final class RenderUtils extends MinecraftInstance {
     }
 
     private static void quickPolygonCircle(float x, float y, float xRadius, float yRadius, int start, int end, int split) {
-        for(int i = end; i >= start; i-=split) {
+        for(int i = end; i >= start; i -= split) {
             glVertex2d(x + Math.sin(i * Math.PI / 180.0D) * xRadius, y + Math.cos(i * Math.PI / 180.0D) * yRadius);
         }
     }
@@ -455,6 +455,7 @@ public final class RenderUtils extends MinecraftInstance {
         glEnable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glDisable(GL_TEXTURE_2D);
         glEnable(GL_LINE_SMOOTH);
 
         glColor(color);

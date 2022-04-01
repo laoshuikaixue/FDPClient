@@ -145,11 +145,6 @@ public class Fonts {
     private static void initFonts() {
         try {
             initSingleFont("regular.ttf","assets/minecraft/fdpclient/font/regular.ttf");
-            initSingleFont("Comfortaa.ttf","assets/minecraft/fdpclient/font/Comfortaa.ttf");
-            initSingleFont("GEETYPE-XiYuanGBT-Flash.ttf","assets/minecraft/fdpclient/font/GEETYPE-XiYuanGBT-Flash.ttf");
-            initSingleFont("Roboto-Bold.ttf","assets/minecraft/fdpclient/font/Roboto-Bold.ttf");
-            initSingleFont("SFTHIN.ttf","assets/minecraft/fdpclient/font/SFTHIN.ttf");
-            initSingleFont("Whitney-Light.ttf","assets/minecraft/fdpclient/font/Whitney-Light.ttf");
         }catch(IOException e) {
             e.printStackTrace();
         }
