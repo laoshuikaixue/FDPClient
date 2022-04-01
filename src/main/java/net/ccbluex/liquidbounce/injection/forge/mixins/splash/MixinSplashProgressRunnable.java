@@ -2,6 +2,7 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.splash;
 
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.render.AnimatedValue;
+import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.ccbluex.liquidbounce.utils.render.EaseUtils;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraftforge.fml.client.SplashProgress;
@@ -79,19 +80,20 @@ public abstract class MixinSplashProgressRunnable {
             // draw progress bar
             float rectX = width * 0.2f;
             float rectX2 = width * 0.8f;
-            float rectY = height * 0.75f;
-            float rectY2 = height * 0.8f;
+            float rectY = height * 0.7f;
+            float rectY2 = height * 0.73f;
             float rectRadius = height * 0.025f;
             float progress = (float) animatedValue.sync(getProgress());
 
             if(progress != 1f) {
                 GL11.glColor4f(0f, 0f, 0f, 0.3f);
-                RenderUtils.drawRoundedCornerRect(rectX, rectY, rectX2, rectY2, rectRadius);
+                RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, ColorUtils.INSTANCE.rainbow());
             }
 
             if(progress != 0f) {
                 GL11.glColor4f(1f, 1f, 1f, 1f);
-                RenderUtils.drawRoundedCornerRect(rectX, rectY, rectX + (width * 0.6f * progress), rectY2, rectRadius);
+                RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, (int) rectRadius);
+                RenderUtils.drawRect(rectX, rectY, rectX + (width * 0.6f * progress), rectY2, ColorUtils.INSTANCE.rainbow());
             }
 
             SplashProgress.mutex.acquireUninterruptibly();
