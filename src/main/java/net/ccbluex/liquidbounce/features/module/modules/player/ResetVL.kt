@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.features.module.modules.render
+package net.ccbluex.liquidbounce.features.module.modules.player
 
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.MotionEvent
@@ -6,7 +6,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 
-@ModuleInfo(name = "ResetVL", category = ModuleCategory.RENDER)
+@ModuleInfo(name = "ResetVL", category = ModuleCategory.PLAYER)
 class ResetVL : Module() {
     private var jumped = 0
     private var y = 0.0

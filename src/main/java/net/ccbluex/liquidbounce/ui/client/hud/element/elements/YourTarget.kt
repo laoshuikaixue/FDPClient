@@ -10,6 +10,7 @@ import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.Palette
 import net.ccbluex.liquidbounce.utils.render.GLUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtil
+import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.minecraft.client.gui.Gui
@@ -63,7 +64,7 @@ class YourTarget : Element() {
             val customColor1 = Color(gredValue.get(), ggreenValue.get(), gblueValue.get(), 255)
             val customColor2 = Color(150, 150, 150, 100)
             if (easingHealth > target.health)
-                RenderUtil.drawRect(1.5F, 34F, (easingHealth / target.maxHealth) * width,
+                RenderUtils.drawRect(1.5F, 34F, (easingHealth / target.maxHealth) * width,
                     42F, customColor2.rgb)
             counter1[0] += 1
             counter2[0] += 1

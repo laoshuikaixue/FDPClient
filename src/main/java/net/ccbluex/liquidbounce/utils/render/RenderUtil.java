@@ -1341,22 +1341,6 @@ public final class RenderUtil extends MinecraftInstance {
             Gui.drawRect(0, 0, 0, 0, 0);
         }
 
-        public static void drawRect(double x2, double y2, double x1, double y1, int color) {
-            R2DUtils.enableGL2D();
-            R2DUtils.glColor(color);
-            R2DUtils.drawRect(x2, y2, x1, y1);
-            R2DUtils.disableGL2D();
-        }
-
-        private static void drawRect(double x2, double y2, double x1, double y1) {
-            GL11.glBegin((int) 7);
-            GL11.glVertex2d((double) x2, (double) y1);
-            GL11.glVertex2d((double) x1, (double) y1);
-            GL11.glVertex2d((double) x1, (double) y2);
-            GL11.glVertex2d((double) x2, (double) y2);
-            GL11.glEnd();
-        }
-
         public static void glColor(int hex) {
             float alpha = (float) (hex >> 24 & 255) / 255.0f;
             float red = (float) (hex >> 16 & 255) / 255.0f;

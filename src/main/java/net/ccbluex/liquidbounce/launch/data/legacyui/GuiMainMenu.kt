@@ -48,7 +48,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         if(LiquidBounce.latest != LiquidBounce.CLIENT_VERSION && LiquidBounce.latest.isNotEmpty()) {
             val str = LanguageManager.getAndFormat("ui.update.released", LiquidBounce.latest)
             val start = width / 2f - (mc.fontRendererObj.getStringWidth(str) / 2f)
-            RenderUtils.drawRect(start, 15f, start + mc.fontRendererObj.getStringWidth(str), 15f + mc.fontRendererObj.FONT_HEIGHT, Color.BLACK.rgb)
             mc.fontRendererObj.drawString(str, start, 15f, Color.WHITE.rgb, false)
         }
 
