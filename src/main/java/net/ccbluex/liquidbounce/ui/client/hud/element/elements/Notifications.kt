@@ -6,6 +6,7 @@
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
 import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.features.module.modules.client.HUD.bordRad
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
@@ -16,6 +17,7 @@ import net.ccbluex.liquidbounce.utils.render.BlurUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.EaseUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
+import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.FontValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.minecraft.client.gui.FontRenderer
@@ -159,8 +161,8 @@ class Notification(
 //        GL11.glPushMatrix()
 //        GL11.glEnable(GL11.GL_SCISSOR_TEST)
 //        GL11.glScissor(width-(width*pct).toFloat(),0F, width.toFloat(),height.toFloat())
-        RenderUtils.drawRoundedRect(0F, 0F, max(width - width * ((nowTime - displayTime) / (animeTime * 2F + time)), 0F), height.toFloat(), 6.2F ,type.renderColor.rgb)
-        RenderUtils.drawRoundedRect2(0F, 0F, width.toFloat(), height.toFloat(), 6.2F, Color(0, 0, 0, alpha))
+        RenderUtils.drawRoundedRect(0F, 0F, max(width - width * ((nowTime - displayTime) / (animeTime * 2F + time)), 0F), height.toFloat(), bordRad.get() ,type.renderColor.rgb)
+        RenderUtils.drawRoundedRect2(0F, 0F, width.toFloat(), height.toFloat(), bordRad.get(), Color(0, 0, 0, alpha))
         font.drawString(title, 4F, 4F, ColorUtils.hslRainbow(index + 1, indexOffset = 100 * 5).rgb, false)
         font.drawString(content, 4F, 17F, Color.WHITE.rgb, false)
 //        RenderUtils.drawRect(0F, height - 2F, max(width - width * ((nowTime - displayTime) / (animeTime * 2F + time)), 0F), height.toFloat(), type.renderColor)
