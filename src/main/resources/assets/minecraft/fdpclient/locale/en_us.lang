@@ -508,3 +508,6 @@ module.Effects.description=Shows a list of active potion effects
 
 module.ResetVL.name=ResetVL
 module.ResetVL.description=Unflags you on servers
+
+module.FluxAntiVoid.name=FluxAntiVoid
+module.FluxAntiVoid.description=Pull you up when you fall into the void

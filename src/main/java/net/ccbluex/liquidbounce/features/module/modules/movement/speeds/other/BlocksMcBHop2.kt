@@ -12,8 +12,8 @@ class BlocksMcBHop2 : SpeedMode("BlocksMcBHop2") {
     override fun onPreMotion() {
         if (!MovementUtils.isMoving() || mc.thePlayer.movementInput.jump) return
         if (mc.thePlayer.onGround) {
-            MovementUtils.strafe(0.9f)
-            mc.thePlayer.motionY = 0.44
+            MovementUtils.strafe(0.72f)
+            mc.thePlayer.motionY = 0.410999998688698
             return
         }
         MovementUtils.strafe()

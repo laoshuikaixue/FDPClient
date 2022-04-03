@@ -487,3 +487,6 @@ module.Effects.description=显示当前药水效果的列表
 
 module.ResetVL.name=重置VL
 module.ResetVL.description=解除服务器上的延迟
+
+module.FluxAntiVoid.name=Flux的防掉虚空
+module.FluxAntiVoid.description=Flux的防止你掉入虚空

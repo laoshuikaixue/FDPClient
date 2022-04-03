@@ -26,14 +26,11 @@ public class Fonts {
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
 
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 28, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN28;
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 35, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN35;
 
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 30, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN30;
-
-    @FontDetails(fontName = "Roboto Regular", fontSize = 28, fileName = "Roboto-Bold.ttf")
-    public static GameFontRenderer fontRoboto28;
+    @FontDetails(fontName = "Roboto Regular", fontSize = 40, fileName = "Roboto-Bold.ttf")
+    public static GameFontRenderer fontRoboto40;
 
     @FontDetails(fontName = "Roboto Regular", fontSize = 30, fileName = "Roboto-Bold.ttf")
     public static GameFontRenderer fontRoboto30;
@@ -41,29 +38,20 @@ public class Fonts {
     @FontDetails(fontName = "Roboto Regular", fontSize = 50, fileName = "Roboto-Bold.ttf")
     public static GameFontRenderer fontRoboto50;
 
-    @FontDetails(fontName = "Comfortaa Regular", fontSize = 28, fileName = "Comfortaa.ttf")
-    public static GameFontRenderer fontComfortaa28;
-
-    @FontDetails(fontName = "Comfortaa Regular", fontSize = 30, fileName = "Comfortaa.ttf")
-    public static GameFontRenderer fontComfortaa30;
-
     @FontDetails(fontName = "Comfortaa Regular", fontSize = 35, fileName = "Comfortaa.ttf")
     public static GameFontRenderer fontComfortaa35;
 
     @FontDetails(fontName = "Comfortaa Regular", fontSize = 40, fileName = "Comfortaa.ttf")
     public static GameFontRenderer fontComfortaa40;
 
-    @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 30, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
-    public static GameFontRenderer fontXiYuanGBT30;
-
     @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 35, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
     public static GameFontRenderer fontXiYuanGBT35;
 
-    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 28, fileName = "Whitney-Light.ttf")
-    public static GameFontRenderer fontWhitneyLight28;
+    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 35, fileName = "Whitney-Light.ttf")
+    public static GameFontRenderer fontWhitneyLight35;
 
-    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 30, fileName = "Whitney-Light.ttf")
-    public static GameFontRenderer fontWhitneyLight30;
+    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 40, fileName = "Whitney-Light.ttf")
+    public static GameFontRenderer fontWhitneyLight40;
 
     @FontDetails(fontName = "Small", fontSize = 35, fileName = "GoogleSans.ttf")
     public static GameFontRenderer fontgoogle35;
@@ -73,6 +61,15 @@ public class Fonts {
 
     @FontDetails(fontName = "SFUI Regular", fontSize = 40, fileName = "sfui.ttf")
     public static GameFontRenderer fontSFUI40;
+
+    @FontDetails(fontName = "Tahoma Regular", fontSize = 35, fileName = "tahoma.ttf")
+    public static GameFontRenderer fonttahoma35;
+
+    @FontDetails(fontName = "MiSans Regular", fontSize = 35, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSans35;
+
+    @FontDetails(fontName = "MiSans Regular", fontSize = 40, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSans40;
 
 //    @FontDetails(fontName = "Huge", fontSize = 60, fileName = "regular.ttf")
 //    public static GameFontRenderer font60;

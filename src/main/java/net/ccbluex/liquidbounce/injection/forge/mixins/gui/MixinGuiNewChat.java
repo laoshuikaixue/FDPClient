@@ -175,7 +175,7 @@ public abstract class MixinGuiNewChat {
                                     }
                                 }
                                 GlStateManager.enableBlend();
-                                (canFont ? Fonts.fontXiYuanGBT35 : this.mc.fontRendererObj).drawString(chatline.getChatComponent().getFormattedText(), (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), false);
+                                (canFont ? Fonts.fontMiSans35 : this.mc.fontRendererObj).drawString(chatline.getChatComponent().getFormattedText(), (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), false);
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
 
@@ -219,8 +219,8 @@ public abstract class MixinGuiNewChat {
                 lvt_7_1_ = MathHelper.floor_float((float) lvt_7_1_ / lvt_5_1_);
                 if(lvt_6_1_ >= 0 && lvt_7_1_ >= 0) {
                     int lvt_8_1_ = Math.min(this.getLineCount(), this.drawnChatLines.size());
-                    if(lvt_6_1_ <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && lvt_7_1_ < Fonts.fontXiYuanGBT35.FONT_HEIGHT * lvt_8_1_ + lvt_8_1_) {
-                        int lvt_9_1_ = lvt_7_1_ / Fonts.fontXiYuanGBT35.FONT_HEIGHT + this.scrollPos;
+                    if(lvt_6_1_ <= MathHelper.floor_float((float) this.getChatWidth() / this.getChatScale()) && lvt_7_1_ < Fonts.fontMiSans35.FONT_HEIGHT * lvt_8_1_ + lvt_8_1_) {
+                        int lvt_9_1_ = lvt_7_1_ / Fonts.fontMiSans35.FONT_HEIGHT + this.scrollPos;
                         if(lvt_9_1_ >= 0 && lvt_9_1_ < this.drawnChatLines.size()) {
                             ChatLine lvt_10_1_ = this.drawnChatLines.get(lvt_9_1_);
                             int lvt_11_1_ = 0;
@@ -229,7 +229,7 @@ public abstract class MixinGuiNewChat {
                             while(lvt_12_1_.hasNext()) {
                                 IChatComponent lvt_13_1_ = (IChatComponent) lvt_12_1_.next();
                                 if(lvt_13_1_ instanceof ChatComponentText) {
-                                    lvt_11_1_ += Fonts.fontXiYuanGBT35.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) lvt_13_1_).getChatComponentText_TextValue(), false));
+                                    lvt_11_1_ += Fonts.fontMiSans35.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText) lvt_13_1_).getChatComponentText_TextValue(), false));
                                     if(lvt_11_1_ > lvt_6_1_) {
                                         callbackInfo.setReturnValue(lvt_13_1_);
                                         return;
