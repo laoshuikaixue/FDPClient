@@ -91,7 +91,7 @@ ClientUtils : MinecraftInstance() {
     }
 
     fun setTitle() {
-        Display.setTitle("${LiquidBounce.CLIENT_NAME} - LaoShui ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:https://github.com/laoshuikaixue/FDPClient")
+        Display.setTitle("${LiquidBounce.CLIENT_NAME} - LaoShui ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:https://github.com/laoshuikaixue/FDPClient 官方群:947680002")
     }
 
     fun displayAlert(message: String) {

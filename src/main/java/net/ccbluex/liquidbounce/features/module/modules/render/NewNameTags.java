@@ -53,7 +53,7 @@ public class NewNameTags extends Module {
         if(entity.noClip && uhc.get()) {
             return;
         }
-        FontRenderer fr = Fonts.fontMiSans40;
+        FontRenderer fr = Fonts.fontMiSansNormal40;
         float size = mc.thePlayer.getDistanceToEntity(entity) / 6.0f;
         if(size < 0.8f) {
             size = 0.8f;

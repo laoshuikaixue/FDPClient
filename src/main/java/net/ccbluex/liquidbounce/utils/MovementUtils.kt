@@ -16,6 +16,17 @@ import kotlin.math.sqrt
 
 
 object MovementUtils : MinecraftInstance() {
+    val jumpMotion: Float
+        get() {
+            var mot = 0.42f
+            if (mc.thePlayer.isPotionActive(Potion.jump)) {
+                mot += (mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier + 1).toFloat() * 0.1f
+            }
+            return mot
+        }
+
+    val movingYaw: Float
+        get() = (direction * 180f / Math.PI).toFloat()
 
     fun getSpeed(): Float {
         return sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ).toFloat()

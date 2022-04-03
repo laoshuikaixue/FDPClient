@@ -185,7 +185,7 @@ class NewTargets : Element() {
 
                 // without the new rise update i would never think of recreating this Targethud lol
                 "Rise" -> {
-                    val font = Fonts.fontMiSans40
+                    val font = Fonts.fontMiSansNormal40
                     val name = "Name ${convertedTarget.name}"
                     val info = "Distance ${decimalFormat2.format(mc.thePlayer.getDistanceToEntityBox(convertedTarget))} Hurt ${convertedTarget.hurtTime}"
 

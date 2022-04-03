@@ -113,7 +113,7 @@ object LiquidBounce {
      * Execute if client will be started
      */
     fun initClient() {
-        if (getTitle() == "$CLIENT_NAME - $L$S $CLIENT_VERSION ($CLIENT_BRANCH) 项目开源地址:$WEBSITE"){
+        if (getTitle() == "$CLIENT_NAME - $L$S $CLIENT_VERSION ($CLIENT_BRANCH) 项目开源地址:$WEBSITE 官方群:947680002"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")

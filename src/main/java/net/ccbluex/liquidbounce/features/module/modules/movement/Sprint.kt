@@ -22,6 +22,7 @@ import net.minecraft.potion.Potion
 
 @ModuleInfo(name = "Sprint", category = ModuleCategory.MOVEMENT, defaultOn = true)
 class Sprint : Module() {
+    val jumpDirectionsValue = BoolValue("JumpDirection", true)
     val allDirectionsValue = BoolValue("AllDirections", true)
     private val allDirectionsBypassValue = ListValue("AllDirectionsBypass", arrayOf("Rotate", "Toggle", "Minemora", "Spoof", "LimitSpeed", "None"), "None").displayable { allDirectionsValue.get() }
     private val blindnessValue = BoolValue("Blindness", true)
@@ -50,12 +51,12 @@ class Sprint : Module() {
         mc.thePlayer.isSprinting = true
 
         if (!MovementUtils.isMoving() || mc.thePlayer.isSneaking || blindnessValue.get() &&
-                mc.thePlayer.isPotionActive(Potion.blindness) || foodValue.get() &&
-                !(mc.thePlayer.foodStats.foodLevel > 6.0f || mc.thePlayer.capabilities.allowFlying) ||
-                (useItemValue.get() && mc.thePlayer.isUsingItem) ||
-                (checkServerSide.get() && (mc.thePlayer.onGround || !checkServerSideGround.get()) &&
-                !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
-                RotationUtils.getRotationDifference(Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)) {
+            mc.thePlayer.isPotionActive(Potion.blindness) || foodValue.get() &&
+            !(mc.thePlayer.foodStats.foodLevel > 6.0f || mc.thePlayer.capabilities.allowFlying) ||
+            (useItemValue.get() && mc.thePlayer.isUsingItem) ||
+            (checkServerSide.get() && (mc.thePlayer.onGround || !checkServerSideGround.get()) &&
+                    !allDirectionsValue.get() && RotationUtils.targetRotation != null &&
+                    RotationUtils.getRotationDifference(Rotation(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch)) > 30)) {
             mc.thePlayer.isSprinting = false
             return
         }
@@ -64,7 +65,7 @@ class Sprint : Module() {
             mc.thePlayer.isSprinting = true
             if (RotationUtils.getRotationDifference(Rotation((MovementUtils.direction * 180f / Math.PI).toFloat(), mc.thePlayer.rotationPitch)) > 30) {
                 when (allDirectionsBypassValue.get().lowercase()) {
-                    "rotate" -> RotationUtils.setTargetRotation(Rotation((MovementUtils.direction * 180f / Math.PI).toFloat(), mc.thePlayer.rotationPitch), 10)
+                    "rotate" -> RotationUtils.setTargetRotation(Rotation(MovementUtils.movingYaw, mc.thePlayer.rotationPitch), 10)
                     "toggle" -> {
                         mc.netHandler.addToSendQueue(C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING))
                         mc.netHandler.addToSendQueue(C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING))

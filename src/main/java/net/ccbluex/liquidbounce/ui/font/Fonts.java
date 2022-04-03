@@ -65,11 +65,17 @@ public class Fonts {
     @FontDetails(fontName = "Tahoma Regular", fontSize = 35, fileName = "tahoma.ttf")
     public static GameFontRenderer fonttahoma35;
 
-    @FontDetails(fontName = "MiSans Regular", fontSize = 35, fileName = "MiSans-Normal.ttf")
-    public static GameFontRenderer fontMiSans35;
+    @FontDetails(fontName = "MiSansNormal Regular", fontSize = 35, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSansNormal35;
 
-    @FontDetails(fontName = "MiSans Regular", fontSize = 40, fileName = "MiSans-Normal.ttf")
-    public static GameFontRenderer fontMiSans40;
+    @FontDetails(fontName = "MiSansLight Regular", fontSize = 40, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSansNormal40;
+
+    @FontDetails(fontName = "MiSansLight Regular", fontSize = 35, fileName = "MiSans-Light.ttf")
+    public static GameFontRenderer fontMiSansLight35;
+
+    @FontDetails(fontName = "MiSansNormal Regular", fontSize = 40, fileName = "MiSans-Light.ttf")
+    public static GameFontRenderer fontMiSansLight40;
 
 //    @FontDetails(fontName = "Huge", fontSize = 60, fileName = "regular.ttf")
 //    public static GameFontRenderer font60;

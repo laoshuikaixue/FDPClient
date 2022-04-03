@@ -39,7 +39,7 @@ class Velocity : Module() {
     private val horizontalValue = FloatValue("Horizontal", 0F, -2F, 2F)
     private val verticalValue = FloatValue("Vertical", 0F, -2F, 2F)
     private val velocityTickValue = IntegerValue("VelocityTick", 1, 0, 10).displayable { modeValue.equals("Tick") || modeValue.equals("OldSpartan")}
-    private val modeValue = ListValue("Mode", arrayOf("Simple", "Tick", "Vanilla", "AACPush", "AACZero", "AAC4Reduce", "AAC5Reduce",
+    private val modeValue = ListValue("Mode", arrayOf("Simple", "Simple2", "Tick", "Vanilla", "AACPush", "AACZero", "AAC4Reduce", "AAC5Reduce",
                                                       "Redesky1", "Redesky2",
                                                       "AAC5.2.0", "AAC5.2.0Combat",
                                                       "MatrixReduce", "MatrixSimple", "MatrixGround",
@@ -105,7 +105,7 @@ class Velocity : Module() {
         get() = modeValue.get()
 
     override fun onEnable() {
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:947680002"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
@@ -338,6 +338,18 @@ class Velocity : Module() {
                     packet.motionX = (packet.getMotionX() * horizontal).toInt()
                     packet.motionY = (packet.getMotionY() * vertical).toInt()
                     packet.motionZ = (packet.getMotionZ() * horizontal).toInt()
+                }
+                "simple2" -> {
+                    event.cancelEvent()
+                    packet.motionX = (packet.getMotionX() * 0.06).toInt()
+                    packet.motionZ = (packet.getMotionZ() * 0.06).toInt()
+                    if (mc.thePlayer.onGround) {
+                        packet.motionX = (packet.getMotionX() * 0.12).toInt()
+                        packet.motionZ = (packet.getMotionZ() * 0.12).toInt()
+                    }
+                    packet.motionX = 0
+                    packet.motionY = 0
+                    packet.motionZ = 0
                 }
                 "vanilla" -> {
                     event.cancelEvent()

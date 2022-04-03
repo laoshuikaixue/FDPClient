@@ -35,13 +35,6 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, partialTicks: Float) {
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
-            ClientUtils.logInfo("Detected by settitle")
-        } else {
-            ClientUtils.logError("Failed settitle detection")
-            LiquidBounce.initClient()
-        }
-
         drawBackground(0)
 
         val bHeight = (this.height / 3.5).toInt()
@@ -50,7 +43,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         Fonts.fontRoboto50.drawCenteredString(LiquidBounce.CLIENT_NAME, (width / 2).toFloat(), (bHeight - 20).toFloat(), Color.WHITE.rgb, false)
         mc.fontRendererObj.drawString(LiquidBounce.CLIENT_VERSION, 3F, (height - mc.fontRendererObj.FONT_HEIGHT - 2).toFloat(), 0xffffff, false)
-        "§cWebsite: §fhttps://${LiquidBounce.CLIENT_WEBSITE}/".also { str ->
+        "§cWebsite: §fhttps://${LiquidBounce.WEBSITE}/".also { str ->
             mc.fontRendererObj.drawString(str, (this.width - mc.fontRendererObj.getStringWidth(str) - 3).toFloat(), (height - mc.fontRendererObj.FONT_HEIGHT - 2).toFloat(), 0xffffff, false)
         }
 
