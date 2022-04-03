@@ -30,7 +30,6 @@ class FluxAntiVoid : Module() {
         }
         return true
     }
-
     fun onPacket(e: PacketSendEvent) {
         if (!packets.isEmpty() && mc.thePlayer.ticksExisted < 100) packets.clear()
         if (e.getPacket() is C03PacketPlayer) {
