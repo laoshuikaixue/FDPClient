@@ -24,4 +24,8 @@ class Hypixel : SpeedMode("Hypixel") {
             mc.thePlayer.motionZ = 0.0
         }
     }
+
+    override fun onDisable() {
+        MovementUtils.strafe()
+    }
 }

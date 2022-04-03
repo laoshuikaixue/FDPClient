@@ -91,6 +91,18 @@ public final class RenderUtils extends MinecraftInstance {
         glEndList();
     }
 
+    public static void doGlScissor(int x, int y, int width, int height2) {
+        int scaleFactor = 1;
+        int k = mc.gameSettings.guiScale;
+        if (k == 0) {
+            k = 1000;
+        }
+        while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320 && mc.displayHeight / (scaleFactor + 1) >= 240) {
+            ++scaleFactor;
+        }
+        GL11.glScissor((x * scaleFactor), (mc.displayHeight - (y + height2) * scaleFactor), (width * scaleFactor), (height2 * scaleFactor));
+    }
+
     public static int Astolfo(int var2) {
         double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
         return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), 0.5F, 1.0F).getRGB();

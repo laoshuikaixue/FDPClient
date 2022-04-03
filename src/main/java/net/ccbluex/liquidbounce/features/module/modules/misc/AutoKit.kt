@@ -10,7 +10,6 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.NotifyType
-import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.ccbluex.liquidbounce.utils.timer.TickTimer
 import net.ccbluex.liquidbounce.value.BoolValue
@@ -43,7 +42,7 @@ class AutoKit : Module() {
     private var delayTimer = MSTimer()
 
     private fun debug(s: String) {
-        if (debugValue.get()) ClientUtils.displayChatMessage("§7[§4§lAuto Kit§7] §r$s")
+        if (debugValue.get()) alert("§7[§4§lAuto Kit§7] §r$s")
     }
 
     override fun onEnable() {

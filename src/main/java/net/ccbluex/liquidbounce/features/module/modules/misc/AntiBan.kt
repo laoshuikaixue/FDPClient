@@ -17,7 +17,6 @@ import kotlin.concurrent.thread
 
 @ModuleInfo(name = "AntiBan", category = ModuleCategory.MISC)
 class AntiBan : Module() {
-
     private var obStaffs = "_"
     private var detected = false
     private var totalCount = 0
@@ -25,8 +24,8 @@ class AntiBan : Module() {
 
     private var updater = MSTimer()
 
-    private var staff_main: String
-    private var staff_fallback: String
+    private lateinit var staff_main: String
+    private lateinit var staff_fallback: String
 
     init {
         staff_main = "https://add-my-brain.exit-scammed.repl.co/staff/"
@@ -142,7 +141,7 @@ class AntiBan : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through head packet!", NotifyType.ERROR,5000))
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through head packet!", NotifyType.ERROR, 5000))
                     mc.thePlayer.sendChatMessage("/leave")
                     detected = true
                 }
@@ -153,7 +152,7 @@ class AntiBan : Module() {
 
             if (entity != null && (obStaffs.contains(entity.name) || obStaffs.contains(entity.displayName.unformattedText))) {
                 if (!detected) {
-                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through nbt packet!", NotifyType.ERROR,5000))
+                    LiquidBounce.hud.addNotification(Notification(name, "${entity.name} detected through nbt packet!", NotifyType.ERROR, 5000))
                     mc.thePlayer.sendChatMessage("/leave")
                     detected = true
                 }
