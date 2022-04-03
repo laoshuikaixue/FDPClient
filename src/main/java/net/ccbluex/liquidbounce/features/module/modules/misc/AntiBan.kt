@@ -30,7 +30,7 @@ class AntiBan : Module() {
 
     init {
         staff_main = "https://add-my-brain.exit-scammed.repl.co/staff/"
-        staff_fallback = "https://gitee.com/insaneNMSL/bmcstaff/raw/master/stafflist"
+        staff_fallback = "https://gitee.com/insaneNMSL/bmcstaff/raw/master/stafflist/"
     }
 
     override fun onInitialize() {

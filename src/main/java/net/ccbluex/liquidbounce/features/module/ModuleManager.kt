@@ -17,6 +17,7 @@ import net.ccbluex.liquidbounce.utils.ClassUtils
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.minecraft.client.Minecraft
 import org.lwjgl.input.Keyboard
+import org.lwjgl.opengl.Display
 
 class ModuleManager : Listenable {
 
@@ -34,6 +35,13 @@ class ModuleManager : Listenable {
      */
     fun registerModules() {
         ClientUtils.logInfo("[ModuleManager] Loading modules...")
+
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
 
         ClassUtils.resolvePackage("${this.javaClass.`package`.name}.modules", Module::class.java)
             .forEach(this::registerModule)
