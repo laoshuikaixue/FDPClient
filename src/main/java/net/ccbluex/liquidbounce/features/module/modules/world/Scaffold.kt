@@ -40,6 +40,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.stats.StatList
 import net.minecraft.util.*
 import org.lwjgl.input.Keyboard
+import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.*
@@ -228,6 +229,12 @@ class Scaffold : Module() {
      * Enable module
      */
     override fun onEnable() {
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
         progress = 0f
         lastMS = System.currentTimeMillis()
         slot = mc.thePlayer.inventory.currentItem

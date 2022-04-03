@@ -11,6 +11,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.movement.Speed
+import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.RotationUtils
 import net.ccbluex.liquidbounce.utils.misc.FallingPlayer
@@ -25,6 +26,7 @@ import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.network.play.server.S12PacketEntityVelocity
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
+import org.lwjgl.opengl.Display
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -101,6 +103,15 @@ class Velocity : Module() {
 
     override val tag: String
         get() = modeValue.get()
+
+    override fun onEnable() {
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
+    }
 
     override fun onDisable() {
         mc.thePlayer?.speedInAir = 0.02F

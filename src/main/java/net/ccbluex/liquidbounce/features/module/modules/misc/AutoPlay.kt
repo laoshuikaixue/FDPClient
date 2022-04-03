@@ -10,6 +10,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.special.AutoDisable
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.NotifyType
+import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.event.ClickEvent
@@ -18,6 +19,7 @@ import net.minecraft.network.play.server.S02PacketChat
 import net.minecraft.network.play.server.S2DPacketOpenWindow
 import net.minecraft.network.play.server.S2FPacketSetSlot
 import net.minecraft.util.IChatComponent
+import org.lwjgl.opengl.Display
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -179,6 +181,12 @@ class AutoPlay : Module() {
     }
 
     private fun queueAutoPlay(delay: Long = delayValue.get().toLong() * 1000, runnable: () -> Unit) {
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
         if (queued) {
             return
         }

@@ -12,6 +12,7 @@ import net.ccbluex.liquidbounce.event.PacketEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
+import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.ccbluex.liquidbounce.value.BoolValue
@@ -24,6 +25,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S0BPacketAnimation
 import net.minecraft.stats.StatList
+import org.lwjgl.opengl.Display
 
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
@@ -50,6 +52,12 @@ class Criticals : Module() {
     var aacLastState = false
 
     override fun onEnable() {
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE}"){
+            ClientUtils.logInfo("Detected by settitle")
+        } else {
+            ClientUtils.logError("Failed settitle detection")
+            LiquidBounce.initClient()
+        }
         if (modeValue.equals("NoGround")) {
             mc.thePlayer.jump()
         }
