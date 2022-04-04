@@ -31,6 +31,5 @@ class ResetVL : Module() {
     override fun onEnable() {
         jumped = 0
         y = mc.thePlayer.posY
-        super.onEnable()
     }
 }

@@ -53,6 +53,9 @@ public class Fonts {
     @FontDetails(fontName = "Whitney-Light Regular", fontSize = 40, fileName = "Whitney-Light.ttf")
     public static GameFontRenderer fontWhitneyLight40;
 
+    @FontDetails(fontName = "Small", fontSize = 30, fileName = "GoogleSans.ttf")
+    public static GameFontRenderer fontgoogle30;
+
     @FontDetails(fontName = "Small", fontSize = 35, fileName = "GoogleSans.ttf")
     public static GameFontRenderer fontgoogle35;
 

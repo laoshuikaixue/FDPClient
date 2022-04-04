@@ -161,10 +161,10 @@ public class Effects extends Module {
             }
 
             int y = (height - this.mc.fontRendererObj.FONT_HEIGHT + x) - 38;
-            Fonts.fontgoogle35.drawString(PType.replaceAll("\247.", ""), (float) width - 91f,
+            Fonts.fontMiSansNormal35.drawString(PType.replaceAll("\247.", ""), (float) width - 91f,
                     y - this.mc.fontRendererObj.FONT_HEIGHT + 1, potion.getLiquidColor());
 
-            Fonts.fontgoogle35.drawString(net.minecraft.potion.Potion.getDurationString(effect).replaceAll("\247.", ""),
+            Fonts.fontMiSansNormal35.drawString(net.minecraft.potion.Potion.getDurationString(effect).replaceAll("\247.", ""),
                     width - 91f, y + 4, RenderUtil.reAlpha(-1, 0.8f));
 
             x -= 35;

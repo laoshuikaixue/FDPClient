@@ -67,15 +67,15 @@ public class CompassUtil extends MinecraftInstance {
         RenderUtils.doGlScissor(sr.getScaledWidth() / 2 - 120, 25, 220, 25);
         for (Degree d : degrees) {
             float location = center + (count * 30) - yaaahhrewindTime;
-            float completeLocation = (float) (d.type == 1 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : d.type == 2 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2));
+            float completeLocation = (float) (d.type == 1 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : d.type == 2 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : (location - Fonts.font35.getStringWidth(d.text) / 2));
 
             int opacity = opacity(sr, completeLocation);
 
             if (d.type == 1 && opacity != 16777215) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
                 cardinals++;
             }
 
@@ -84,15 +84,15 @@ public class CompassUtil extends MinecraftInstance {
                 RenderUtils.drawRect(location - 0.5f, -75 + 100 + 4, location + 0.5f, -75 + 105 + 4,
                         opacity(sr, completeLocation));
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
                         false);
                 markers++;
             }
 
             if (d.type == 3 && opacity != 16777215) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation,
-                        -75 + 100 + Fonts.fontgoogle35.getStringHeight2("") / 2 - Fonts.fontgoogle35.getStringHeight2("") / 2,
+                Fonts.font35.drawString(d.text, completeLocation,
+                        -75 + 100 + Fonts.font35.getStringHeight2("") / 2 - Fonts.font35.getStringHeight2("") / 2,
                         opacity(sr, completeLocation), false);
                 subCardinals++;
             }
@@ -102,13 +102,13 @@ public class CompassUtil extends MinecraftInstance {
         for (Degree d : degrees) {
 
             float location = center + (count * 30) - yaaahhrewindTime;
-            float completeLocation = (float) (d.type == 1 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : d.type == 2 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2));
+            float completeLocation = (float) (d.type == 1 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : d.type == 2 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : (location - Fonts.font35.getStringWidth(d.text) / 2));
 
             if (d.type == 1) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
                 cardinals++;
             }
 
@@ -117,15 +117,15 @@ public class CompassUtil extends MinecraftInstance {
                 RenderUtils.drawRect(location - 0.5f, -75 + 100 + 4, location + 0.5f, -75 + 105 + 4,
                         opacity(sr, completeLocation));
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
                         false);
                 markers++;
             }
 
             if (d.type == 3) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation,
-                        -75 + 100 + Fonts.fontgoogle35.getStringHeight2("") / 2 - Fonts.fontgoogle35.getStringHeight2("") / 2,
+                Fonts.font35.drawString(d.text, completeLocation,
+                        -75 + 100 + Fonts.font35.getStringHeight2("") / 2 - Fonts.font35.getStringHeight2("") / 2,
                         opacity(sr, completeLocation), false);
                 subCardinals++;
             }
@@ -135,13 +135,13 @@ public class CompassUtil extends MinecraftInstance {
         for (Degree d : degrees) {
 
             float location = center + (count * 30) - yaaahhrewindTime;
-            float completeLocation = (float) (d.type == 1 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : d.type == 2 ? (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2)
-                    : (location - Fonts.fontgoogle35.getStringWidth(d.text) / 2));
+            float completeLocation = (float) (d.type == 1 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : d.type == 2 ? (location - Fonts.font35.getStringWidth(d.text) / 2)
+                    : (location - Fonts.font35.getStringWidth(d.text) / 2));
 
             if (d.type == 1) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 100, opacity(sr, completeLocation), false);
                 cardinals++;
             }
 
@@ -150,15 +150,15 @@ public class CompassUtil extends MinecraftInstance {
                 RenderUtils.drawRect(location - 0.5f, -75 + 100 + 4, location + 0.5f, -75 + 105 + 4,
                         opacity(sr, completeLocation));
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
+                Fonts.font35.drawString(d.text, completeLocation, -75 + 105 + 3.5f + 4, opacity(sr, completeLocation),
                         false);
                 markers++;
             }
 
             if (d.type == 3) {
                 GlStateManager.color(1, 1, 1, 1);
-                Fonts.fontgoogle35.drawString(d.text, completeLocation,
-                        -75 + 100 + Fonts.fontgoogle35.getStringHeight2("") / 2 - Fonts.fontgoogle35.getStringHeight2("") / 2,
+                Fonts.font35.drawString(d.text, completeLocation,
+                        -75 + 100 + Fonts.font35.getStringHeight2("") / 2 - Fonts.font35.getStringHeight2("") / 2,
                         opacity(sr, completeLocation), false);
                 subCardinals++;
             }

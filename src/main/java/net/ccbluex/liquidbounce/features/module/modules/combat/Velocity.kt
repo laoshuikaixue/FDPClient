@@ -13,6 +13,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.movement.Speed
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
+import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.utils.RotationUtils
 import net.ccbluex.liquidbounce.utils.misc.FallingPlayer
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
@@ -339,17 +340,21 @@ class Velocity : Module() {
                     packet.motionY = (packet.getMotionY() * vertical).toInt()
                     packet.motionZ = (packet.getMotionZ() * horizontal).toInt()
                 }
+
                 "simple2" -> {
-                    event.cancelEvent()
-                    packet.motionX = (packet.getMotionX() * 0.06).toInt()
-                    packet.motionZ = (packet.getMotionZ() * 0.06).toInt()
-                    if (mc.thePlayer.onGround) {
-                        packet.motionX = (packet.getMotionX() * 0.12).toInt()
-                        packet.motionZ = (packet.getMotionZ() * 0.12).toInt()
+                    val horizontal = horizontalValue.get()
+                    val vertical = verticalValue.get()
+                    if (horizontal == 0F && vertical == 0F) {
+                        event.cancelEvent()
                     }
-                    packet.motionX = 0
-                    packet.motionY = 0
-                    packet.motionZ = 0
+                    if (mc.thePlayer.hurtTime == 9) {
+                        packet.motionX = mc.thePlayer.motionX.toInt()
+                        packet.motionY = mc.thePlayer.motionY.toInt()
+                        packet.motionZ = mc.thePlayer.motionZ.toInt()
+                    }
+                    packet.motionX *= (horizontal / 100.0).toInt()
+                    packet.motionY *= (vertical / 100.0).toInt()
+                    packet.motionZ *= (horizontal / 100.0).toInt()
                 }
                 "vanilla" -> {
                     event.cancelEvent()

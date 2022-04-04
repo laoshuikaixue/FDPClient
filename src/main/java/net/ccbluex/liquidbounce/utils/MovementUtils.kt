@@ -40,6 +40,27 @@ object MovementUtils : MinecraftInstance() {
         return Math.sqrt(entity.motionX * entity.motionX + entity.motionZ * entity.motionZ)
     }
 
+    fun getSpeed3(): Float {
+        return getSpeed3(mc.thePlayer.motionX, mc.thePlayer.motionZ).toFloat()
+    }
+
+    fun getSpeed3(motionX: Double, motionZ: Double): Double {
+        return Math.sqrt(motionX * motionX + motionZ * motionZ)
+    }
+
+    fun getJumpBoostModifier(baseJumpHeight: Double, potionJumpHeight: Boolean): Double {
+        var baseJumpHeight = baseJumpHeight
+        if (mc.thePlayer.isPotionActive(Potion.jump) && potionJumpHeight) {
+            val amplifier = mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier
+            baseJumpHeight += ((amplifier + 1).toFloat() * 0.1f).toDouble()
+        }
+        return baseJumpHeight
+    }
+
+    fun getSpeedEffect(): Int {
+        return if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 else 0
+    }
+
     fun strafe() {
         strafe(getSpeed())
     }
@@ -140,6 +161,38 @@ object MovementUtils : MinecraftInstance() {
                     strafe * speed * sin)
             mc.thePlayer.motionZ = (forward * speed * sin -
                     strafe * speed * cos)
+        }
+    }
+
+    fun setMotion2(e: MoveEvent, speed: Double) {
+        var forward = mc.thePlayer.movementInput.moveForward.toDouble()
+        var strafe = mc.thePlayer.movementInput.moveStrafe.toDouble()
+        var rotationYaw = mc.thePlayer.rotationYaw
+        if (mc.thePlayer.moveForward < 0f) rotationYaw += 180f
+        if (mc.thePlayer.moveStrafing > 0f) rotationYaw -= (90f * forward).toFloat()
+        if (mc.thePlayer.moveStrafing < 0f) rotationYaw += (90f * forward).toFloat()
+        var yaw = mc.thePlayer.rotationYaw.toDouble()
+        if (forward == 0.0 && strafe == 0.0) {
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
+        } else {
+            if (forward != 0.0) {
+                if (strafe > 0.0) {
+                    yaw += (if (forward > 0.0) -44 else 44).toDouble()
+                } else if (strafe < 0.0) {
+                    yaw += (if (forward > 0.0) 44 else -44).toDouble()
+                }
+                strafe = 0.0
+                if (forward > 0.0) {
+                    forward = 1.0
+                } else if (forward < 0.0) {
+                    forward = -1.0
+                }
+            }
+            e.x = (forward * speed * Math.cos(Math.toRadians(yaw + 90.0f))
+                    + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0f)))
+            e.z = (forward * speed * Math.sin(Math.toRadians(yaw + 90.0f))
+                    - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0f)))
         }
     }
 

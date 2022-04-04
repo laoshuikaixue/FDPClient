@@ -91,6 +91,12 @@ public final class RenderUtils extends MinecraftInstance {
         glEndList();
     }
 
+    public static int getNormalRainbow(int delay, float sat, float brg) {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
+        rainbowState %= 360;
+        return Color.getHSBColor((float) (rainbowState / 360.0f), sat, brg).getRGB();
+    }
+
     public static void doGlScissor(int x, int y, int width, int height2) {
         int scaleFactor = 1;
         int k = mc.gameSettings.guiScale;

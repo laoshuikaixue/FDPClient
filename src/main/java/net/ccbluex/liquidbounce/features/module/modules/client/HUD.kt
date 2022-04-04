@@ -35,10 +35,10 @@ object HUD : Module() {
     private val hotbarAnimOrderValue = EaseUtils.getEnumEasingOrderList("HotbarAnimOrder").displayable { hotbarEaseValue.get() }
     val inventoryParticle = BoolValue("InventoryParticle", false)
     private val blurValue = BoolValue("Blur", false)
-    val bordRad = FloatValue("NotificationsBorderRadius", 6.2F, 0F, 8F)
-    val fontChatValue = BoolValue("FontChat", false)
+    val bordRad = FloatValue("NotificationsBorderRadius", 0F, 0F, 8F)
+    val fontChatValue = BoolValue("FontChat", true)
     val chatCombineValue = BoolValue("ChatCombine", true)
-    val chatAnimValue = BoolValue("ChatAnimation", true)
+    val chatAnimValue = BoolValue("ChatAnimation", false)
     val rainbowStartValue = FloatValue("RainbowStart", 0.41f, 0f, 1f)
     val rainbowStopValue = FloatValue("RainbowStop", 0.58f, 0f, 1f)
     val rainbowSaturationValue = FloatValue("RainbowSaturation", 0.7f, 0f, 1f)
@@ -51,7 +51,7 @@ object HUD : Module() {
     val arraylistYAxisAnimTypeValue = EaseUtils.getEnumEasingList("ArraylistYAxisAnimType")
     val arraylistYAxisAnimOrderValue = EaseUtils.getEnumEasingOrderList("ArraylistYAxisHotbarAnimOrder")
     val fontEpsilonValue = FloatValue("FontVectorEpsilon", 0.5f, 0f, 1.5f)
-    private val buttonValue = ListValue("Button", arrayOf("FLine", "Rounded", "Rise", "Vanilla"), "FLine")
+    private val buttonValue = ListValue("Button", arrayOf("FLine", "Rounded", "Rise", "Vanilla"), "Rise")
 
     private var lastFontEpsilon = 0f
 

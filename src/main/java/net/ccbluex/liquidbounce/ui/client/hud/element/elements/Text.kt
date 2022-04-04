@@ -12,10 +12,7 @@ import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.ElementInfo
 import net.ccbluex.liquidbounce.ui.client.hud.element.Side
 import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.ccbluex.liquidbounce.utils.CPSCounter
-import net.ccbluex.liquidbounce.utils.MovementUtils
-import net.ccbluex.liquidbounce.utils.ServerUtils
-import net.ccbluex.liquidbounce.utils.SessionUtils
+import net.ccbluex.liquidbounce.utils.*
 import net.ccbluex.liquidbounce.utils.extensions.ping
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
@@ -107,6 +104,7 @@ class Text(
             "clientVersion" -> LiquidBounce.CLIENT_VERSION
             "clientCreator" -> LiquidBounce.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()
+            "fakefps" -> (Math.random()*10000 + 1000).toInt().toString()
             "date" -> DATE_FORMAT.format(System.currentTimeMillis())
             "time" -> HOUR_FORMAT.format(System.currentTimeMillis())
             "serverIp" -> ServerUtils.getRemoteIp()

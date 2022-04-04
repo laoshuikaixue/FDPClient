@@ -13,6 +13,8 @@ import net.ccbluex.liquidbounce.value.ListValue
 object Animations : Module() {
     val blockingModeValue = ListValue(
         "BlockingMode", arrayOf(
+            "1.7", "Throw", "Spin", "Forward", "Old", "Dortware", "Dortware 2", "Cockless", "Shove", "Chill", "Smooth", "Butter", "Stab", "Small", "Wobble",
+            "Chungus", "Bitch Slap", "Leaked", "Rise", "Flush", "Whack", "Big Whack", "Spinny", "Inwards", "Rhys",
             "Akrien", "Avatar", "ETB", "Exhibition", "Push", "Reverse",
             "Shield", "SigmaNew", "SigmaOld", "Slide", "SlideDown", "HSlide", "Swong", "VisionFX",
             "Swank", "Jello", "Rotate", "Liquid", "None"

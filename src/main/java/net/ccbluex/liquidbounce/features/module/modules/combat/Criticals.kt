@@ -30,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "AAC5Packet", "Packet", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "AAC5Packet", "Packet", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -141,11 +141,29 @@ class Criticals : Module() {
                 }
 
                 "hypixel3" -> {
-                    sendCriticalPacket(yOffset = 0.011, ground = false)
-                    sendCriticalPacket(yOffset = 0.02233445566, ground = false)
-                    sendCriticalPacket(yOffset = 0.056876574557, ground = false)
-                    sendCriticalPacket(yOffset = 0.096875875757, ground = false)
-                    mc.thePlayer.onCriticalHit(entity)
+                    for (offset in doubleArrayOf(0.06, 0.01)) {
+                        mc.thePlayer.sendQueue.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY + offset + Math.random() * 0.001,
+                                mc.thePlayer.posZ,
+                                false
+                            )
+                        )
+                    }
+                }
+
+                "hypixel4" -> {
+                    for (offset in doubleArrayOf(0.011,0.02233445566,0.056876574557,0.096875875757)) {
+                        mc.thePlayer.sendQueue.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY + offset + Math.random() * 0.001,
+                                mc.thePlayer.posZ,
+                                false
+                            )
+                        )
+                    }
                 }
 
                 "aac4.3.11oldhyt" -> {
