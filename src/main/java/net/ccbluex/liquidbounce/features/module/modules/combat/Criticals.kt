@@ -141,16 +141,11 @@ class Criticals : Module() {
                 }
 
                 "hypixel3" -> {
-                    for (offset in doubleArrayOf(0.06, 0.01)) {
-                        mc.thePlayer.sendQueue.addToSendQueue(
-                            C04PacketPlayerPosition(
-                                mc.thePlayer.posX,
-                                mc.thePlayer.posY + offset + Math.random() * 0.001,
-                                mc.thePlayer.posZ,
-                                false
-                            )
-                        )
-                    }
+                    sendCriticalPacket(yOffset = 0.011, ground = false)
+                    sendCriticalPacket(yOffset = 0.02233445566, ground = false)
+                    sendCriticalPacket(yOffset = 0.056876574557, ground = false)
+                    sendCriticalPacket(yOffset = 0.096875875757, ground = false)
+                    mc.thePlayer.onCriticalHit(entity)
                 }
 
                 "aac4.3.11oldhyt" -> {
