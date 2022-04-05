@@ -117,7 +117,7 @@ object KillInsults : Module() {
         }
 
         if (waterMark2Value.get() && clientname.get()) {
-            message = "[${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}] " + prefixValue.get() + " $message"
+            message = prefixValue.get() + "[${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}] " + " $message"
         }
         else{
             message = prefixValue.get() + " $message"
