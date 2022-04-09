@@ -295,7 +295,7 @@ class HackerDetector : Module() {
 
         // reach check
         val reach = attacker.getDistanceToEntity(entity)
-        if (reach> 3.7) {
+        if (reach> 3.2) {
             data.flag("killaura", 70, "(reach=$reach)")
         }
 

@@ -24,9 +24,9 @@ class PlayerHealthSend : Module() {
                       healthData[mc.thePlayer.entityId] = mc.thePlayer.health
                       if(lastHealth==mc.thePlayer.health) continue
                       if(lastHealth>mc.thePlayer.health){
-                          alert("§c[Debug][-]§a"+(Text.DECIMAL_FORMAT.format(lastHealth-mc.thePlayer.health))+"HP")
+                          alert("§c[Health-]§a"+(Text.DECIMAL_FORMAT.format(lastHealth-mc.thePlayer.health))+"HP")
                       }else{
-                          alert("§c[Debug][+]§a"+(Text.DECIMAL_FORMAT.format(abs(lastHealth-mc.thePlayer.health)))+"HP")
+                          alert("§c[Health+]§a"+(Text.DECIMAL_FORMAT.format(abs(lastHealth-mc.thePlayer.health)))+"HP")
                 }
             }
         }

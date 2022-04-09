@@ -22,6 +22,7 @@ import net.minecraft.item.ItemTool;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+
 @ModuleInfo(name = "NewNameTags", category = ModuleCategory.RENDER)
 public class NewNameTags extends Module {
     private final IntegerValue colorRedValue = new IntegerValue("R", 255, 0, 255);
@@ -87,15 +88,15 @@ public class NewNameTags extends Module {
         GL11.glScalef(-scale, -scale, scale);
         GLUtils.setGLCap(2896, false);
         GLUtils.setGLCap(2929, false);
-        int width = Fonts.font40.getStringWidth(lol) / 2;
+        int width = Fonts.fontMiSansNormal35.getStringWidth(lol) / 2;
         GLUtils.setGLCap(3042, true);
         GL11.glBlendFunc(770, 771);
 
-        drawBorderedRectNameTag(-width - 2, -(Fonts.font40.FONT_HEIGHT + 9), width + 2, 2.0F, 1.0F,
+        drawBorderedRectNameTag(-width - 2, -(Fonts.fontMiSansNormal35.FONT_HEIGHT + 9), width + 2, 2.0F, 1.0F,
                 RenderUtils.reAlpha(Color.BLACK.getRGB(), 0.3f), RenderUtils.reAlpha(Color.BLACK.getRGB(), 0.3f));
         GL11.glColor3f(1,1,1);
-        fr.drawString(lol, -width, -(Fonts.font40.FONT_HEIGHT + 8), -1);
-        fr.drawString(hp, -Fonts.font40.getStringWidth(hp) / 2, -(Fonts.font40.FONT_HEIGHT - 2), -1);
+        fr.drawString(lol, -width, -(Fonts.fontMiSansNormal35.FONT_HEIGHT + 8), -1);
+        fr.drawString(hp, -Fonts.fontMiSansNormal35.getStringWidth(hp) / 2, -(Fonts.fontMiSansNormal35.FONT_HEIGHT - 2), -1);
         int COLOR = new Color(colorRedValue.get(),colorGreenValue.get(), colorBlueValue.get()).getRGB();
         if(entity.getHealth() > 20) {
             COLOR = -65292;
@@ -144,7 +145,7 @@ public class NewNameTags extends Module {
         mc.getRenderItem().zLevel = -150.0F;
         whatTheFuckOpenGLThisFixesItemGlint();
         mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
-        mc.getRenderItem().renderItemOverlays(Fonts.font40, stack, x, y);
+        mc.getRenderItem().renderItemOverlays(Fonts.fontMiSansNormal35, stack, x, y);
         mc.getRenderItem().zLevel = 0.0F;
         net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
         GlStateManager.disableCull();

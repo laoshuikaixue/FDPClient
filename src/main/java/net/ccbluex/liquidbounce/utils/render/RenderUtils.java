@@ -7,6 +7,7 @@ package net.ccbluex.liquidbounce.utils.render;
 
 import net.ccbluex.liquidbounce.injection.access.StaticStorage;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
+import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.MathUtils;
 import net.ccbluex.liquidbounce.utils.MinecraftInstance;
 import net.ccbluex.liquidbounce.utils.block.BlockUtils;
@@ -43,7 +44,7 @@ import static java.lang.Math.*;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class RenderUtils extends MinecraftInstance {
-    private static final Map<Integer, Boolean> glCapMap = new HashMap<>();
+    private static final Map<String, Map<Integer, Boolean>> glCapMap = new HashMap<>();
 
     public static int deltaTime;
 
@@ -89,301 +90,6 @@ public final class RenderUtils extends MinecraftInstance {
         quickDrawRect(-7.3F, -20.3F, -4F, -20F);
 
         glEndList();
-    }
-
-    public static int getNormalRainbow(int delay, float sat, float brg) {
-        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
-        rainbowState %= 360;
-        return Color.getHSBColor((float) (rainbowState / 360.0f), sat, brg).getRGB();
-    }
-
-    public static void doGlScissor(int x, int y, int width, int height2) {
-        int scaleFactor = 1;
-        int k = mc.gameSettings.guiScale;
-        if (k == 0) {
-            k = 1000;
-        }
-        while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320 && mc.displayHeight / (scaleFactor + 1) >= 240) {
-            ++scaleFactor;
-        }
-        GL11.glScissor((x * scaleFactor), (mc.displayHeight - (y + height2) * scaleFactor), (width * scaleFactor), (height2 * scaleFactor));
-    }
-
-    public static int Astolfo(int var2) {
-        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
-        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), 0.5F, 1.0F).getRGB();
-    }
-
-    public static void drawCircleRect(float x, float y, float x1, float y1, float radius, int color) {
-        glColor(color);
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glDisable(GL_CULL_FACE);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glPushMatrix();
-        glLineWidth(1F);
-        glBegin(GL_POLYGON);
-
-        float xRadius = (float) Math.min((x1 - x) * 0.5, radius);
-        float yRadius = (float) Math.min((y1 - y) * 0.5, radius);
-        quickPolygonCircle(x+xRadius,y+yRadius, xRadius, yRadius,180,270,4);
-        quickPolygonCircle(x1-xRadius,y+yRadius, xRadius, yRadius,90,180,4);
-        quickPolygonCircle(x1-xRadius,y1-yRadius, xRadius, yRadius,0,90,4);
-        quickPolygonCircle(x+xRadius,y1-yRadius, xRadius, yRadius,270,360,4);
-
-        glEnd();
-        glPopMatrix();
-        glEnable(GL_TEXTURE_2D);
-        glEnable(GL_CULL_FACE);
-        glDisable(GL_LINE_SMOOTH);
-        glColor4f(1F, 1F, 1F, 1F);
-    }
-
-    public static void drawExhiRect(float x, float y, float x2, float y2) {
-        drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, Color.black.getRGB());
-        drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50, 50, 50).getRGB());
-        //drawBorder(x - 1.5F, y - 1.5F, x2 + 1.5F, y2 + 1.5F, 2.5F, new Color(26, 26, 26).getRGB());
-        drawRect(x - 2.5F, y - 2.5F, x2 + 2.5F, y2 + 2.5F, new Color(26, 26, 26).getRGB());
-        drawRect(x - 0.5F, y - 0.5F, x2 + 0.5F, y2 + 0.5F, new Color(50, 50, 50).getRGB());
-        drawRect(x, y, x2, y2, new Color(18, 18, 18).getRGB());
-    }
-
-    public static void drawFilledCircle2(final int xx, final int yy, final float radius, final Color color) {
-        int sections = 50;
-        double dAngle = 2 * Math.PI / sections;
-        float x, y;
-
-        glPushAttrib(GL_ENABLE_BIT);
-
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glBegin(GL_TRIANGLE_FAN);
-
-        for (int i = 0; i < sections; i++) {
-            x = (float) (radius * Math.sin((i * dAngle)));
-            y = (float) (radius * Math.cos((i * dAngle)));
-
-            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
-            glVertex2f(xx + x, yy + y);
-        }
-
-        GlStateManager.color(0, 0, 0);
-
-        glEnd();
-
-        glPopAttrib();
-    }
-
-    public static void drawFilledCircle2(final float xx, final float yy, final float radius, final Color color) {
-        int sections = 50;
-        double dAngle = 2 * Math.PI / sections;
-        float x, y;
-
-        glPushAttrib(GL_ENABLE_BIT);
-
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glBegin(GL_TRIANGLE_FAN);
-
-        for (int i = 0; i < sections; i++) {
-            x = (float) (radius * Math.sin((i * dAngle)));
-            y = (float) (radius * Math.cos((i * dAngle)));
-
-            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
-            glVertex2f(xx + x, yy + y);
-        }
-
-        GlStateManager.color(0, 0, 0);
-
-        glEnd();
-
-        glPopAttrib();
-    }
-
-    // This method colors the next avalible texture with a specified alpha value ranging from 0-1
-    public static void color(int color, float alpha) {
-        float r = (float) (color >> 16 & 255) / 255.0F;
-        float g = (float) (color >> 8 & 255) / 255.0F;
-        float b = (float) (color & 255) / 255.0F;
-        GlStateManager.color(r, g, b, alpha);
-    }
-
-    // Colors the next texture without a specified alpha value
-    public static void color(int color) {
-        color(color, (float) (color >> 24 & 255) / 255.0F);
-    }
-
-    // TODO: Replace this with a shader as GL_POINTS is not consistent with gui scales
-    public static void drawGoodCircle(double x, double y, float radius, int color) {
-        color(color);
-        GLUtil.setup2DRendering(() -> {
-            glEnable(GL_POINT_SMOOTH);
-            glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-            glPointSize(radius * (2 * mc.gameSettings.guiScale));
-            GLUtil.render(GL_POINTS, () -> glVertex2d(x, y));
-        });
-    }
-
-    // Bad rounded rect method but the shader one requires scaling that sucks
-    public static void tenacityrenderRoundedRect(float x, float y, float width, float height, float radius, int color) {
-        drawGoodCircle(x + radius, y + radius, radius, color);
-        drawGoodCircle(x + width - radius, y + radius, radius, color);
-        drawGoodCircle(x + radius, y + height - radius, radius, color);
-        drawGoodCircle(x + width - radius, y + height - radius, radius, color);
-
-        TENACITYGUI.drawRect2(x + radius, y, width - radius * 2, height, color);
-        TENACITYGUI.drawRect2(x, y + radius, width, height - radius * 2, color);
-    }
-
-    public static void tenacityrenderRoundedRect2(float x, float y, float width, float height, float radius, final Color color) {
-        drawGoodCircle(x + radius, y + radius, radius, color.getRGB());
-        drawGoodCircle(x + width - radius, y + radius, radius, color.getRGB());
-        drawGoodCircle(x + radius, y + height - radius, radius, color.getRGB());
-        drawGoodCircle(x + width - radius, y + height - radius, radius, color.getRGB());
-
-        TENACITYGUI.drawRect2(x + radius, y, width - radius * 2, height, color.getRGB());
-        TENACITYGUI.drawRect2(x, y + radius, width, height - radius * 2, color.getRGB());
-    }
-
-    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color) {
-        drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color, true);
-    }
-
-    public static void drawRoundedRect2(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, final Color color) {
-        drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color.getRGB(), true);
-    }
-
-    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color, boolean popPush) {
-        float alpha = (color >> 24 & 0xFF) / 255.0F;
-        float red = (color >> 16 & 0xFF) / 255.0F;
-        float green = (color >> 8 & 0xFF) / 255.0F;
-        float blue = (color & 0xFF) / 255.0F;
-
-        float z = 0;
-        if (paramXStart > paramXEnd) {
-            z = paramXStart;
-            paramXStart = paramXEnd;
-            paramXEnd = z;
-        }
-
-        if (paramYStart > paramYEnd) {
-            z = paramYStart;
-            paramYStart = paramYEnd;
-            paramYEnd = z;
-        }
-
-        double x1 = (double)(paramXStart + radius);
-        double y1 = (double)(paramYStart + radius);
-        double x2 = (double)(paramXEnd - radius);
-        double y2 = (double)(paramYEnd - radius);
-
-        if (popPush) glPushMatrix();
-        glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_LINE_SMOOTH);
-        glLineWidth(1);
-
-        glColor4f(red, green, blue, alpha);
-        glBegin(GL_POLYGON);
-
-        double degree = Math.PI / 180;
-        for (double i = 0; i <= 90; i += 0.25)
-            glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
-        for (double i = 90; i <= 180; i += 0.25)
-            glVertex2d(x2 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
-        for (double i = 180; i <= 270; i += 0.25)
-            glVertex2d(x1 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
-        for (double i = 270; i <= 360; i += 0.25)
-            glVertex2d(x1 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
-        glEnd();
-
-        glEnable(GL_TEXTURE_2D);
-        glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
-        if (popPush) glPopMatrix();
-    }
-
-    public static void drawRoundedRect(float x, float y, float x1, float y1, int borderC, int insideC) {
-        RenderUtil.R2DUtils.enableGL2D();
-        GL11.glScalef((float) 0.5f, (float) 0.5f, (float) 0.5f);
-        RenderUtil.R2DUtils.drawVLine(x *= 2.0f, (y *= 2.0f) + 1.0f, (y1 *= 2.0f) - 2.0f, borderC);
-        RenderUtil.R2DUtils.drawVLine((x1 *= 2.0f) - 1.0f, y + 1.0f, y1 - 2.0f, borderC);
-        RenderUtil.R2DUtils.drawHLine(x + 2.0f, x1 - 3.0f, y, borderC);
-        RenderUtil.R2DUtils.drawHLine(x + 2.0f, x1 - 3.0f, y1 - 1.0f, borderC);
-        RenderUtil.R2DUtils.drawHLine(x + 1.0f, x + 1.0f, y + 1.0f, borderC);
-        RenderUtil.R2DUtils.drawHLine(x1 - 2.0f, x1 - 2.0f, y + 1.0f, borderC);
-        RenderUtil.R2DUtils.drawHLine(x1 - 2.0f, x1 - 2.0f, y1 - 2.0f, borderC);
-        RenderUtil.R2DUtils.drawHLine(x + 1.0f, x + 1.0f, y1 - 2.0f, borderC);
-        RenderUtil.R2DUtils.drawRect(x + 1.0f, y + 1.0f, x1 - 1.0f, y1 - 1.0f, insideC);
-        GL11.glScalef((float) 2.0f, (float) 2.0f, (float) 2.0f);
-        RenderUtil.R2DUtils.disableGL2D();
-        Gui.drawRect(0, 0, 0, 0, 0);
-    }
-
-    public static void drawGradientSideways(double left, double top, double right, double bottom, int col1, int col2) {
-        float f = (col1 >> 24 & 0xFF) / 255.0F;
-        float f1 = (col1 >> 16 & 0xFF) / 255.0F;
-        float f2 = (col1 >> 8 & 0xFF) / 255.0F;
-        float f3 = (col1 & 0xFF) / 255.0F;
-
-        float f4 = (col2 >> 24 & 0xFF) / 255.0F;
-        float f5 = (col2 >> 16 & 0xFF) / 255.0F;
-        float f6 = (col2 >> 8 & 0xFF) / 255.0F;
-        float f7 = (col2 & 0xFF) / 255.0F;
-
-        GL11.glEnable(3042);
-        GL11.glDisable(3553);
-        GL11.glBlendFunc(770, 771);
-        GL11.glEnable(2848);
-        GL11.glShadeModel(7425);
-
-        GL11.glPushMatrix();
-        GL11.glBegin(7);
-        GL11.glColor4f(f1, f2, f3, f);
-        GL11.glVertex2d(left, top);
-        GL11.glVertex2d(left, bottom);
-
-        GL11.glColor4f(f5, f6, f7, f4);
-        GL11.glVertex2d(right, bottom);
-        GL11.glVertex2d(right, top);
-        GL11.glEnd();
-        GL11.glPopMatrix();
-
-        GL11.glEnable(3553);
-        GL11.glDisable(3042);
-        GL11.glDisable(2848);
-        GL11.glShadeModel(7424);
-    }
-
-    public static int getRainbowOpaque(int seconds, float saturation, float brightness, int index) {
-        float hue = ((System.currentTimeMillis() + index) % (int) (seconds * 1000)) / (float) (seconds * 1000);
-        int color = Color.HSBtoRGB(hue, saturation, brightness);
-        return color;
-    }
-
-    public static int SkyRainbow(int var2, float st, float bright) {
-        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
-        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright).getRGB();
-    }
-
-    public static Color skyRainbow(int var2, float st, float bright) {
-        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
-        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright);
-    }
-    public static Color skyRainbow(int var2, float bright, float st, double speed) {
-        double v1 = Math.ceil((System.currentTimeMillis()/speed) + (var2 * 109L)) / 5;
-        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright);
-    }
-
-    public static int reAlpha(final int n, final float n2) {
-        final Color color = new Color(n);
-        return new Color(0.003921569f * color.getRed(), 0.003921569f * color.getGreen(), 0.003921569f * color.getBlue(), n2).getRGB();
     }
 
     public static void connectPoints(float xOne, float yOne, float xTwo, float yTwo) {
@@ -471,17 +177,17 @@ public final class RenderUtils extends MinecraftInstance {
 
     public static void drawRoundedCornerRect(float x, float y, float x1, float y1, float radius, int color) {
         glEnable(GL_BLEND);
-        glDisable(GL_TEXTURE_2D);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glDisable(GL_TEXTURE_2D);
-        glEnable(GL_LINE_SMOOTH);
+        final boolean hasCull = glIsEnabled(GL_CULL_FACE);
+        glDisable(GL_CULL_FACE);
 
         glColor(color);
         drawRoundedCornerRect(x, y, x1, y1, radius);
 
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_BLEND);
-        glDisable(GL_LINE_SMOOTH);
+        setGlState(GL_CULL_FACE, hasCull);
     }
 
     public static void drawRoundedCornerRect(float x, float y, float x1, float y1, float radius) {
@@ -905,6 +611,62 @@ public final class RenderUtils extends MinecraftInstance {
         glPopAttrib();
     }
 
+    public static void drawFilledCircle2(final int xx, final int yy, final float radius, final Color color) {
+        int sections = 50;
+        double dAngle = 2 * Math.PI / sections;
+        float x, y;
+
+        glPushAttrib(GL_ENABLE_BIT);
+
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glBegin(GL_TRIANGLE_FAN);
+
+        for (int i = 0; i < sections; i++) {
+            x = (float) (radius * Math.sin((i * dAngle)));
+            y = (float) (radius * Math.cos((i * dAngle)));
+
+            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+            glVertex2f(xx + x, yy + y);
+        }
+
+        GlStateManager.color(0, 0, 0);
+
+        glEnd();
+
+        glPopAttrib();
+    }
+
+    public static void drawFilledCircle2(final float xx, final float yy, final float radius, final Color color) {
+        int sections = 50;
+        double dAngle = 2 * Math.PI / sections;
+        float x, y;
+
+        glPushAttrib(GL_ENABLE_BIT);
+
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glBegin(GL_TRIANGLE_FAN);
+
+        for (int i = 0; i < sections; i++) {
+            x = (float) (radius * Math.sin((i * dAngle)));
+            y = (float) (radius * Math.cos((i * dAngle)));
+
+            glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+            glVertex2f(xx + x, yy + y);
+        }
+
+        GlStateManager.color(0, 0, 0);
+
+        glEnd();
+
+        glPopAttrib();
+    }
+
     public static void drawLimitedCircle(final float lx, final float ly, final float x2, final float y2,final int xx, final int yy, final float radius, final Color color) {
         int sections = 50;
         double dAngle = 2 * Math.PI / sections;
@@ -1122,36 +884,73 @@ public final class RenderUtils extends MinecraftInstance {
         glScissor((int) (x * factor), (int) ((scaledResolution.getScaledHeight() - y2) * factor), (int) ((x2 - x) * factor), (int) ((y2 - y) * factor));
     }
 
+    public static void resetCaps(final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            return;
+        }
+        Map<Integer, Boolean> map = glCapMap.get(scale);
+        map.forEach(RenderUtils::setGlState);
+        map.clear();
+    }
+
     public static void resetCaps() {
-        glCapMap.forEach(RenderUtils::setGlState);
-        glCapMap.clear();
+        resetCaps("COMMON");
+    }
+
+    public static void clearCaps(final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            return;
+        }
+        Map<Integer, Boolean> map = glCapMap.get(scale);
+        if(!map.isEmpty()) {
+            ClientUtils.INSTANCE.logWarn("Cap map is not empty! [" + map.size() + "]");
+        }
+        map.clear();
     }
 
     public static void clearCaps() {
-        glCapMap.clear();
+        clearCaps("COMMON");
+    }
+
+    public static void enableGlCap(final int cap, final String scale) {
+        setGlCap(cap, true, scale);
     }
 
     public static void enableGlCap(final int cap) {
-        setGlCap(cap, true);
+        enableGlCap(cap, "COMMON");
     }
 
-    public static void enableGlCap(final int... caps) {
-        for (final int cap : caps)
-            setGlCap(cap, true);
+    public static void disableGlCap(final int cap, final String scale) {
+        setGlCap(cap, false, scale);
     }
 
     public static void disableGlCap(final int cap) {
-        setGlCap(cap, false);
+        disableGlCap(cap, "COMMON");
+    }
+
+
+    public static void enableGlCap(final int... caps) {
+        for(int cap : caps) {
+            setGlCap(cap, true, "COMMON");
+        }
     }
 
     public static void disableGlCap(final int... caps) {
-        for (final int cap : caps)
-            setGlCap(cap, false);
+        for(int cap : caps) {
+            setGlCap(cap, false, "COMMON");
+        }
+    }
+
+    public static void setGlCap(final int cap, final boolean state, final String scale) {
+        if(!glCapMap.containsKey(scale)) {
+            glCapMap.put(scale, new HashMap<>());
+        }
+        glCapMap.get(scale).put(cap, glGetBoolean(cap));
+        setGlState(cap, state);
     }
 
     public static void setGlCap(final int cap, final boolean state) {
-        glCapMap.put(cap, glGetBoolean(cap));
-        setGlState(cap, state);
+        setGlCap(cap, state, "COMMON");
     }
 
     public static void setGlState(final int cap, final boolean state) {
@@ -1287,10 +1086,10 @@ public final class RenderUtils extends MinecraftInstance {
 
         glBegin(GL_LINE_LOOP);
 
-        glVertex2d(x2, y);
-        glVertex2d(x, y);
-        glVertex2d(x, y2);
-        glVertex2d(x2, y2);
+        glVertex2d(x2 + 1, y - 1);
+        glVertex2d(x - 1, y - 1);
+        glVertex2d(x - 1, y2 + 1);
+        glVertex2d(x2 + 1, y2 + 1);
 
         glEnd();
 
@@ -1456,5 +1255,182 @@ public final class RenderUtils extends MinecraftInstance {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
         return textureId;
+    }
+
+    public static int SkyRainbow(int var2, float st, float bright) {
+        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
+        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright).getRGB();
+    }
+
+    public static Color skyRainbow(int var2, float st, float bright) {
+        double v1 = Math.ceil(System.currentTimeMillis() + (long) (var2 * 109)) / 5;
+        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright);
+    }
+    public static Color skyRainbow(int var2, float bright, float st, double speed) {
+        double v1 = Math.ceil((System.currentTimeMillis()/speed) + (var2 * 109L)) / 5;
+        return Color.getHSBColor((double) ((float) ((v1 %= 360.0) / 360.0)) < 0.5 ? -((float) (v1 / 360.0)) : (float) (v1 / 360.0), st, bright);
+    }
+
+    public static int getNormalRainbow(int delay, float sat, float brg) {
+        double rainbowState = Math.ceil((System.currentTimeMillis() + delay) / 20.0);
+        rainbowState %= 360;
+        return Color.getHSBColor((float) (rainbowState / 360.0f), sat, brg).getRGB();
+    }
+
+    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color) {
+        drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color, true);
+    }
+
+    public static void drawRoundedRect2(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, final Color color) {
+        drawRoundedRect(paramXStart, paramYStart, paramXEnd, paramYEnd, radius, color.getRGB(), true);
+    }
+
+    public static void drawRoundedRect(float paramXStart, float paramYStart, float paramXEnd, float paramYEnd, float radius, int color, boolean popPush) {
+        float alpha = (color >> 24 & 0xFF) / 255.0F;
+        float red = (color >> 16 & 0xFF) / 255.0F;
+        float green = (color >> 8 & 0xFF) / 255.0F;
+        float blue = (color & 0xFF) / 255.0F;
+
+        float z = 0;
+        if (paramXStart > paramXEnd) {
+            z = paramXStart;
+            paramXStart = paramXEnd;
+            paramXEnd = z;
+        }
+
+        if (paramYStart > paramYEnd) {
+            z = paramYStart;
+            paramYStart = paramYEnd;
+            paramYEnd = z;
+        }
+
+        double x1 = (double)(paramXStart + radius);
+        double y1 = (double)(paramYStart + radius);
+        double x2 = (double)(paramXEnd - radius);
+        double y2 = (double)(paramYEnd - radius);
+
+        if (popPush) glPushMatrix();
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glLineWidth(1);
+
+        glColor4f(red, green, blue, alpha);
+        glBegin(GL_POLYGON);
+
+        double degree = Math.PI / 180;
+        for (double i = 0; i <= 90; i += 0.25)
+            glVertex2d(x2 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
+        for (double i = 90; i <= 180; i += 0.25)
+            glVertex2d(x2 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
+        for (double i = 180; i <= 270; i += 0.25)
+            glVertex2d(x1 + Math.sin(i * degree) * radius, y1 + Math.cos(i * degree) * radius);
+        for (double i = 270; i <= 360; i += 0.25)
+            glVertex2d(x1 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_BLEND);
+        glDisable(GL_LINE_SMOOTH);
+        if (popPush) glPopMatrix();
+    }
+
+    public static void drawRoundedRect(float x, float y, float x1, float y1, int borderC, int insideC) {
+        RenderUtil.R2DUtils.enableGL2D();
+        GL11.glScalef((float) 0.5f, (float) 0.5f, (float) 0.5f);
+        RenderUtil.R2DUtils.drawVLine(x *= 2.0f, (y *= 2.0f) + 1.0f, (y1 *= 2.0f) - 2.0f, borderC);
+        RenderUtil.R2DUtils.drawVLine((x1 *= 2.0f) - 1.0f, y + 1.0f, y1 - 2.0f, borderC);
+        RenderUtil.R2DUtils.drawHLine(x + 2.0f, x1 - 3.0f, y, borderC);
+        RenderUtil.R2DUtils.drawHLine(x + 2.0f, x1 - 3.0f, y1 - 1.0f, borderC);
+        RenderUtil.R2DUtils.drawHLine(x + 1.0f, x + 1.0f, y + 1.0f, borderC);
+        RenderUtil.R2DUtils.drawHLine(x1 - 2.0f, x1 - 2.0f, y + 1.0f, borderC);
+        RenderUtil.R2DUtils.drawHLine(x1 - 2.0f, x1 - 2.0f, y1 - 2.0f, borderC);
+        RenderUtil.R2DUtils.drawHLine(x + 1.0f, x + 1.0f, y1 - 2.0f, borderC);
+        RenderUtil.R2DUtils.drawRect(x + 1.0f, y + 1.0f, x1 - 1.0f, y1 - 1.0f, insideC);
+        GL11.glScalef((float) 2.0f, (float) 2.0f, (float) 2.0f);
+        RenderUtil.R2DUtils.disableGL2D();
+        Gui.drawRect(0, 0, 0, 0, 0);
+    }
+
+    public static void drawExhiRect(float x, float y, float x2, float y2) {
+        drawRect(x - 3.5F, y - 3.5F, x2 + 3.5F, y2 + 3.5F, Color.black.getRGB());
+        drawRect(x - 3F, y - 3F, x2 + 3F, y2 + 3F, new Color(50, 50, 50).getRGB());
+        //drawBorder(x - 1.5F, y - 1.5F, x2 + 1.5F, y2 + 1.5F, 2.5F, new Color(26, 26, 26).getRGB());
+        drawRect(x - 2.5F, y - 2.5F, x2 + 2.5F, y2 + 2.5F, new Color(26, 26, 26).getRGB());
+        drawRect(x - 0.5F, y - 0.5F, x2 + 0.5F, y2 + 0.5F, new Color(50, 50, 50).getRGB());
+        drawRect(x, y, x2, y2, new Color(18, 18, 18).getRGB());
+    }
+
+    public static void drawCircleRect(float x, float y, float x1, float y1, float radius, int color) {
+        glColor(color);
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_CULL_FACE);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glPushMatrix();
+        glLineWidth(1F);
+        glBegin(GL_POLYGON);
+
+        float xRadius = (float) Math.min((x1 - x) * 0.5, radius);
+        float yRadius = (float) Math.min((y1 - y) * 0.5, radius);
+        quickPolygonCircle(x+xRadius,y+yRadius, xRadius, yRadius,180,270,4);
+        quickPolygonCircle(x1-xRadius,y+yRadius, xRadius, yRadius,90,180,4);
+        quickPolygonCircle(x1-xRadius,y1-yRadius, xRadius, yRadius,0,90,4);
+        quickPolygonCircle(x+xRadius,y1-yRadius, xRadius, yRadius,270,360,4);
+
+        glEnd();
+        glPopMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_CULL_FACE);
+        glDisable(GL_LINE_SMOOTH);
+        glColor4f(1F, 1F, 1F, 1F);
+    }
+
+    public static void drawGradientSideways(double left, double top, double right, double bottom, int col1, int col2) {
+        float f = (col1 >> 24 & 0xFF) / 255.0F;
+        float f1 = (col1 >> 16 & 0xFF) / 255.0F;
+        float f2 = (col1 >> 8 & 0xFF) / 255.0F;
+        float f3 = (col1 & 0xFF) / 255.0F;
+
+        float f4 = (col2 >> 24 & 0xFF) / 255.0F;
+        float f5 = (col2 >> 16 & 0xFF) / 255.0F;
+        float f6 = (col2 >> 8 & 0xFF) / 255.0F;
+        float f7 = (col2 & 0xFF) / 255.0F;
+
+        GL11.glEnable(3042);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 771);
+        GL11.glEnable(2848);
+        GL11.glShadeModel(7425);
+
+        GL11.glPushMatrix();
+        GL11.glBegin(7);
+        GL11.glColor4f(f1, f2, f3, f);
+        GL11.glVertex2d(left, top);
+        GL11.glVertex2d(left, bottom);
+
+        GL11.glColor4f(f5, f6, f7, f4);
+        GL11.glVertex2d(right, bottom);
+        GL11.glVertex2d(right, top);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+
+        GL11.glEnable(3553);
+        GL11.glDisable(3042);
+        GL11.glDisable(2848);
+        GL11.glShadeModel(7424);
+    }
+
+    public static int getRainbowOpaque(int seconds, float saturation, float brightness, int index) {
+        float hue = ((System.currentTimeMillis() + index) % (int) (seconds * 1000)) / (float) (seconds * 1000);
+        int color = Color.HSBtoRGB(hue, saturation, brightness);
+        return color;
+    }
+
+    public static int reAlpha(final int n, final float n2) {
+        final Color color = new Color(n);
+        return new Color(0.003921569f * color.getRed(), 0.003921569f * color.getGreen(), 0.003921569f * color.getBlue(), n2).getRGB();
     }
 }
