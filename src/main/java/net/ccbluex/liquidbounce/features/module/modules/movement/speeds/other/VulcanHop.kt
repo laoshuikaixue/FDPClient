@@ -15,14 +15,14 @@ class VulcanHop : SpeedMode("VulcanHop") {
         if (!mc.thePlayer.onGround) {
             mc.gameSettings.keyBindJump.pressed = mc.gameSettings.keyBindJump.isKeyDown
         }
-        if (MovementUtils.getSpeed() < 0.215f) {
-            MovementUtils.strafe(0.215f)
+        if (MovementUtils.getSpeed() < 0.205f) {
+            MovementUtils.strafe(0.205f)
         }
         if (mc.thePlayer.onGround && MovementUtils.isMoving()) {
             mc.timer.timerSpeed = 1.25f
             mc.gameSettings.keyBindJump.pressed = false
             mc.thePlayer.jump()
-            MovementUtils.strafe()
+            MovementUtils.strafe(MovementUtils.getSpeedEffect() * 0.1f)
             if(MovementUtils.getSpeed() < 0.5f) {
                 MovementUtils.strafe(0.4849f)
             }
