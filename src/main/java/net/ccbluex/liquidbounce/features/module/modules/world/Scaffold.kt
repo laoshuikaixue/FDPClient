@@ -231,7 +231,7 @@ class Scaffold : Module() {
      * Enable module
      */
     override fun onEnable() {
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:947680002"){
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
@@ -831,7 +831,7 @@ class Scaffold : Module() {
                 (scaledResolution.scaledHeight - 60).toFloat(),
                 (scaledResolution.scaledWidth / 2 + infoWidth / 2 + 4).toFloat(),
                 (scaledResolution.scaledHeight - 74).toFloat(),
-                4.5f,
+                1.5f,
                 Color(0.25f, 0.25f, 0.25f, progress).rgb
             )
             GlStateManager.resetColor()
