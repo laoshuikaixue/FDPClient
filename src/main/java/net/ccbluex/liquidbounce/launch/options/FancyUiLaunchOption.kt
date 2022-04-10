@@ -32,7 +32,7 @@ object FancyUiLaunchOption : LaunchOption() {
         val mc = Minecraft.getMinecraft()
         mc.displayGuiScreen(GuiPrepare(progressHandler) {
             // I think LiquidBounce.mainMenu must be initialized here
-            mc.displayGuiScreen(LiquidBounce.mainMenu)
+            mc.displayGuiScreen(LiquidBounce.guiwelcome)
         })
 
         // todo: add new HTML UI and Java To JS Bridge

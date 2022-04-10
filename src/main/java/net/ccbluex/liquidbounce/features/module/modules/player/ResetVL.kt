@@ -32,4 +32,8 @@ class ResetVL : Module() {
         jumped = 0
         y = mc.thePlayer.posY
     }
+
+    override fun onDisable() {
+        mc.timer.timerSpeed = 1F
+    }
 }

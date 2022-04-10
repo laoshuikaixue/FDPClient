@@ -20,9 +20,9 @@ import net.ccbluex.liquidbounce.file.config.ConfigManager
 import net.ccbluex.liquidbounce.launch.EnumLaunchFilter
 import net.ccbluex.liquidbounce.launch.LaunchFilterInfo
 import net.ccbluex.liquidbounce.launch.LaunchOption
-import net.ccbluex.liquidbounce.launch.data.GuiLaunchOptionSelectMenu
 import net.ccbluex.liquidbounce.script.ScriptManager
 import net.ccbluex.liquidbounce.ui.cape.GuiCapeManager
+import net.ccbluex.liquidbounce.ui.client.NewGuiWelcome
 import net.ccbluex.liquidbounce.ui.client.hud.HUD
 import net.ccbluex.liquidbounce.ui.client.keybind.KeyBindManager
 import net.ccbluex.liquidbounce.ui.font.Fonts
@@ -91,7 +91,7 @@ object LiquidBounce {
 
     // Some UI things
     lateinit var hud: HUD
-    lateinit var mainMenu: GuiScreen
+    lateinit var guiwelcome: GuiScreen
     lateinit var keyBindManager: KeyBindManager
 
     // Menu Background
@@ -180,7 +180,7 @@ object LiquidBounce {
 
         GuiCapeManager.load()
 
-        mainMenu = GuiLaunchOptionSelectMenu()
+        guiwelcome = NewGuiWelcome()
 
         // Set HUD
         hud = HUD.createDefault()

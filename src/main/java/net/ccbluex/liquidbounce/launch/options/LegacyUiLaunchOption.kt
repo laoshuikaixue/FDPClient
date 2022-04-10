@@ -20,7 +20,7 @@ object LegacyUiLaunchOption : LaunchOption() {
     lateinit var clickGuiConfig: ClickGuiConfig
 
     override fun start() {
-        LiquidBounce.mainMenu = GuiMainMenu()
+        LiquidBounce.guiwelcome = GuiMainMenu()
         LiquidBounce.moduleManager.registerModule(ClickGUIModule())
 
         clickGui = ClickGui()

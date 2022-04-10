@@ -19,7 +19,7 @@ public final class ServerUtils extends MinecraftInstance {
         if(serverData == null)
             return;
 
-        mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(LiquidBounce.mainMenu), mc, serverData));
+        mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(LiquidBounce.guiwelcome), mc, serverData));
     }
 
     public static String getRemoteIp() {

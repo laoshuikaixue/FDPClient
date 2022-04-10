@@ -511,3 +511,12 @@ module.ResetVL.description=Unflags you on servers
 
 module.FluxAntiVoid.name=FluxAntiVoid
 module.FluxAntiVoid.description=Pull you up when you fall into the void
+
+module.SpeedMine.name=SpeedMine
+module.SpeedMine.description=Fast break the block
+
+module.KeepSprint.name=KeepSprint
+module.KeepSprint.description=Move keep sprint and no slow down
+
+module.OldDisabler.name=OldDisabler
+module.OldDisabler.description=OldDisabler
