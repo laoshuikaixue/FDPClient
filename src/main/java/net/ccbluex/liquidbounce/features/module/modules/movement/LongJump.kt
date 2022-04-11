@@ -26,7 +26,7 @@ import net.minecraft.util.EnumFacing
 
 @ModuleInfo(name = "LongJump", category = ModuleCategory.MOVEMENT, autoDisable = EnumAutoDisableType.FLAG)
 class LongJump : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("NCP", "NCPDamage", "JartexWater", "AACv1", "AACv2", "AACv3", "Mineplex", "Mineplex2", "Mineplex3", "RedeSkyTest", "RedeSky", "RedeSky2", "RedeSky3", "OldBlocksMC", "OldBlocksMC2", "HYT4v4"), "NCP")
+    private val modeValue = ListValue("Mode", arrayOf("NCP", "NCPDamage", "JartexWater", "AACv1", "AACv2", "AACv3", "Mineplex", "Mineplex2", "Mineplex3", "RedeSkyTest", "RedeSky", "RedeSky2", "RedeSky3", "OldBlocksMC", "OldBlocksMC2", "HYT4v4", "AAC5Test"), "NCP")
     private val ncpBoostValue = FloatValue("NCPBoost", 4.25f, 1f, 10f)
 
     // redesky
@@ -74,8 +74,11 @@ class LongJump : Module() {
     private var damageStat = false
     private var nextClick: BlockPos? = null
     private val jumpYPosArr = arrayOf(0.41999998688698, 0.7531999805212, 1.00133597911214, 1.16610926093821, 1.24918707874468, 1.24918707874468, 1.1707870772188, 1.0155550727022, 0.78502770378924, 0.4807108763317, 0.10408037809304, 0.0)
+    private var YourMom = false
+    private var noGoHighAnymore = false
 
     override fun onEnable() {
+        noGoHighAnymore = false
         airTicks = 0
         balance = 0
         hasJumped = false
@@ -153,7 +156,6 @@ class LongJump : Module() {
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         mc.thePlayer ?: return
-
         if (jumped) {
             val mode = modeValue.get()
 
@@ -308,6 +310,38 @@ class LongJump : Module() {
                         mc.thePlayer.motionY += 0.031470000997
                         MovementUtils.strafe(MovementUtils.getSpeed() * 1.0114514f)
                         mc.timer.timerSpeed = 1.0114514f
+                    }
+
+                    "AAC5test" -> {
+                        if(noGoHighAnymore) {
+                            return
+                        }
+                        var disabled = 0
+                        if(mc.thePlayer.onGround) {
+                            disabled++
+                            if (mc.thePlayer.onGround && disabled <= 2) {
+                                noGoHighAnymore = true
+                                disabled = 0;
+                            }
+                        }
+                        if(mc.thePlayer.onGround) {
+                            YourMom = false
+                            if(MovementUtils.isMoving()) {
+                                if(mc.thePlayer.onGround) {
+                                    mc.thePlayer.jump()
+                                }
+                                mc.thePlayer.motionY += 0.3
+                                mc.thePlayer.motionX *= 1.2
+                                mc.thePlayer.motionZ *= 1.2
+                            }
+                            return
+                        }
+                        if(YourMom) {
+                            mc.thePlayer.speedInAir = 0.02f;
+                            return;
+                        }
+                        mc.thePlayer.speedInAir = 0.06f
+                        YourMom = true
                     }
                 }
             }
