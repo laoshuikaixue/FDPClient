@@ -5,7 +5,7 @@ import net.ccbluex.liquidbounce.event.MoveEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
-class NewBhop : SpeedMode("HypixelNewHop") {
+class HypixelNewHop : SpeedMode("HypixelNewHop") {
 
     fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null) event.cancelEvent()

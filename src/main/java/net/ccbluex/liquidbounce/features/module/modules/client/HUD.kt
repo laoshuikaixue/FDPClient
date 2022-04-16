@@ -17,10 +17,7 @@ import net.ccbluex.liquidbounce.features.module.modules.client.button.RoundedBut
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.utils.render.Animation
 import net.ccbluex.liquidbounce.utils.render.EaseUtils
-import net.ccbluex.liquidbounce.value.BoolValue
-import net.ccbluex.liquidbounce.value.FloatValue
-import net.ccbluex.liquidbounce.value.IntegerValue
-import net.ccbluex.liquidbounce.value.ListValue
+import net.ccbluex.liquidbounce.value.*
 import net.minecraft.client.gui.GuiButton
 import net.minecraft.client.gui.GuiChat
 import net.minecraft.util.ResourceLocation
@@ -51,6 +48,7 @@ object HUD : Module() {
     val arraylistYAxisAnimTypeValue = EaseUtils.getEnumEasingList("ArraylistYAxisAnimType")
     val arraylistYAxisAnimOrderValue = EaseUtils.getEnumEasingOrderList("ArraylistYAxisHotbarAnimOrder")
     val fontEpsilonValue = FloatValue("FontVectorEpsilon", 0.5f, 0f, 1.5f)
+    val domainValue = TextValue("Scoreboard-Domain", ".hud scoreboard-domain <your domain here>")
     private val buttonValue = ListValue("Button", arrayOf("FLine", "Rounded", "Rise", "Vanilla"), "Rise")
 
     private var lastFontEpsilon = 0f

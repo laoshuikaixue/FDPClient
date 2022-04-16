@@ -18,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Objects;
 
 @Mixin(targets="net.minecraftforge.fml.client.SplashProgress$3", remap=false)
 public abstract class MixinSplashProgressRunnable {
@@ -85,15 +86,15 @@ public abstract class MixinSplashProgressRunnable {
             float rectRadius = height * 0.025f;
             float progress = (float) animatedValue.sync(getProgress());
 
-            if(progress != 1f) {
+            if (progress != 1f) {
                 GL11.glColor4f(0f, 0f, 0f, 0.3f);
                 RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, (int) rectRadius);
             }
 
-            if(progress != 0f) {
+            if (progress != 0f) {
                 GL11.glColor4f(1f, 1f, 1f, 1f);
                 RenderUtils.drawRect(rectX, rectY, rectX2, rectY2, (int) rectRadius);
-                RenderUtils.drawRect(rectX, rectY, rectX + (width * 0.6f * progress), rectY2, ColorUtils.INSTANCE.rainbow());
+                RenderUtils.drawRect(rectX, rectY, rectX + (width * 0.6f * progress), rectY2, Objects.requireNonNull(ColorUtils.LiquidSlowly(System.nanoTime(), 50, 0.3f, 1f)));
             }
 
             SplashProgress.mutex.acquireUninterruptibly();
