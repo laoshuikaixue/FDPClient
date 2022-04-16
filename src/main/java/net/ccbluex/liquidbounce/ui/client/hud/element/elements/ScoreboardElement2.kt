@@ -2,7 +2,6 @@ package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
-import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.module.modules.client.HUD
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
@@ -114,22 +113,20 @@ class ScoreboardElement2(
 
         var maxWidth = fontRenderer.getStringWidth(objective.displayName)
 
-        val hud = LiquidBounce.moduleManager.getModule(HUD::class.java) as HUD
-
         for (score in scoreCollection) {
             val scorePlayerTeam = scoreboard.getPlayersTeam(score.playerName)
             var name = ScorePlayerTeam.formatPlayerName(scorePlayerTeam, score.playerName)
             var stripped = StringUtils.fixString(ColorUtils.stripColor(name)!!)
             if(changeDomain.get()){
                 if (cachedDomains.contains(stripped)) {
-                    name = hud.domainValue.get()
+                    name = HUD.domainValue.get()
                 } else if (ServerUtils.isHypixelDomain(stripped)) {
-                    name = hud.domainValue.get()
+                    name = HUD.domainValue.get()
                     cachedDomains.add(stripped)
                 } else
                     for (domain in domainList) {
                         if(stripped.contains(domain,true)){
-                            name = hud.domainValue.get()
+                            name = HUD.domainValue.get()
                             cachedDomains.add(stripped)
                             break;
                         }
@@ -182,7 +179,7 @@ class ScoreboardElement2(
             GlStateManager.resetColor()
             if(changeDomain.get()) {
                 if (cachedDomains.contains(stripped)) {
-                    name = hud.domainValue.get()
+                    name = HUD.domainValue.get()
                     changed = true
                 }/* else if (ServerUtils.isHypixelDomain(stripped)) {
                     name = hud.domainValue.get()
