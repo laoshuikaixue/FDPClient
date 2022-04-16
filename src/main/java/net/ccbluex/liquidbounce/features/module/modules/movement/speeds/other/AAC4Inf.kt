@@ -9,6 +9,7 @@ class AAC4Inf : SpeedMode("AAC4Inf") {
             return
         }
         if (mc.thePlayer.onGround) {
+            mc.gameSettings.keyBindJump.pressed = false
             mc.thePlayer.jump()
             mc.thePlayer.speedInAir = 0.02F
             mc.timer.timerSpeed = 1.00F

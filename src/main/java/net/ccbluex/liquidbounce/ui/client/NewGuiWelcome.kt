@@ -55,14 +55,14 @@ class NewGuiWelcome : GuiScreen(), GuiYesNoCallback {
             "Hello " + EnumChatFormatting.GREEN + mc.session.username + EnumChatFormatting.WHITE + " Welcome back to ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}"
         Scale = 2.0f
         GL11.glScaled(Scale.toDouble(), Scale.toDouble(), Scale.toDouble())
-        Fonts.fontComfortaa40.drawString(
-            text, (Width / 2f - Fonts.fontComfortaa40.getStringWidth(text)) / Scale,
+        Fonts.fontMiSansNormal40.drawString(
+            text, (Width / 2f - Fonts.fontMiSansNormal40.getStringWidth(text)) / Scale,
             (Height / 2 - 9) / Scale, Color.WHITE.rgb
         )
         GL11.glScaled(1.0 / Scale, 1.0 / Scale, 1.0 / Scale)
         text = "Click here to continue..."
-        Fonts.fontComfortaa40.drawString(
-            text, Width / 2.0f - Fonts.fontComfortaa40.getStringWidth(text) / 2.0f,
+        Fonts.fontMiSansNormal40.drawString(
+            text, Width / 2.0f - Fonts.fontMiSansNormal40.getStringWidth(text) / 2.0f,
             (Height / 2 + 11).toFloat(), Color.WHITE.rgb
         )
         GL11.glColor4f(1.0f, 1.0f, 1.0f, 1f)

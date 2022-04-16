@@ -11,11 +11,7 @@ class HypixelHop : SpeedMode("HypixelHop") {
     fun onJump(event: JumpEvent) {
         if (mc.thePlayer != null) event.cancelEvent()
     }
-    private var groundTick = 0
 
-    override fun onMotion(event: MotionEvent) {}
-
-    override fun onEnable() {}
     override fun onMove(event: MoveEvent) {
         if (!mc.thePlayer.isInWeb && !mc.thePlayer.isInLava && !mc.thePlayer.isInWater && !mc.thePlayer.isOnLadder && mc.thePlayer.ridingEntity == null) {
             if (MovementUtils.isMoving()) {

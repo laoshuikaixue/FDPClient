@@ -26,12 +26,8 @@ class BunnyHop : SpeedMode("BunnyHop") {
         }
     }
 
-    override fun onUpdate() {}
     override fun onDisable() {
         mc.thePlayer.speedInAir = 0.02f
         mc.timer.timerSpeed = 1f
-    }
-
-    override fun onMove(event: MoveEvent) {
     }
 }
