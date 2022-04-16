@@ -10,11 +10,8 @@ import net.ccbluex.liquidbounce.ui.client.GuiBackground
 import net.ccbluex.liquidbounce.ui.client.altmanager.GuiAltManager
 import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
-import net.ccbluex.liquidbounce.utils.MinecraftInstance
-import net.minecraft.client.audio.PositionedSoundRecord
 import net.minecraft.client.gui.*
 import net.minecraft.client.resources.I18n
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fml.client.GuiModList
 import java.awt.Color
 

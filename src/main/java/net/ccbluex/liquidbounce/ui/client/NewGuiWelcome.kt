@@ -3,7 +3,10 @@ package net.ccbluex.liquidbounce.ui.client
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.launch.data.GuiLaunchOptionSelectMenu
 import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.minecraft.client.gui.*
+import net.minecraft.client.gui.GuiButton
+import net.minecraft.client.gui.GuiScreen
+import net.minecraft.client.gui.GuiYesNoCallback
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.util.EnumChatFormatting
 import org.lwjgl.opengl.GL11
 import java.awt.Color

@@ -33,11 +33,11 @@ public class SpinBot extends Module
         yawTimer = 0.0f;
         pitchTimer = 0.0f;
     }
-    
+
     @EventTarget
     public void onTick(final TickEvent e) {
         final String s = this.yawMode.get();
-        float yaw = 0.0f;
+        float yaw;
         switch (s) {
             case "Static": {
                 yaw = this.YawSet.get();
@@ -106,13 +106,13 @@ public class SpinBot extends Module
             pitch = -4.9531336E7f;
         }
     }
-    
+
     @Nullable
     @Override
     public String getTag() {
         return "Yaw " + this.yawMode.get() + ", Pitch " + this.pitchMode.get();
     }
-    
+
     static {
         pitch = -4.9531336E7f;
     }
