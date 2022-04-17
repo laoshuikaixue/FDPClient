@@ -95,13 +95,13 @@ object KillInsults : Module() {
 
         when (modeValue.get().lowercase()) {
             "clear" -> {
-                sendInsultWords("L ${target.name}", target.name)
+                sendInsultWords("L ${target.name} kill within FDPClinet-LaoShui ", target.name)
             }
             "withwords" -> {
-                sendInsultWords("L ${target.name} " + getRandomOne(), target.name)
+                sendInsultWords("L ${target.name} kill within FDPClinet-LaoShui " + getRandomOne(), target.name)
             }
             "rawwords" -> {
-                sendInsultWords(getRandomOne(), target.name)
+                sendInsultWords(getRandomOne(), target.name + "kill within FDPClinet-LaoShui")
             }
         }
     }
