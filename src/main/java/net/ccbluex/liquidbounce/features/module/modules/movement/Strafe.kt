@@ -9,9 +9,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 @ModuleInfo(name = "Strafe", category = ModuleCategory.MOVEMENT)
 class Strafe : Module() {
@@ -21,8 +19,8 @@ class Strafe : Module() {
     private var onGroundStrafeValue = BoolValue("OnGroundStrafe", false)
     private var allDirectionsJumpValue = BoolValue("AllDirectionsJump", false)
 
-    private var wasDown: Boolean = false
-    private var jump: Boolean = false
+    private var wasDown = false
+    private var jump = false
 
     @EventTarget
     fun onJump(event: JumpEvent) {
