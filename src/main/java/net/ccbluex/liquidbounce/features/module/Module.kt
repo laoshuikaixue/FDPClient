@@ -21,7 +21,7 @@ import net.ccbluex.liquidbounce.utils.render.EaseUtils
 import net.ccbluex.liquidbounce.value.Value
 import org.lwjgl.input.Keyboard
 
-open class Module() : MinecraftInstance(), Listenable {
+open class Module : MinecraftInstance(), Listenable {
     // Module information
     var name: String
     var localizedName = ""

@@ -1,9 +1,12 @@
-package net.ccbluex.liquidbounce.utils.render
+package net.ccbluex.liquidbounce.utils
 
 import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.ccbluex.liquidbounce.utils.render.Stencil.mc
+import net.ccbluex.liquidbounce.utils.MinecraftInstance.mc
+import net.ccbluex.liquidbounce.utils.render.RenderUtils
+import net.ccbluex.liquidbounce.utils.render.Translate
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
+
 class hotbarutil {
     val translate = Translate(0f , 0f)
     var size = 1.0f
@@ -20,8 +23,8 @@ class hotbarutil {
                 GlStateManager.scale(1.0f / lvt_8_1_, (lvt_8_1_ + 1.0f) / 2.0f, 1.0f)
                 GlStateManager.translate((-(xPos + 8)).toFloat(), (-(yPos + 12)).toFloat(), 0.0f)
             }
-            RenderUtils.drawTexturedRect(xPos - 7, yPos -7,30f,30f,"hotbar",  ScaledResolution(mc));
-            RenderUtils.drawTexturedRect(xPos - 7, yPos -7,30f,30f,"hotbar",  ScaledResolution(mc));
+            RenderUtils.drawTexturedRect(xPos - 7, yPos - 7, 30f, 30f, "hotbar", ScaledResolution(mc));
+            RenderUtils.drawTexturedRect(xPos - 7, yPos - 7, 30f, 30f, "hotbar", ScaledResolution(mc));
             mc.renderItem.renderItemAndEffectIntoGUI(itemStack, xPos.toInt(), yPos.toInt())
             if (lvt_7_1_ > 0.0f) {
                 GlStateManager.popMatrix()

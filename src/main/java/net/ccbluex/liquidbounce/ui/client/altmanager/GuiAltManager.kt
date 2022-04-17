@@ -196,7 +196,7 @@ class GuiAltManager(private val prevGui: GuiScreen) : GuiScreen() {
         var randomAltField = GuiTextField(2, Minecraft.getMinecraft().fontRendererObj, 0, 0, 0, 0)
 
         init {
-            randomAltField.text = "L%na%no%n_S%sh%su%si"
+            randomAltField.text = "F%nD%nP%n_%s%s%s"
             randomAltField.maxStringLength = Int.MAX_VALUE
         }
 

@@ -184,7 +184,7 @@ public abstract class MixinGuiNewChat {
 
                                 if(hud.getState() && hud.getChatRectValue().get()) {
                                     if (hud.getChatAnimValue().get() && lineBeingDrawn <= newLines && !flag)
-                                        RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float)d0 / 3.2F)).getRGB());
+                                        RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float)d0 / 3F)).getRGB());
                                     else
                                         RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 }
