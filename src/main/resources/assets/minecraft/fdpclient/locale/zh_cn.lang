@@ -496,6 +496,3 @@ module.SpeedMine.description=快速挖掘方块
 
 module.KeepSprint.name=强制疾跑
 module.KeepSprint.description=保持疾跑 没有减速
-
-module.OldDisabler.name=OldDisabler
-module.OldDisabler.description=OldDisabler

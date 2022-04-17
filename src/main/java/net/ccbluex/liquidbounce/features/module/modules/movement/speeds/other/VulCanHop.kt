@@ -5,12 +5,7 @@ import net.ccbluex.liquidbounce.event.MoveEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
-class VulcanHop : SpeedMode("VulcanHop") {
-
-    fun onJump(event: JumpEvent) {
-        if (mc.thePlayer != null) event.cancelEvent()
-    }
-
+class VulCanHop : SpeedMode("VulCanHop") {
     override fun onUpdate() {
         mc.timer.timerSpeed = 1.00f
         if (Math.abs(mc.thePlayer.movementInput.moveStrafe) < 0.1f) {
@@ -27,13 +22,9 @@ class VulcanHop : SpeedMode("VulcanHop") {
     }
 
     override fun onMove(event: MoveEvent) {
-        var moveSpeed = Math.max(MovementUtils.getBaseMoveSpeed(), MovementUtils.getSpeed().toDouble())
         if (mc.thePlayer.onGround && MovementUtils.isMoving()) {
             mc.gameSettings.keyBindJump.pressed = false
             mc.thePlayer.jump()
-            mc.thePlayer.motionY = 0.42
-            event.y = mc.thePlayer.motionY
-            moveSpeed *= 1.275
             MovementUtils.strafe()
             if(MovementUtils.getSpeed() < 0.5f) {
                 MovementUtils.strafe(0.4849f)

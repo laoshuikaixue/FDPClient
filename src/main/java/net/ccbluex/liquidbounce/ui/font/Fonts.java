@@ -26,8 +26,17 @@ public class Fonts {
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
 
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 35, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN35;
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 17, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN17;
+
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 18, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN18;
+
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 19, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN19;
+
+    @FontDetails(fontName = "SFTHIN Regular", fontSize = 20, fileName = "SFTHIN.ttf")
+    public static GameFontRenderer fontSFTHIN20;
 
     @FontDetails(fontName = "Roboto Regular", fontSize = 40, fileName = "Roboto-Bold.ttf")
     public static GameFontRenderer fontRoboto40;
