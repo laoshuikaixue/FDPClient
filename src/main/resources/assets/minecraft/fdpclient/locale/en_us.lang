@@ -517,3 +517,12 @@ module.SpeedMine.description=Fast break the block
 
 module.KeepSprint.name=KeepSprint
 module.KeepSprint.description=Move keep sprint and no slow down
+
+module.KickWarn.name=KickWarn
+module.KickWarn.description=KickWarn
+
+module.LnkTargetHUD.name=LnkTargetHUD
+module.LnkTargetHUD.description=Lnk.TargetHUD
+
+module.NoFallPlus.name=NoFallPlus
+module.NoFallPlus.description=Prevents you from taking fall damage

@@ -26,15 +26,6 @@ public class Fonts {
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
 
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 17, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN17;
-
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 18, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN18;
-
-    @FontDetails(fontName = "SFTHIN Regular", fontSize = 19, fileName = "SFTHIN.ttf")
-    public static GameFontRenderer fontSFTHIN19;
-
     @FontDetails(fontName = "SFTHIN Regular", fontSize = 20, fileName = "SFTHIN.ttf")
     public static GameFontRenderer fontSFTHIN20;
 
@@ -56,17 +47,8 @@ public class Fonts {
     @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 35, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
     public static GameFontRenderer fontXiYuanGBT35;
 
-    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 35, fileName = "Whitney-Light.ttf")
-    public static GameFontRenderer fontWhitneyLight35;
-
-    @FontDetails(fontName = "Whitney-Light Regular", fontSize = 40, fileName = "Whitney-Light.ttf")
-    public static GameFontRenderer fontWhitneyLight40;
-
-    @FontDetails(fontName = "Small", fontSize = 30, fileName = "GoogleSans.ttf")
-    public static GameFontRenderer fontgoogle30;
-
-    @FontDetails(fontName = "Small", fontSize = 35, fileName = "GoogleSans.ttf")
-    public static GameFontRenderer fontgoogle35;
+    @FontDetails(fontName = "SFUI Regular", fontSize = 24, fileName = "sfui.ttf")
+    public static GameFontRenderer fontSFUI24;
 
     @FontDetails(fontName = "SFUI Regular", fontSize = 35, fileName = "sfui.ttf")
     public static GameFontRenderer fontSFUI35;
@@ -74,8 +56,8 @@ public class Fonts {
     @FontDetails(fontName = "SFUI Regular", fontSize = 40, fileName = "sfui.ttf")
     public static GameFontRenderer fontSFUI40;
 
-    @FontDetails(fontName = "Tahoma Regular", fontSize = 35, fileName = "tahoma.ttf")
-    public static GameFontRenderer fonttahoma35;
+    @FontDetails(fontName = "MiSansNormal Regular", fontSize = 30, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSansNormal30;
 
     @FontDetails(fontName = "MiSansNormal Regular", fontSize = 35, fileName = "MiSans-Normal.ttf")
     public static GameFontRenderer fontMiSansNormal35;

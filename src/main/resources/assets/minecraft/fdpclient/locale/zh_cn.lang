@@ -496,3 +496,12 @@ module.SpeedMine.description=快速挖掘方块
 
 module.KeepSprint.name=强制疾跑
 module.KeepSprint.description=保持疾跑 没有减速
+
+module.KickWarn.name=KickWarn
+module.KickWarn.description=KickWarn
+
+module.LnkTargetHUD.name=LnkTargetHUD
+module.LnkTargetHUD.description=Lnk.TargetHUD
+
+module.NoFallPlus.name=更好的无掉落伤害
+module.NoFallPlus.description=更好的抵消你的掉落伤害

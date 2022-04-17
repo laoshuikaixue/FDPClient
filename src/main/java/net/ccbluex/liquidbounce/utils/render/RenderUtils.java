@@ -14,6 +14,8 @@ import net.ccbluex.liquidbounce.utils.block.BlockUtils;
 import net.ccbluex.liquidbounce.utils.render.glu.DirectTessCallback;
 import net.ccbluex.liquidbounce.utils.render.glu.VertexData;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
@@ -41,6 +43,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Math.*;
+import static net.ccbluex.liquidbounce.utils.render.GLUtils.glDisable;
+import static net.ccbluex.liquidbounce.utils.render.GLUtils.glEnable;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class RenderUtils extends MinecraftInstance {
@@ -90,6 +94,114 @@ public final class RenderUtils extends MinecraftInstance {
         quickDrawRect(-7.3F, -20.3F, -4F, -20F);
 
         glEndList();
+    }
+
+    public static int width() {
+        return new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth();
+    }
+    public static int height() {
+        return new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight();
+    }
+
+    // Astolfo
+    public static int Astolfo(int var2, float st, float bright) {
+        double currentColor = Math.ceil(System.currentTimeMillis() + (long) (var2 * 130)) / 6;
+        return Color.getHSBColor((double) ((float) ((currentColor %= 360.0) / 360.0)) < 0.5 ? -((float) (currentColor / 360.0)) : (float) (currentColor / 360.0), st, bright).getRGB();
+    }
+
+    public static void drawTexturedRect(float x, float y, float width, float height, String image) {
+        glPushMatrix();
+        final boolean enableBlend = glIsEnabled(GL_BLEND);
+        final boolean disableAlpha = !glIsEnabled(GL_ALPHA_TEST);
+        if (!enableBlend) glEnable(GL_BLEND);
+        if (!disableAlpha) glDisable(GL_ALPHA_TEST);
+        mc.getTextureManager().bindTexture(new ResourceLocation("Insane/" + image + ".png"));
+        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderUtils.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
+        if (!enableBlend) glDisable(GL_BLEND);
+        if (!disableAlpha) glEnable(GL_ALPHA_TEST);
+        glPopMatrix();
+    }
+    public static void drawTexturedRect(float x, float y, float width, float height, String image, ScaledResolution sr) {
+        GL11.glPushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.disableAlpha();
+        mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/" + image + ".png"));
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+        Gui.drawModalRectWithCustomSizedTexture((int)x, (int)y, 0.0f, 0.0f, (int)width, (int)height, (int)width, (int)height);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlpha();
+        GL11.glPopMatrix();
+    }
+    public static void drawModalRectWithCustomSizedTexture(float x, float y, float u, float v, float width, float height, float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(x, (y + height), 0.0D).tex((u * f), ((v + height) * f1)).endVertex();
+        worldrenderer.pos((x + width), (y + height), 0.0D).tex(((u + width) * f), ((v + height) * f1)).endVertex();
+        worldrenderer.pos((x + width), y, 0.0D).tex(((u + width) * f), (v * f1)).endVertex();
+        worldrenderer.pos(x, y, 0.0D).tex((u * f), (v * f1)).endVertex();
+        tessellator.draw();
+    }
+    public static void rectangle(double left, double top, double right, double bottom, int color) {
+        double var5;
+        if (left < right) {
+            var5 = left;
+            left = right;
+            right = var5;
+        }
+        if (top < bottom) {
+            var5 = top;
+            top = bottom;
+            bottom = var5;
+        }
+        float var11 = (float) (color >> 24 & 255) / 255.0f;
+        float var6 = (float) (color >> 16 & 255) / 255.0f;
+        float var7 = (float) (color >> 8 & 255) / 255.0f;
+        float var8 = (float) (color & 255) / 255.0f;
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldRenderer = tessellator.getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate((int) 770, (int) 771, (int) 1, (int) 0);
+        GlStateManager.color((float) var6, (float) var7, (float) var8, (float) var11);
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(left, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, top, 0.0).endVertex();
+        worldRenderer.pos(left, top, 0.0).endVertex();
+        tessellator.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+    }
+    public static void rectangleBordered(double x, double y, double x1, double y1, double width, int internalColor,
+                                         int borderColor) {
+        RenderUtils.rectangle(x + width, y + width, x1 - width, y1 - width, internalColor);
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+        RenderUtils.rectangle(x + width, y, x1 - width, y + width, borderColor);
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+        RenderUtils.rectangle(x, y, x + width, y1, borderColor);
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+        RenderUtils.rectangle(x1 - width, y, x1, y1, borderColor);
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+        RenderUtils.rectangle(x + width, y1 - width, x1 - width, y1, borderColor);
+        GlStateManager.color((float) 1.0f, (float) 1.0f, (float) 1.0f, (float) 1.0f);
+    }
+    public static void drawFace(int x, int y,float scale, AbstractClientPlayer target) {
+        try {
+            ResourceLocation skin = target.getLocationSkin();
+            Minecraft.getMinecraft().getTextureManager().bindTexture(skin);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glColor4f(1, 1, 1, 1);
+            Gui.drawScaledCustomSizeModalRect(x, y, 8.0f, 8.0f, 8, 8, (int)scale, (int)scale, 64.0f, 64.0f);
+            GL11.glDisable(GL11.GL_BLEND);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void connectPoints(float xOne, float yOne, float xTwo, float yTwo) {

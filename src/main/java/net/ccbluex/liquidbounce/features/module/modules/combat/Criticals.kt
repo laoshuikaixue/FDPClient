@@ -30,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "AAC5Packet", "Packet", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "AAC5Packet", "Packet", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -211,6 +211,19 @@ class Criticals : Module() {
                     mc.thePlayer.triggerAchievement(StatList.jumpStat)
                     sendCriticalPacket(xOffset = motionX / 3, yOffset = 0.20000004768372, zOffset = motionZ / 3, ground = false)
                     sendCriticalPacket(xOffset = motionX / 1.5, yOffset = 0.12160004615784, zOffset = motionZ / 1.5, ground = false)
+                }
+
+                "non-calculable" -> {
+                    sendCriticalPacket(yOffset = 1E-5, ground = false)
+                    sendCriticalPacket(yOffset = 1E-7, ground = false)
+                    sendCriticalPacket(yOffset = - 1E-6, ground = false)
+                    sendCriticalPacket(yOffset = - 1E-4, ground = false)
+                }
+
+                "invalid" -> {
+                    sendCriticalPacket(yOffset = 1E+27, ground = false)
+                    sendCriticalPacket(yOffset = - 1E+68, ground = false)
+                    sendCriticalPacket(yOffset = 1E+41, ground = false)
                 }
 
                 "tphop" -> {

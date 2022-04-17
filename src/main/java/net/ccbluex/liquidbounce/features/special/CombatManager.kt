@@ -8,6 +8,7 @@ import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.network.play.server.S02PacketChat
 
 class CombatManager : Listenable, MinecraftInstance() {
     private val lastAttackTimer = MSTimer()
@@ -97,6 +98,38 @@ class CombatManager : Listenable, MinecraftInstance() {
         }
 
         return focusedPlayerList.contains(entity)
+    }
+
+    private var huayutingbans: Long = 0
+    @EventTarget
+    fun onPacket(event: PacketEvent) {
+        val packet = event.packet
+        if (packet is S02PacketChat) {
+            val text = packet.chatComponent.unformattedText
+            if (text.contains("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■", true)) {
+                huayutingbans += 1
+                return
+            }
+        }
+    }
+
+    fun gethuayutingbans(): Long {
+        return huayutingbans
+    }
+
+    private var killCounts: Long = 0
+    @EventTarget
+    fun onKilled(event: EntityKilledEvent) {
+        val target = event.targetEntity
+
+        if (target is EntityPlayer) {
+            killCounts += 1
+            return
+        }
+    }
+
+    fun getKillCounts(): Long {
+        return killCounts
     }
 
     override fun handleEvents() = true

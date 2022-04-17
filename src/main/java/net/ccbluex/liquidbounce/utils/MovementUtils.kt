@@ -33,6 +33,13 @@ object MovementUtils : MinecraftInstance() {
         return sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ).toFloat()
     }
 
+    fun isOnGround(height: Double): Boolean {
+        return !mc.theWorld.getCollidingBoundingBoxes(
+            mc.thePlayer,
+            mc.thePlayer.entityBoundingBox.offset(0.0, -height, 0.0)
+        ).isEmpty()
+    }
+
     fun getSpeed2(): Double {
         return getSpeed2(mc.thePlayer)
     }

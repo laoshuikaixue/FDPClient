@@ -26,7 +26,7 @@ import kotlin.concurrent.schedule
 @ModuleInfo(name = "AutoPlay", category = ModuleCategory.MISC)
 class AutoPlay : Module() {
 
-    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HuaYuTingGG", "HuaYuTing32", "HuaYuTing64"), "RedeSky")
+    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HuaYuTingBWGG1", "HuaYuTingBWGG2", "HuaYuTingMW"), "RedeSky")
     private val delayValue = IntegerValue("JoinDelay", 3, 0, 7)
 
     private var clicking = false
@@ -152,26 +152,22 @@ class AutoPlay : Module() {
                     }
                     process(packet.chatComponent)
                 }
-                "huayutinggg" -> {
+                "huayutingbwgg1" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {
                         mc.thePlayer.sendChatMessage("@ GG")
                         LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
-                "huayuting32" -> {
-                    if (text.contains("      喜欢      一般      不喜欢", true)) {
-                        mc.thePlayer.sendChatMessage("GG")
-                        queueAutoPlay {
-                            mc.thePlayer.sendChatMessage("/game bwxp-32")
-                        }
+                "huayutingbwgg2" -> {
+                    if (text.contains("[起床战争] Game 结束！感谢您的参与！", true)) {
+                        mc.thePlayer.sendChatMessage("@ GG")
+                        LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
-                "huayuting64" -> {
-                    if (text.contains("      喜欢      一般      不喜欢", true)) {
-                        mc.thePlayer.sendChatMessage("GG")
-                        queueAutoPlay {
-                            mc.thePlayer.sendChatMessage("/game bwxp-64")
-                        }
+                "huayutingmw" -> {
+                    if (text.contains("                                击杀排行榜", true)) {
+                        mc.thePlayer.sendChatMessage("!GG")
+                        LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
             }
