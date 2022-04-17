@@ -458,8 +458,8 @@ module.SilentDisconnect.description=当你与服务器断开连接时，不会�
 module.AutoKit.name=自动套件
 module.AutoKit.description=在BlocksMC Skywars中自动为您选择套件
 
-module.NewNameTags.name=新的名称标签
-module.NewNameTags.description=更好的改变名称标签的样式让你能持续看到
+#module.NewNameTags.name=新的名称标签
+#module.NewNameTags.description=更好的改变名称标签的样式让你能持续看到
 
 module.PackSpoofer.name=防止资源包
 module.PackSpoofer.description=防止服务器强制您下载其资源包
