@@ -159,7 +159,7 @@ class AutoPlay : Module() {
                     }
                 }
                 "huayutingbwgg2" -> {
-                    if (text.contains("[起床战争] Game 结束！感谢您的参与！", true)) {
+                    if (text.contains("赢得了游戏", true)) {
                         mc.thePlayer.sendChatMessage("@ GG")
                         LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
