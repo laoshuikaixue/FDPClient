@@ -479,8 +479,8 @@ module.Performance.description=Make the game faster
 module.AutoKit.name=AutoKit
 module.AutoKit.description=Automatically selects kits for you in BlocksMC Skywars
 
-#module.NewNameTags.name=NewNameTags
-#module.NewNameTags.description=Render the name tag
+# module.NewNameTags.name=NewNameTags
+# module.NewNameTags.description=Render the name tag
 
 module.PackSpoofer.name=PackSpoofer
 module.PackSpoofer.description=Prevents servers from forcing you to download their resource pack

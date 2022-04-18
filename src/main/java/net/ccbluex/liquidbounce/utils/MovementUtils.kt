@@ -365,4 +365,7 @@ object MovementUtils : MinecraftInstance() {
         moveEvent.x = forward * moveSpeed * mx + strafe * moveSpeed * mz
         moveEvent.z = forward * moveSpeed * mz - strafe * moveSpeed * mx
     }
+    fun getPredictedMotionY(motionY: Double): Double {
+        return (motionY - 0.08) * 0.98f
+    }
 }

@@ -1,7 +1,9 @@
 package net.ccbluex.liquidbounce.utils
 
 import net.ccbluex.liquidbounce.utils.MinecraftInstance.mc
+import net.minecraft.block.Block
 import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.BlockPos
 
 object PlayerUtils {
     fun randomUnicode(str: String): String {
@@ -31,5 +33,14 @@ object PlayerUtils {
             off += 2
         }
         return false
+    }
+    fun getBlockRelativeToPlayer(offsetX: Double, offsetY: Double, offsetZ: Double): Block? {
+        return mc.theWorld.getBlockState(
+            BlockPos(
+                mc.thePlayer.posX + offsetX,
+                mc.thePlayer.posY + offsetY,
+                mc.thePlayer.posZ + offsetZ
+            )
+        ).block
     }
 }
