@@ -106,7 +106,7 @@ class CombatManager : Listenable, MinecraftInstance() {
         val packet = event.packet
         if (packet is S02PacketChat) {
             val text = packet.chatComponent.unformattedText
-            if (text.contains("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■", true)) {
+            if (text.contains("在本局游戏中行为异常, 已被踢出游戏并封禁处罚", true)) {
                 huayutingbans += 1
                 return
             }
