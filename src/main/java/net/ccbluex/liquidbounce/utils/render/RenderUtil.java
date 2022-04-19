@@ -98,7 +98,7 @@ public final class RenderUtil extends MinecraftInstance {
         if (!disableAlpha) {
             GL11.glDisable(3008);
         }
-        RenderUtils.mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/Effects/" + image + ".png"));
+        RenderUtils.mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/misc/" + image + ".png"));
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         drawModalRectWithCustomSizedTexture(x, y, 0.0f, 0.0f, width, height, width, height);
         if (!enableBlend) {

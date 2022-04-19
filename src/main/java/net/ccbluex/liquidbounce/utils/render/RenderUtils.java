@@ -115,7 +115,7 @@ public final class RenderUtils extends MinecraftInstance {
         final boolean disableAlpha = !glIsEnabled(GL_ALPHA_TEST);
         if (!enableBlend) glEnable(GL_BLEND);
         if (!disableAlpha) glDisable(GL_ALPHA_TEST);
-        mc.getTextureManager().bindTexture(new ResourceLocation("Insane/" + image + ".png"));
+        mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/misc/" + image + ".png"));
         GlStateManager.color(1F, 1F, 1F, 1F);
         RenderUtils.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
         if (!enableBlend) glDisable(GL_BLEND);
@@ -126,7 +126,7 @@ public final class RenderUtils extends MinecraftInstance {
         GL11.glPushMatrix();
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
-        mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/" + image + ".png"));
+        mc.getTextureManager().bindTexture(new ResourceLocation("fdpclient/misc/" + image + ".png"));
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
         Gui.drawModalRectWithCustomSizedTexture((int)x, (int)y, 0.0f, 0.0f, (int)width, (int)height, (int)width, (int)height);
         GlStateManager.disableBlend();
