@@ -7,13 +7,18 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.movement.flys.FlyMode
+import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.ClassUtils
+import net.ccbluex.liquidbounce.utils.render.Colors
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.ListValue
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.network.play.server.S19PacketEntityStatus
+import net.minecraft.util.MathHelper
 import org.lwjgl.input.Keyboard
 import java.awt.Color
+import java.math.BigDecimal
 
 @ModuleInfo(name = "Fly", category = ModuleCategory.MOVEMENT, autoDisable = EnumAutoDisableType.FLAG, keyBind = Keyboard.KEY_F)
 class Fly : Module() {
@@ -39,6 +44,7 @@ class Fly : Module() {
     // Visuals
     private val markValue = ListValue("Mark", arrayOf("Up", "Down", "Off"), "Up")
     private val fakeDamageValue = BoolValue("FakeDamage", false)
+    private val speedDisplay = BoolValue("speedDisplay", true)
 
     var launchX = 0.0
     var launchY = 0.0
@@ -79,6 +85,24 @@ class Fly : Module() {
         }
 
         mode.onDisable()
+    }
+
+    @EventTarget
+    fun onRender2D(event: Render2DEvent?) {
+        if (speedDisplay.get()) {
+            val sr = ScaledResolution(mc)
+            val xDiff = (mc.thePlayer.posX - mc.thePlayer.lastTickPosX) * 2
+            val zDiff = (mc.thePlayer.posZ - mc.thePlayer.lastTickPosZ) * 2
+            val bg = BigDecimal(MathHelper.sqrt_double(xDiff * xDiff + zDiff * zDiff) * 10.0)
+            val speed = (bg.toInt() * mc.timer.timerSpeed).toInt()
+            val str = speed.toString() + "block/s"
+            Fonts.fontSFUI35.drawString(
+                str,
+                (sr.scaledWidth - Fonts.fontSFUI35.getStringWidth(str)) / 2,
+                sr.scaledHeight / 2 - 20,
+                Colors.WHITE.c
+            )
+        }
     }
 
     @EventTarget

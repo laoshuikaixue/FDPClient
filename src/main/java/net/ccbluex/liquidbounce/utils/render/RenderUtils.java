@@ -1545,4 +1545,14 @@ public final class RenderUtils extends MinecraftInstance {
         final Color color = new Color(n);
         return new Color(0.003921569f * color.getRed(), 0.003921569f * color.getGreen(), 0.003921569f * color.getBlue(), n2).getRGB();
     }
+    public static void drawShadow(float x, float y, float width, float height) {
+        drawTexturedRect(x - 9, y - 9, 9, 9, "paneltopleft");
+        drawTexturedRect(x - 9, y + height, 9, 9, "panelbottomleft");
+        drawTexturedRect(x + width, y + height, 9, 9, "panelbottomright");
+        drawTexturedRect(x + width, y - 9, 9, 9, "paneltopright");
+        drawTexturedRect(x - 9, y, 9, height, "panelleft");
+        drawTexturedRect(x + width, y, 9, height, "panelright");
+        drawTexturedRect(x, y - 9, width, 9, "paneltop");
+        drawTexturedRect(x, y + height, width, 9, "panelbottom");
+    }
 }

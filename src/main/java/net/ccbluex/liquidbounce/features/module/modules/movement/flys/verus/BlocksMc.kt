@@ -39,10 +39,10 @@ class NewBlocksMcFly : FlyMode("BlocksMc") {
         mc.thePlayer.motionY = 0.0
         mc.thePlayer.motionZ = 0.0
 
-        if (mc.gameSettings.keyBindJump.isKeyDown) {
+        if (mc.gameSettings.keyBindJump.isKeyDown()) {
             mc.thePlayer.motionY += speedValue.get() * 0.5
         }
-        if (mc.gameSettings.keyBindSneak.isKeyDown) {
+        if (mc.gameSettings.keyBindSneak.isKeyDown()) {
             mc.thePlayer.motionY -= speedValue.get() * 0.5
         }
 
