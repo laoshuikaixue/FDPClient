@@ -76,18 +76,14 @@ class NewEffect : Element() {
             )
             RenderUtils.drawShadow(0f, Math.round(potionData.translate.y).toFloat(), 120f, 30f)
             val posY = potionData.translate.y + 13f
+            val PType = I18n.format(potion.name)
             Fonts.fontMiSansNormal35.drawString(
-                name + " " + intToRomanByGreedy(potionEffect.amplifier + 1),
-                29f,
-                posY - mc.fontRendererObj.FONT_HEIGHT,
-                realpha.reAlpha(
-                    Colors.WHITE.c, 0.8f
-                )
+                PType.replace("\u00a7.".toRegex(), ""), 29f, (
+                        posY - mc.fontRendererObj.FONT_HEIGHT), realpha.reAlpha(potion.liquidColor,0.8f)
             )
-            Fonts.font35.drawString(
-                Potion.getDurationString(potionEffect), 29f, posY + 4.0f, realpha.reAlpha(
-                    Color(200, 200, 200).rgb, 0.5f
-                )
+            Fonts.fontMiSansNormal35.drawString(
+                Potion.getDurationString(potionEffect).replace("\u00a7.".toRegex(), ""),
+                29f, posY + 4.0f, RenderUtil.reAlpha(Color(200, 200, 200).rgb, 0.5f)
             )
             if (potion.hasStatusIcon()) {
                 GlStateManager.pushMatrix()
