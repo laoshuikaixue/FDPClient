@@ -96,12 +96,8 @@ class Fly : Module() {
             val bg = BigDecimal(MathHelper.sqrt_double(xDiff * xDiff + zDiff * zDiff) * 10.0)
             val speed = (bg.toInt() * mc.timer.timerSpeed).toInt()
             val str = speed.toString() + "block/s"
-            Fonts.fontSFUI35.drawString(
-                str,
-                (sr.scaledWidth - Fonts.fontSFUI35.getStringWidth(str)) / 2,
-                sr.scaledHeight / 2 - 20,
-                Colors.WHITE.c
-            )
+            RenderUtils.drawRect(sr.scaledWidth / 2F - 50F, 60F, sr.scaledWidth / 2F + 50F, 72F, Color(0, 0, 0, 140).rgb)
+            Fonts.fontSFUI35.drawString(str,(sr.scaledWidth - Fonts.fontSFUI35.getStringWidth(str)) / 2F, 62F, Color(220, 220, 50).rgb)
         }
     }
 

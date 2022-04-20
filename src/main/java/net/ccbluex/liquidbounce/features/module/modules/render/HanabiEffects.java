@@ -26,14 +26,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-@ModuleInfo(name = "Effects", category = ModuleCategory.RENDER)
-public class Effects extends Module {
+@ModuleInfo(name = "HanabiEffects", category = ModuleCategory.RENDER)
+public class HanabiEffects extends Module {
     public static final FloatValue bordRad = new FloatValue("BorderRadius",6F,0F,8F);
     public static final IntegerValue r = new IntegerValue("R", 0, 0, 255);
     public static final IntegerValue g = new IntegerValue("G", 160, 0, 255);
     public static final IntegerValue b = new IntegerValue("B", 255, 0, 255);
 
-    public Effects() {
+    public HanabiEffects() {
         setState(true);
     }
     @EventTarget
