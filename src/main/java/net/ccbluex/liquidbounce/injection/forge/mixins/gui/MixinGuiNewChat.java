@@ -184,7 +184,7 @@ public abstract class MixinGuiNewChat {
 
                                 if(hud.getState() && hud.getChatRectValue().get()) {
                                     if (hud.getChatAnimValue().get() && lineBeingDrawn <= newLines && !flag)
-                                        RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float)d0 / 0.5F)).getRGB());
+                                        RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, new Color(0F, 0F, 0F, animationPercent * ((float)d0 / 2F)).getRGB());
                                     else
                                         RenderUtils.drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 }
@@ -195,9 +195,9 @@ public abstract class MixinGuiNewChat {
                                 String s = fixString(chatline.getChatComponent().getFormattedText());
                                 GlStateManager.enableBlend();
                                 if (hud.getState() && hud.getChatAnimValue().get() && lineBeingDrawn <= newLines)
-                                    (canFont?Fonts.fontMiSansNormal35:this.mc.fontRendererObj).drawString(s, (float)i2, (float)(j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float)d0).getRGB(), true);
+                                    (canFont? Fonts.fontMiSansNormal35:this.mc.fontRendererObj).drawString(s, (float)i2, (float)(j2 - 8), new Color(1F, 1F, 1F, animationPercent * (float)d0).getRGB(), true);
                                 else
-                                    (canFont? Fonts.fontMiSansNormal35:this.mc.fontRendererObj).drawString(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), true);
+                                    (canFont?Fonts.fontMiSansNormal35:this.mc.fontRendererObj).drawString(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24), true);
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }

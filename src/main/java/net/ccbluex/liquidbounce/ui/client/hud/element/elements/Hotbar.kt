@@ -13,8 +13,6 @@ import kotlin.collections.ArrayList
 
 
 @ElementInfo(name = "Hotbar") class Hotbar(x: Double = 40.0, y: Double = 100.0) : Element(x, y) {
-
-
     val slotlist = mutableListOf<hotbarutil>()
 
     private var lastSlot = -1

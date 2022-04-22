@@ -15,7 +15,7 @@ class BlocksMcBHop : SpeedMode("BlocksMcBHop") {
             if (MovementUtils.isMoving()) {
                 mc.gameSettings.keyBindJump.pressed = false
                 if (mc.thePlayer.onGround) {
-                    MovementUtils.strafe(0.41F)
+                    MovementUtils.strafe(0.65F)
                     mc.thePlayer.jump()
                     mc.thePlayer.motionY = 0.330999998688698
                     event.y = 0.42
