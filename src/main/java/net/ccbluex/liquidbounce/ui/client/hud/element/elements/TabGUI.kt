@@ -24,7 +24,6 @@ import java.awt.Color
 
 @ElementInfo(name = "TabGUI", blur = true)
 class TabGUI(x: Double = 5.0, y: Double = 25.0) : Element(x = x, y = y) {
-    private val blurStrength = FloatValue("BlurStrength", 1F, 0F, 30F)
     private val rainbowX = FloatValue("Rainbow-X", -1000F, -2000F, 2000F)
     private val rainbowY = FloatValue("Rainbow-Y", -1000F, -2000F, 2000F)
     private val redValue = IntegerValue("Rectangle Red", 0, 0, 255)
@@ -51,7 +50,7 @@ class TabGUI(x: Double = 5.0, y: Double = 25.0) : Element(x = x, y = y) {
     private val oldRainbowSaturationValue = FloatValue("OldRainbow-Saturation", 0.9f, 0f, 1f)
     private val oldRainbowBrightnessValue = FloatValue("OldRainbow-Brightness", 1f, 0f, 1f)
     private val arrowsValue = BoolValue("Arrows", true)
-    private val fontValue = FontValue("Font", Fonts.font35)
+    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal35)
     private val textShadow = BoolValue("TextShadow", false)
     private val textFade = BoolValue("TextFade", true)
     private val textPositionY = FloatValue("TextPosition-Y", 2F, 0F, 5F)
