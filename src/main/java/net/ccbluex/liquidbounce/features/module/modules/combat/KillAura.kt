@@ -192,6 +192,7 @@ class KillAura : Module() {
     private val limitedMultiTargetsValue = IntegerValue("LimitedMultiTargets", 0, 0, 50).displayable { targetModeValue.equals("Multi") }
 
     // Visuals
+    private val noBadPacketsValue = BoolValue("NoBadPackets", false)
     private val markValue = ListValue("Mark", arrayOf("Liquid", "FDP", "Block", "Jello", "Sims", "None"), "FDP")
     private val circleValue = BoolValue("Circle", false)
     private val circleRedValue = IntegerValue("CircleRed", 255, 0, 255).displayable { circleValue.get() }
@@ -208,6 +209,8 @@ class KillAura : Module() {
     var target: EntityLivingBase? = null
     private var currentTarget: EntityLivingBase? = null
     private var hitable = false
+    private var lastPacketSent = false
+    private var packetSent = false
     private val prevTargetEntities = mutableListOf<Int>()
     private val discoveredTargets = mutableListOf<EntityLivingBase>()
     private val inRangeDiscoveredTargets = mutableListOf<EntityLivingBase>()
@@ -257,6 +260,7 @@ class KillAura : Module() {
         target = null
         currentTarget = null
         hitable = false
+        packetSent = false
         prevTargetEntities.clear()
         discoveredTargets.clear()
         inRangeDiscoveredTargets.clear()
@@ -274,6 +278,10 @@ class KillAura : Module() {
      */
     @EventTarget
     fun onMotion(event: MotionEvent) {
+        if (event.eventState == EventState.POST) {
+            packetSent = false
+        }
+
         if (mc.thePlayer.isRiding) {
             return
         }
@@ -287,6 +295,9 @@ class KillAura : Module() {
         if (blockTimingValue.equals("Both") ||
             (blockTimingValue.equals("Pre") && event.eventState == EventState.PRE) ||
             (blockTimingValue.equals("Post") && event.eventState == EventState.POST)) {
+            if(packetSent && noBadPacketsValue.get()) {
+                return
+            }
             // AutoBlock
             if (autoBlockValue.equals("Range") && discoveredTargets.isNotEmpty() && (!autoBlockPacketValue.equals("AfterAttack")
                         || discoveredTargets.any { mc.thePlayer.getDistanceToEntityBox(it) > maxRange }) && canBlock) {
@@ -635,9 +646,13 @@ class KillAura : Module() {
             return
         }
 
-        while (clicks > 0) {
-            runAttack()
-            clicks--
+        try {
+            while (clicks > 0) {
+                runAttack()
+                clicks--
+            }
+        } catch (e: java.lang.IllegalStateException) {
+            return
         }
     }
 
@@ -768,8 +783,12 @@ class KillAura : Module() {
 
     /**
      * Attack [entity]
+     * @throws IllegalStateException when bad packets protection
      */
     private fun attackEntity(entity: EntityLivingBase) {
+        if(packetSent && noBadPacketsValue.get()) {
+            throw java.lang.IllegalStateException("Attack canceled because of bad packets protection")
+        }
         // Call attack event
         val event = AttackEvent(entity)
         LiquidBounce.eventManager.callEvent(event)
@@ -781,11 +800,16 @@ class KillAura : Module() {
         if (!autoBlockPacketValue.equals("Vanilla") && (mc.thePlayer.isBlocking || blockingStatus)) {
             mc.netHandler.addToSendQueue(C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN))
             blockingStatus = false
+            if(noBadPacketsValue.get()) {
+                packetSent = true
+                throw java.lang.IllegalStateException("Attack canceled because of bad packets protection")
+            }
         }
 
         // Attack target
         runSwing()
 
+        packetSent = true
         mc.netHandler.addToSendQueue(C02PacketUseEntity(entity, C02PacketUseEntity.Action.ATTACK))
 
         if (keepSprintValue.get()) {
@@ -934,11 +958,15 @@ class KillAura : Module() {
      * Start blocking
      */
     private fun startBlocking(interactEntity: Entity, interact: Boolean) {
-        if (autoBlockValue.equals("Range") && mc.thePlayer.getDistanceToEntityBox(interactEntity)> autoBlockRangeValue.get()) {
+        if (autoBlockValue.equals("Range") && mc.thePlayer.getDistanceToEntityBox(interactEntity) > autoBlockRangeValue.get()) {
             return
         }
 
         if (blockingStatus) {
+            return
+        }
+
+        if(packetSent && noBadPacketsValue.get()) {
             return
         }
 
@@ -949,6 +977,7 @@ class KillAura : Module() {
 
         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()))
         blockingStatus = true
+        packetSent = true
     }
 
     /**
@@ -958,6 +987,7 @@ class KillAura : Module() {
         if (blockingStatus) {
             mc.netHandler.addToSendQueue(C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, if (MovementUtils.isMoving()) BlockPos(-1, -1, -1) else BlockPos.ORIGIN, EnumFacing.DOWN))
             blockingStatus = false
+            packetSent = true
         }
     }
 
