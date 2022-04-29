@@ -50,12 +50,12 @@ class Jesus : Module() {
                 }
             }
             "jump" -> {
-                if (BlockUtils.getBlock(blockPos) === Blocks.water && mc.thePlayer.onGround) {
+                if (getBlock(blockPos) === Blocks.water && mc.thePlayer.onGround) {
                     mc.thePlayer.motionY = jumpMotionValue.get().toDouble()
                 }
             }
             "aac" -> {
-                if (!mc.thePlayer.onGround && BlockUtils.getBlock(blockPos) === Blocks.water || mc.thePlayer.isInWater) {
+                if (!mc.thePlayer.onGround && getBlock(blockPos) === Blocks.water || mc.thePlayer.isInWater) {
                     if (!mc.thePlayer.isSprinting) {
                         mc.thePlayer.motionX *= 0.99999
                         mc.thePlayer.motionY *= 0.0
@@ -86,8 +86,8 @@ class Jesus : Module() {
                         mc.thePlayer.motionY = +0.09
                         return
                     }
-                    val block = BlockUtils.getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ))
-                    val blockUp = BlockUtils.getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1.1, mc.thePlayer.posZ))
+                    val block = getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1, mc.thePlayer.posZ))
+                    val blockUp = getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY + 1.1, mc.thePlayer.posZ))
                     if (blockUp is BlockLiquid) {
                         mc.thePlayer.motionY = 0.1
                     } else if (block is BlockLiquid) {
@@ -130,7 +130,7 @@ class Jesus : Module() {
                 }
             }
             "aac4.2.1" -> {
-                if (!mc.thePlayer.onGround && BlockUtils.getBlock(blockPos) === Blocks.water || mc.thePlayer.isInWater) {
+                if (!mc.thePlayer.onGround && getBlock(blockPos) === Blocks.water || mc.thePlayer.isInWater) {
                     mc.thePlayer.motionY *= 0.0
                     mc.thePlayer.jumpMovementFactor = 0.08f
                     if (mc.thePlayer.fallDistance > 0) {
@@ -216,7 +216,7 @@ class Jesus : Module() {
             return
         }
 
-        val block = BlockUtils.getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.01, mc.thePlayer.posZ))
+        val block = getBlock(BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 0.01, mc.thePlayer.posZ))
         if (noJumpValue.get() && block is BlockLiquid) {
             event.cancelEvent()
         }
