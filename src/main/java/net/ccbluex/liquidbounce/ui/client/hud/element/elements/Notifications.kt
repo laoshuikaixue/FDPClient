@@ -162,7 +162,7 @@ class Notification(
         RenderUtils.drawRoundedCornerRect(0F, 0F, width.toFloat(), height.toFloat()-5f,2f ,colors.rgb)
         RenderUtils.drawRoundedCornerRect(0F, 0F, max(width - width * ((nowTime - displayTime) / (animeTime * 2F + time)), 0F), height.toFloat()-5f,2f ,Color(0,0,0,26).rgb)
         //RenderUtils.drawRoundedCornerRect(2F, 2F, width.toFloat()-2F, height.toFloat()-7F,1f ,Color(242,242,242, 100).rgb)
-        font.drawString(content, 4F, 10.5F, Color(31,41,55).rgb,false)
+        font.drawString(content, 4F, 10.5F, Color.WHITE.rgb,false)
         font.drawString(title, 4F, 2F, ColorUtils.hslRainbow(index + 1, indexOffset = 100 * 5).rgb, false)
         return false
     }

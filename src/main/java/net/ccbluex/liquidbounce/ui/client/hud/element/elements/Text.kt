@@ -217,10 +217,10 @@ class Text(
                 "Client", 5F + Fonts.fontMiSansNormal40.getStringWidth("FDP"), 13F,Color(255,255,255,180).rgb
             )
             RenderUtils.drawRect(5f,22.5f,85f,22.8f,Color(200,200,200,120).rgb)
-            Fonts.fontComfortaa40.drawString(
+            Fonts.fontComfortaa35.drawString(
                 LiquidBounce.CLIENT_VERSION + " | "+ LiquidBounce.MINECRAFT_VERSION, 5F, 27F,Color(255,255,255,180).rgb
             )
-            Fonts.fontComfortaa30.drawString(
+            Fonts.fontComfortaa40.drawString(
                 "Fork by LaoShui", 5F, 37F,Color(255,255,255,180).rgb
             )
         }
