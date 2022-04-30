@@ -6,8 +6,8 @@
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
 A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
 
-Website: https://getfdp.today/  
-Latest: [github-actions](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)
+Latest: [github-actions](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)  
+QQ Group: https://jq.qq.com/?_wv=1027&k=PNxmBQTu
 
 ## Issues
 If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/laoshuikaixue/FDPClientissues).
