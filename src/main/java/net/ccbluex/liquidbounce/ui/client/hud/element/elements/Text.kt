@@ -60,7 +60,7 @@ class Text(
     private val rectBlueValue = IntegerValue("RectBlue", 0, 0, 255)
     private val rectAlphaValue = IntegerValue("RectAlpha", 255, 0, 255)
     val rectColorModeValue = ListValue("RectColor", arrayOf("Custom", "Rainbow", "AnotherRainbow", "SkyRainbow"), "Custom")
-    val rectValue = ListValue("Rect", arrayOf("Normal", "RNormal", "OneTap", "Skeet", "None"), "None")
+    val rectValue = ListValue("Rect", arrayOf("Normal", "RNormal", "OneTap", "Skeet", "None","Logo"), "None")
     private val rectExpandValue = FloatValue("RectExpand", 0.3F, 0F, 1F)
     private val rainbowSpeed = IntegerValue("RainbowSpeed", 10, 1, 10)
     private val rainbowIndex = IntegerValue("RainbowIndex", 1, 1, 20)
@@ -196,18 +196,38 @@ class Text(
                 RenderUtils.drawOutLineRect(-9.0, -9.0, (fontRenderer.getStringWidth(displayText) + 8).toDouble(), fontRenderer.FONT_HEIGHT.toDouble() + 6.0, 4.0, Color(59, 59, 59).rgb, Color(40, 40, 40).rgb)
                 RenderUtils.drawOutLineRect(-4.0, -4.0, (fontRenderer.getStringWidth(displayText) + 3).toDouble(), fontRenderer.FONT_HEIGHT.toDouble() + 1.0, 1.0, Color(18, 18, 18).rgb, Color(0, 0, 0).rgb)
             }
-        }
+            "logo" -> {
 
-        fontRenderer.drawString(displayText, 0F, 0F, when (colorModeValue.get().lowercase()) {
-            "rainbow" -> ColorUtils.hslRainbow(rainbowIndex.get(), indexOffset = 100 * rainbowSpeed.get()).rgb
-            "skyrainbow" -> ColorUtils.skyRainbow(rainbowIndex.get(), 1F, 1F, rainbowSpeed.get().toDouble()).rgb
-            "anotherrainbow" -> ColorUtils.fade(color, 100, rainbowIndex.get()).rgb
-            else -> color.rgb
-        }, shadow.get())
+            }
+        }
+        if(!rectValue.get().contains("Logo")) {
+            fontRenderer.drawString(
+                displayText, 0F, 0F, when (colorModeValue.get().lowercase()) {
+                    "rainbow" -> ColorUtils.hslRainbow(rainbowIndex.get(), indexOffset = 100 * rainbowSpeed.get()).rgb
+                    "skyrainbow" -> ColorUtils.skyRainbow(rainbowIndex.get(), 1F, 1F, rainbowSpeed.get().toDouble()).rgb
+                    "anotherrainbow" -> ColorUtils.fade(color, 100, rainbowIndex.get()).rgb
+                    else -> color.rgb
+                }, shadow.get()
+            )
+        }else{
+            Fonts.fontRoboto50.drawString(
+                "FDP", 5F, 0F,Color(255,255,255,180).rgb
+            )
+            Fonts.fontComfortaa40.drawString(
+                "Client", 5F + Fonts.fontMiSansNormal40.getStringWidth("FDP"), 13F,Color(255,255,255,180).rgb
+            )
+            RenderUtils.drawRect(5f,22.5f,85f,22.8f,Color(200,200,200,120).rgb)
+            Fonts.fontComfortaa40.drawString(
+                LiquidBounce.CLIENT_VERSION + " | "+ LiquidBounce.MINECRAFT_VERSION, 5F, 27F,Color(255,255,255,180).rgb
+            )
+            Fonts.fontComfortaa30.drawString(
+                "Fork by LaoShui", 5F, 37F,Color(255,255,255,180).rgb
+            )
+        }
 
         if (editMode && mc.currentScreen is GuiHudDesigner && editTicks <= 40) {
             fontRenderer.drawString("_", fontRenderer.getStringWidth(displayText) + 2F,
-                    0F, Color.WHITE.rgb, shadow.get())
+                0F, Color.WHITE.rgb, shadow.get())
         }
 
         if (editMode && mc.currentScreen !is GuiHudDesigner) {
@@ -216,10 +236,10 @@ class Text(
         }
 
         return Border(
-                -2F,
-                -2F,
-                fontRenderer.getStringWidth(displayText) + 2F,
-                fontRenderer.FONT_HEIGHT.toFloat()
+            -2F,
+            -2F,
+            fontRenderer.getStringWidth(displayText) + 2F,
+            fontRenderer.FONT_HEIGHT.toFloat()
         )
     }
 

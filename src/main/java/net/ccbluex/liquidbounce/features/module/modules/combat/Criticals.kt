@@ -22,6 +22,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
+import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S0BPacketAnimation
 import net.minecraft.stats.StatList
@@ -30,7 +31,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "funny"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -90,6 +91,12 @@ class Criticals : Module() {
             }
 
             when (modeValue.get().lowercase()) {
+                "funny" -> {
+                    if(mc.thePlayer.onGround) {
+                        mc.thePlayer.sendQueue.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
+                    }
+                }
+
                 "newpacket" -> {
                     sendCriticalPacket(yOffset = 0.104080378093037,ground = false)
                     sendCriticalPacket(yOffset = 0.105454222033912,ground = false)
