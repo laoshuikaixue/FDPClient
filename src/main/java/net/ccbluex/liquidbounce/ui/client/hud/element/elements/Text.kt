@@ -6,7 +6,6 @@
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
 import net.ccbluex.liquidbounce.LiquidBounce
-import net.ccbluex.liquidbounce.features.special.CombatManager
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
@@ -47,8 +46,6 @@ class Text(
         val HOUR_FORMAT = SimpleDateFormat("HH:mm")
 
         val DECIMAL_FORMAT = DecimalFormat("#.##")
-
-        val DECIMAL_FORMAT2 = DecimalFormat("#.#")
     }
 
     val displayString = TextValue("DisplayText", "")
@@ -89,15 +86,28 @@ class Text(
     private fun getReplacement(str: String): String? {
         if (mc.thePlayer != null) {
             when (str) {
-                "x" -> return DECIMAL_FORMAT.format(mc.thePlayer.posX)
-                "y" -> return DECIMAL_FORMAT.format(mc.thePlayer.posY)
-                "z" -> return DECIMAL_FORMAT.format(mc.thePlayer.posZ)
+                "x" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.posX)
+                "y" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.posY)
+                "z" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.posZ)
+                "xInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.posX)
+                "yInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.posY)
+                "zInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.posZ)
                 "xdp" -> return mc.thePlayer.posX.toString()
                 "ydp" -> return mc.thePlayer.posY.toString()
                 "zdp" -> return mc.thePlayer.posZ.toString()
-                "velocity" -> return DECIMAL_FORMAT.format(sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ))
+                "velocity" -> return Text2.DECIMAL_FORMAT.format(sqrt(mc.thePlayer.motionX * mc.thePlayer.motionX + mc.thePlayer.motionZ * mc.thePlayer.motionZ))
                 "ping" -> return "${mc.thePlayer.ping}"
+                "health" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.health)
+                "maxHealth" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.maxHealth)
+                "healthInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.health)
+                "maxHealthInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.maxHealth)
+                "yaw" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.rotationYaw)
+                "pitch" -> return Text2.DECIMAL_FORMAT.format(mc.thePlayer.rotationPitch)
+                "yawInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.rotationYaw)
+                "pitchInt" -> return Text2.DECIMAL_FORMAT_INT.format(mc.thePlayer.rotationPitch)
                 "speed" -> return DECIMAL_FORMAT.format(MovementUtils.bps)
+                "hurtTime" -> return mc.thePlayer.hurtTime.toString()
+                "onGround" -> return mc.thePlayer.onGround.toString()
                 "attackDist" -> return if (LiquidBounce.combatManager.target != null) mc.thePlayer.getDistanceToEntity(LiquidBounce.combatManager.target).toString() + " Blocks" else "Hasn't attacked"
             }
         }
