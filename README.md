@@ -7,12 +7,12 @@
 A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
 
 Website: https://getfdp.today/  
-Latest: [github-actions](https://github.com/UnlegitMC/FDPClient/actions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
+Latest: [github-actions](https://github.com/laoshuikaixue/FDPClientactions/workflows/build.yml?query=event%3Apush) | https://getfdp.today/eap.html  
 Discord: https://discord.gg/55x7TaHWXG  
 Gitee mirror: https://gitee.com/fdpclient-cn/FDPClient
 
 ## Issues
-If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/UnlegitMC/FDPClient/issues).
+If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/laoshuikaixue/FDPClientissues).
 
 ## License
 This project is subject to the [GNU General Public License v3.0](LICENSE). This does only apply for source code located directly in this clean repository. During the development and compilation process, additional source code may be used to which we have obtained no rights. Such code is not covered by the GPL license.

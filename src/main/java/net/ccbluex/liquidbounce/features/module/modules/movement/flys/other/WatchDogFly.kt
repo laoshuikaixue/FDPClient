@@ -8,7 +8,7 @@ import net.ccbluex.liquidbounce.value.FloatValue
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 
-class WatchDogFly : FlyMode("NWatchDog") {
+class WatchDogFly : FlyMode("WatchDog") {
     private val motionValue = FloatValue("${valuePrefix}Motion", 0f, 0f, 1f)
 
     private var hasClipped = false

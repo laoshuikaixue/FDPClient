@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/laoshuikaixue/FDPClient
  */
 package net.ccbluex.liquidbounce.features.module.modules.player
 
@@ -22,7 +22,7 @@ import net.minecraft.network.play.client.C03PacketPlayer
 @ModuleInfo(name = "FastUse", category = ModuleCategory.PLAYER)
 class FastUse : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("NCP","Instant", "Timer", "CustomDelay", "DelayedInstant", "MinemoraTest", "AAC", "NewAAC"), "DelayedInstant")
+    private val modeValue = ListValue("Mode", arrayOf("NCP","Instant", "Timer", "CustomDelay", "DelayedInstant", "MinemoraTest", "AAC", "NewAAC", "AACv4_2"), "DelayedInstant")
     private val timerValue = FloatValue("Timer", 1.22F, 0.1F, 2.0F).displayable { modeValue.equals("Timer") }
     private val durationValue = IntegerValue("InstantDelay", 14, 0, 35).displayable { modeValue.equals("DelayedInstant") }
     private val delayValue = IntegerValue("CustomDelay", 0, 0, 300).displayable { modeValue.equals("CustomDelay") }
@@ -84,6 +84,18 @@ class FastUse : Module() {
                     }
 
                     // mc.playerController.onStoppedUsingItem(mc.thePlayer)
+                }
+                //move while eating -> flag. recommend enable noMove
+                "aacv4_2" -> {
+                    mc.timer.timerSpeed = 0.49F
+                    usedTimer = true
+                    if (mc.thePlayer.itemInUseDuration > 13) {
+                        repeat(23) {
+                            mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))
+                        }
+
+                        mc.playerController.onStoppedUsingItem(mc.thePlayer)
+                    }
                 }
                 "timer" -> {
                     mc.timer.timerSpeed = timerValue.get()

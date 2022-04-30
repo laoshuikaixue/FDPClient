@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/UnlegitMC/FDPClient/
+ * https://github.com/laoshuikaixue/FDPClient
  */
 package net.ccbluex.liquidbounce.features.module.modules.combat
 
@@ -30,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "AAC5Packet", "Packet", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -40,8 +40,7 @@ class Criticals : Module() {
     private val s08DelayValue = IntegerValue("FlagPauseTime", 100, 100, 5000).displayable { s08FlagValue.get() }
     private val hurtTimeValue = IntegerValue("HurtTime", 10, 0, 10)
     private val lookValue = BoolValue("UseC06Packet", false)
-    private val debugValue = BoolValue("DebugMessage", false)
-    // private val rsNofallValue = BoolValue("RedeNofall",true)
+    private val debugValue = BoolValue("DebugMessage", true)
 
     val msTimer = MSTimer()
     
@@ -94,15 +93,8 @@ class Criticals : Module() {
                 "newpacket" -> {
                     sendCriticalPacket(yOffset = 0.104080378093037,ground = false)
                     sendCriticalPacket(yOffset = 0.105454222033912,ground = false)
-                    sendCriticalPacket(yOffset = 0.102888018147468,ground = false)
+                    sendCriticalPacket(yOffset = 0.062522033912227, ground = false)
                     sendCriticalPacket(yOffset = 0.099634532004642,ground = false)
-                }
-
-                "aac5packet" -> {
-                    sendCriticalPacket(yOffset = 0.0625, ground = false)
-                    sendCriticalPacket(yOffset = 0.0433, ground = false)
-                    sendCriticalPacket(yOffset = 0.2088, ground = false)
-                    sendCriticalPacket(yOffset = 0.9963, ground = false)
                 }
 
                 "packet" -> {
@@ -110,6 +102,20 @@ class Criticals : Module() {
                     sendCriticalPacket(ground = false)
                     sendCriticalPacket(yOffset = 1.1E-5, ground = false)
                     sendCriticalPacket(ground = false)
+                }
+
+                "packet2" -> {
+                    sendCriticalPacket(yOffset = 0.0625, ground = false)
+                    sendCriticalPacket(yOffset = 0.0433, ground = false)
+                    sendCriticalPacket(yOffset = 0.2088, ground = false)
+                    sendCriticalPacket(yOffset = 0.9963, ground = false)
+                }
+
+                "packet3" -> {
+                    sendCriticalPacket(yOffset = 0.0625080378093, ground = false)
+                    sendCriticalPacket(yOffset = 0.1015634532004, ground = false)
+                    sendCriticalPacket(yOffset = 0.0140220332227, ground = false)
+                    sendCriticalPacket(yOffset = 0.0015082393037, ground = false)
                 }
 
                 "ncppacket" -> {
@@ -141,19 +147,6 @@ class Criticals : Module() {
                 }
 
                 "hypixel3" -> {
-                    for (offset in doubleArrayOf(0.06, 0.01)) {
-                        mc.thePlayer.sendQueue.addToSendQueue(
-                            C04PacketPlayerPosition(
-                                mc.thePlayer.posX,
-                                mc.thePlayer.posY + offset + Math.random() * 0.001,
-                                mc.thePlayer.posZ,
-                                false
-                            )
-                        )
-                    }
-                }
-
-                "hypixel4" -> {
                     for (offset in doubleArrayOf(0.011,0.02233445566,0.056876574557,0.096875875757)) {
                         mc.thePlayer.sendQueue.addToSendQueue(
                             C04PacketPlayerPosition(
