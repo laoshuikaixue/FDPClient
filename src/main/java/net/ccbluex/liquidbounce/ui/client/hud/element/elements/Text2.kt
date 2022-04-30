@@ -127,7 +127,7 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
                 "pitch" -> return DECIMAL_FORMAT.format(mc.thePlayer.rotationPitch)
                 "yawInt" -> return DECIMAL_FORMAT_INT.format(mc.thePlayer.rotationYaw)
                 "pitchInt" -> return DECIMAL_FORMAT_INT.format(mc.thePlayer.rotationPitch)
-                "speed" -> return Text.DECIMAL_FORMAT.format(MovementUtils.bps)
+                "speed" -> return DECIMAL_FORMAT.format(MovementUtils.bps)
                 "hurtTime" -> return mc.thePlayer.hurtTime.toString()
                 "onGround" -> return mc.thePlayer.onGround.toString()
                 "attackDist" -> return if (LiquidBounce.combatManager.target != null) mc.thePlayer.getDistanceToEntity(LiquidBounce.combatManager.target).toString() + " Blocks" else "Hasn't attacked"
@@ -140,6 +140,7 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
             "clientVersion" -> LiquidBounce.CLIENT_VERSION.toString()
             "clientCreator" -> LiquidBounce.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()
+            "fakefps" -> (Math.random()*10000 + 1000).toInt().toString()
             "date" -> DATE_FORMAT.format(System.currentTimeMillis())
             "time" -> HOUR_FORMAT.format(System.currentTimeMillis())
             "serverIp" -> ServerUtils.getRemoteIp()
@@ -365,7 +366,7 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
             "pitch",
             "yawInt",
             "pitchInt",
-            "bps",
+            "speed",
             "inBound",
             "outBound",
             "hurtTime",
@@ -375,6 +376,7 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
             "clientVersion",
             "clientCreator",
             "fps",
+            "fakefps",
             "date",
             "time",
             "serverIp",
@@ -386,7 +388,10 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
             "staffLastMin",
             "wdStatus",
             "sessionTime",
-            "worldTime"
+            "attackDist",
+            "worldTime",
+            "huayutingbans",
+            "kills"
         ).filter { it.startsWith(suggestStr, true) && it.length > suggestStr.length }.sortedBy { it.length }.reversed().toMutableList()
 
         pointer = pointer.coerceIn(0, (suggestion.size - 1).coerceAtLeast(0))
