@@ -526,3 +526,6 @@ module.LnkTargetHUD.description=Lnk.TargetHUD
 
 module.NoFallPlus.name=NoFallPlus
 module.NoFallPlus.description=Prevents you from taking fall damage
+
+module.Glide.name=Glide
+module.Glide.description=Glides fly

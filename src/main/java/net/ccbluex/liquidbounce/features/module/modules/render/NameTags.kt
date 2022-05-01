@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
+ * https://github.com/laoshuikaixue/FDPClient/
  */
 package net.ccbluex.liquidbounce.features.module.modules.render
 
@@ -29,13 +29,13 @@ import kotlin.math.roundToInt
 
 @ModuleInfo(name = "NameTags", category = ModuleCategory.RENDER)
 class NameTags : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Simple", "Liquid", "Jello"), "Simple")
+    private val modeValue = ListValue("Mode", arrayOf("Simple", "Liquid", "Jello"), "Jello")
     private val healthValue = BoolValue("Health", true)
     private val pingValue = BoolValue("Ping", true)
     private val distanceValue = BoolValue("Distance", false)
     private val armorValue = BoolValue("Armor", true)
     private val clearNamesValue = BoolValue("ClearNames", true)
-    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal40)
+    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal35)
     private val borderValue = BoolValue("Border", true)
     private val hackerValue = BoolValue("Hacker", true)
     private val jelloColorValue = BoolValue("JelloHPColor", true).displayable { modeValue.equals("Jello") }
@@ -88,9 +88,9 @@ class NameTags : Module() {
         val timer = mc.timer
 
         glTranslated( // Translate to player position with render pos and interpolate it
-                entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * timer.renderPartialTicks - renderManager.renderPosX,
-                entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks - renderManager.renderPosY + entity.eyeHeight.toDouble() + 0.55,
-                entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * timer.renderPartialTicks - renderManager.renderPosZ
+            entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * timer.renderPartialTicks - renderManager.renderPosX,
+            entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks - renderManager.renderPosY + entity.eyeHeight.toDouble() + 0.55,
+            entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * timer.renderPartialTicks - renderManager.renderPosZ
         )
 
         // Rotate view to player

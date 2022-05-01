@@ -505,3 +505,6 @@ module.LnkTargetHUD.description=Lnk.TargetHUD
 
 module.NoFallPlus.name=更好的无掉落伤害
 module.NoFallPlus.description=更好的抵消你的掉落伤害
+
+module.Glide.name=滑行
+module.Glide.description=滑行飞行

@@ -37,7 +37,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         Gui.drawRect(width / 2 - 60, bHeight - 30, width / 2 + 60, bHeight + 174, Integer.MIN_VALUE)
 
-        Fonts.fontRoboto50.drawCenteredString(LiquidBounce.CLIENT_NAME, (width / 2).toFloat(), (bHeight - 20).toFloat(), Color.WHITE.rgb, false)
+        Fonts.fontRoboto50.drawCenteredString(LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S, (width / 2).toFloat(), (bHeight - 20).toFloat(), Color.WHITE.rgb, false)
         mc.fontRendererObj.drawString(LiquidBounce.CLIENT_VERSION, 3F, (height - mc.fontRendererObj.FONT_HEIGHT - 2).toFloat(), 0xffffff, false)
         "§cWebsite: §fhttps://${LiquidBounce.WEBSITE}/".also { str ->
             mc.fontRendererObj.drawString(str, (this.width - mc.fontRendererObj.getStringWidth(str) - 3).toFloat(), (height - mc.fontRendererObj.FONT_HEIGHT - 2).toFloat(), 0xffffff, false)

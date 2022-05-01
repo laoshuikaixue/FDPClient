@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
+ * https://github.com/laoshuikaixue/FDPClient/
  */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
@@ -9,7 +9,6 @@ import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.launch.options.FancyUiLaunchOption;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.IChatComponent;
@@ -86,7 +85,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
     @Inject(method = "initGui", at = @At("RETURN"))
     private void init(CallbackInfo callbackInfo) {
-        inputField.yPosition = height + 1;
+        inputField.yPosition = height - 5;
         yPosOfInputField = inputField.yPosition;
     }
 
@@ -138,7 +137,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         if (yPosOfInputField > height - 12) yPosOfInputField -= 0.4F * delta;
         if (yPosOfInputField < height - 12) yPosOfInputField = height - 12;
 
-        inputField.yPosition = (int) yPosOfInputField;
+        inputField.yPosition = (int) yPosOfInputField - 1;
     }
 
     @Inject(method = "autocompletePlayerNames", at = @At("HEAD"))
@@ -169,19 +168,21 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         }
     }
 
-    @Inject(method = "onAutocompleteResponse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiChat;autocompletePlayerNames(F)V", shift = At.Shift.BEFORE), cancellable = true)
     private void onAutocompleteResponse(String[] autoCompleteResponse, CallbackInfo callbackInfo) {
         if (LiquidBounce.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
     }
-
+    public void draw(){
+    }
     /**
      * @author CCBlueX
      */
-    @Overwrite
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        Gui.drawRect(2, this.height - (int) fade, this.width - 2, this.height, Integer.MIN_VALUE);
-        this.inputField.drawTextBox();
+    @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
+    public void drawScreen(int mouseX, int mouseY, float partialTicks,CallbackInfo ci) {
+        //RenderUtils.drawRect(10,10,20,20,new Color(255,255,255,255).getRGB());
+        RenderUtils.drawRoundedCornerRect(1, this.height - (int) fade - 2, this.width - 4, this.height - 1 , 2f, new Color(255,255,255,50).getRGB());
+        RenderUtils.drawRoundedCornerRect(2, this.height - (int) fade - 1, this.width - 3, this.height - 2 ,3f, new Color(0,0,0,200).getRGB());
 
+        this.inputField.drawTextBox();
         FancyUiLaunchOption.INSTANCE.render(true, mouseX, mouseY);
 
         if (LiquidBounce.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix()))) {
@@ -193,7 +194,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
             if(result.length>0)
                 resultText = ((String)result[0]).substring(Math.min(((String)result[0]).length(),text.length()));
 
-            mc.fontRendererObj.drawStringWithShadow(resultText, inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition, new Color(165, 165, 165).getRGB());
+            mc.fontRendererObj.drawStringWithShadow(resultText, 5.5F + inputField.xPosition + mc.fontRendererObj.getStringWidth(inputField.getText()), inputField.yPosition+2f, new Color(165, 165, 165).getRGB());
         }
 
         IChatComponent ichatcomponent =
@@ -201,5 +202,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
         if (ichatcomponent != null)
             this.handleComponentHover(ichatcomponent, mouseX, mouseY);
+        ci.cancel();
     }
 }

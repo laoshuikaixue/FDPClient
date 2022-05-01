@@ -22,7 +22,6 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
-import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.network.play.server.S0BPacketAnimation
 import net.minecraft.stats.StatList
@@ -31,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -50,6 +49,7 @@ class Criticals : Module() {
     private var target = 0
     var jState = 0
     var aacLastState = false
+    var attacks = 0
 
     override fun onEnable() {
         if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302"){
@@ -62,6 +62,7 @@ class Criticals : Module() {
             mc.thePlayer.jump()
         }
         jState = 0
+        attacks = 0
     }
 
     @EventTarget
@@ -219,6 +220,15 @@ class Criticals : Module() {
                     sendCriticalPacket(yOffset = 1E+27, ground = false)
                     sendCriticalPacket(yOffset = - 1E+68, ground = false)
                     sendCriticalPacket(yOffset = 1E+41, ground = false)
+                }
+
+                "vulcansemi" -> {
+                    attacks++
+                    if(attacks > 6) {
+                        sendCriticalPacket(yOffset = 0.2, ground = false)
+                        sendCriticalPacket(yOffset = 0.1216, ground = false)
+                        attacks = 0
+                    }
                 }
 
                 "tphop" -> {

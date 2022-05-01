@@ -27,7 +27,7 @@ import net.minecraft.util.BlockPos
 
 @ModuleInfo(name = "AntiVoid", category = ModuleCategory.PLAYER)
 class AntiVoid : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Blink", "TPBack", "MotionFlag", "PacketFlag", "GroundSpoof", "OldHypixel", "Jartex", "OldCubecraft", "Watchdog"), "Blink")
+    private val modeValue = ListValue("Mode", arrayOf("Blink", "TPBack", "MotionFlag", "PacketFlag", "GroundSpoof", "OldHypixel", "Jartex", "OldCubecraft", "Watchdog", "Verus"), "Blink")
     private val maxFallDistValue = FloatValue("MaxFallDistance", 10F, 5F, 20F)
     private val resetMotionValue = BoolValue("ResetMotion", false).displayable { modeValue.equals("Blink") }
     private val startFallDistValue = FloatValue("BlinkStartFallDistance", 2F, 0F, 5F).displayable { modeValue.equals("Blink") }
@@ -40,6 +40,9 @@ class AntiVoid : Module() {
     private var canSpoof = false
     private var tried = false
     private var flagged = false
+    private var needSpoof = false
+    private var packet1Count = 0
+    private var packetModify = false
 
     private var posX = 0.0
     private var posY = 0.0
@@ -55,7 +58,16 @@ class AntiVoid : Module() {
         canSpoof = false
         lastRecY = mc.thePlayer.posY
         tried = false
+        needSpoof = false
+        packet1Count = 0
+        packetModify = false
 	flagged = false
+    }
+
+    override fun onDisable() {
+        needSpoof = false
+        packet1Count = 0
+        packetModify = false
     }
 
     @EventTarget
@@ -149,6 +161,24 @@ class AntiVoid : Module() {
                         false
                     )
                 )
+            }
+
+            "verus" -> {
+                if (mc.thePlayer.fallDistance - mc.thePlayer.motionY > 3) {
+                    mc.thePlayer.motionY = 0.0
+                    mc.thePlayer.fallDistance = 0.0f
+                    mc.thePlayer.motionX *= 0.6
+                    mc.thePlayer.motionZ *= 0.6
+                    needSpoof = true
+                }
+
+                if (mc.thePlayer.fallDistance.toInt() / 3 > packet1Count) {
+                    packet1Count = mc.thePlayer.fallDistance.toInt() / 3
+                    packetModify = true
+                }
+                if (mc.thePlayer.onGround) {
+                    packet1Count = 0
+                }
             }
 
             "blink" -> {
