@@ -16,7 +16,11 @@ repositories {
     maven { url = "https://repo.getfdp.today/" }
 }
 
-version = "220501"
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+version = "${releaseTime()}"
 group = "org.unlegitmc.fdp"
 archivesBaseName = "FDPClient"
 

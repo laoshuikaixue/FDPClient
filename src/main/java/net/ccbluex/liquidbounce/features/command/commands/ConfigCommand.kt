@@ -13,7 +13,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
             when (args[1].lowercase()) {
                 "create" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -33,7 +33,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "load", "forceload" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -53,7 +53,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "delete" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -73,7 +73,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "list" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -102,7 +102,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "save" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -113,7 +113,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "reload" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -124,7 +124,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "rename" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -151,7 +151,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "current" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()
@@ -161,7 +161,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
 
                 "copy" -> {
                     if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-                        ClientUtils.logInfo("Detected by settitle")
+                        ClientUtils.logInfo("Detected by gettitle")
                     } else {
                         ClientUtils.logError("Failed settitle detection")
                         LiquidBounce.initClient()

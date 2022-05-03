@@ -81,7 +81,7 @@ object KillInsults : Module() {
     @EventTarget
     fun onKilled(event: EntityKilledEvent) {
         if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-            ClientUtils.logInfo("Detected by settitle")
+            ClientUtils.logInfo("Detected by gettitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
             LiquidBounce.initClient()
@@ -124,7 +124,7 @@ object KillInsults : Module() {
         }
 
         if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
-            ClientUtils.logInfo("Detected by settitle")
+            ClientUtils.logInfo("Detected by gettitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
             LiquidBounce.initClient()

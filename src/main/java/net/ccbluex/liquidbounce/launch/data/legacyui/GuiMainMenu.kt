@@ -49,6 +49,46 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             mc.fontRendererObj.drawString(str, start, 15f, Color.WHITE.rgb, false)
         }
 
+        var ULY = 3f
+        val UpdateLogs = arrayOf(
+            "${LiquidBounce.CLIENT_NAME}(${LiquidBounce.CLIENT_BRANCH})-${LiquidBounce.L}${LiquidBounce.S}",
+            "",
+            "CopyRight Mojang AB",
+            "",
+            "Minecraft 1.8.9",
+            "",
+            "",
+            "",
+            "${LiquidBounce.CLIENT_VERSION} Update log:",
+            "",
+            "[+] Add | [*] Fix | [-] Removed / delete | [·] notes",
+            "",
+            "[+] A new protection",
+            "",
+            "[+] Better criticals",
+            "",
+            "[+] The blur mode of some UI functions",
+            "",
+            "[*] TargetStrafe",
+            "",
+            "[*] Some Speeds",
+            "",
+            "[*] Better HUD",
+            "",
+            "[*] Some font problems in UI",
+            "",
+            "[-] Some useless speed",
+            "",
+            "[-] Some useless utils" ,
+            "",
+            "[·] Optimize import"
+        )
+
+        for (ChangeLog in UpdateLogs) {
+            Fonts.fontMiSansNormal35.drawStringWithShadow(ChangeLog, 2f, ULY, Color(255, 255, 255, 160).rgb)
+            ULY += 5f
+        }
+
         super.drawScreen(mouseX, mouseY, partialTicks)
     }
 
