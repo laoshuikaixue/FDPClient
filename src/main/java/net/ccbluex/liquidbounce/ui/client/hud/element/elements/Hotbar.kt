@@ -9,10 +9,9 @@ import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import java.awt.Color
-import kotlin.collections.ArrayList
 
 
-@ElementInfo(name = "Hotbar") class Hotbar(x: Double = 40.0, y: Double = 100.0) : Element(x, y) {
+@ElementInfo(name = "Hotbar", blur = true) class Hotbar(x: Double = 40.0, y: Double = 100.0) : Element(x, y) {
     val slotlist = mutableListOf<hotbarutil>()
 
     private var lastSlot = -1

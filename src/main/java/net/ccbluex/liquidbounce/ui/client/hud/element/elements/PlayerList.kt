@@ -24,7 +24,7 @@ import java.util.*
 /**
  * A target hud
  */
-@ElementInfo(name = "PlayerList")
+@ElementInfo(name = "PlayerList", blur = true)
 class PlayerList : Element() {
 
     private val decimalFormat3 = DecimalFormat("0.#", DecimalFormatSymbols(Locale.ENGLISH))

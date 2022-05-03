@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 
-@ElementInfo(name = "NewEffect")
+@ElementInfo(name = "NewEffect", blur = true)
 class NewEffect : Element() {
     private val potionMap: MutableMap<Potion, PotionData> = HashMap()
 

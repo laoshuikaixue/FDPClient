@@ -1,21 +1,16 @@
-/*
- * LiquidBounce+ Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
- * https://github.com/WYSI-Foundation/LiquidBouncePlus/
- */
 package net.ccbluex.liquidbounce.utils;
 
 import net.ccbluex.liquidbounce.event.*;
-import net.ccbluex.liquidbounce.utils.timer.MSTimer2;
+import net.ccbluex.liquidbounce.utils.timer.MSTimer;
 import net.minecraft.client.gui.GuiDownloadTerrain;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 
 public class SessionUtils extends MinecraftInstance implements Listenable {
 
-    private static final MSTimer2 sessionTimer = new MSTimer2();
-    private static final MSTimer2 worldTimer = new MSTimer2();
-    
+    private static final MSTimer sessionTimer = new MSTimer();
+    private static final MSTimer worldTimer = new MSTimer();
+
     public static long lastSessionTime = 0L;
     public static long backupSessionTime = 0L;
     public static long lastWorldTime = 0L;
@@ -99,5 +94,4 @@ public class SessionUtils extends MinecraftInstance implements Listenable {
     public boolean handleEvents() {
         return true;
     }
-    
 }

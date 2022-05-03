@@ -7,6 +7,7 @@ package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
 import com.google.common.collect.Iterables
 import com.google.common.collect.Lists
+import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.ElementInfo
@@ -119,17 +120,17 @@ class ScoreboardElement2(
         for (score in scoreCollection) {
             val scorePlayerTeam = scoreboard.getPlayersTeam(score.playerName)
             var name = ScorePlayerTeam.formatPlayerName(scorePlayerTeam, score.playerName)
-            val stripped = StringUtils.fixString(ColorUtils.stripColor(name))
+                val stripped = StringUtils.fixString(ColorUtils.stripColor(name))
             if(changeDomain.get()){
                 if (cachedDomains.contains(stripped)) {
-                    name = "FDPClient-LaoShui"
+                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                 } else if (ServerUtils.isHypixelDomain(stripped)) {
-                    name = "FDPClient-LaoShui"
+                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                     cachedDomains.add(stripped)
                 } else
                     for (domain in domainList) {
                         if(stripped.contains(domain,true)){
-                            name = "FDPClient-LaoShui"
+                            name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                             cachedDomains.add(stripped)
                             break
                         }
@@ -182,16 +183,16 @@ class ScoreboardElement2(
             GlStateManager.resetColor()
             if(changeDomain.get()) {
                 if (cachedDomains.contains(stripped)) {
-                    name = "FDPClient-LaoShui"
+                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                     changed = true
                 }/* else if (ServerUtils.isHypixelDomain(stripped)) {
-                    name = "FDPClient-LaoShui"
+                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                     changed = true
                     cachedDomains.add(stripped)
                 } else
                     for (domain in domainList) {
                         if (stripped.contains(domain, true)) {
-                            name = "FDPClient-LaoShui"
+                            name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
                             changed = true
                             cachedDomains.add(stripped)
                             break;

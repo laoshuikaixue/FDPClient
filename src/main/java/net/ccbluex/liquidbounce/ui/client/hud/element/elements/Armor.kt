@@ -24,7 +24,7 @@ import java.awt.Color
  *
  * Shows a horizontal display of current armor
  */
-@ElementInfo(name = "Armor")
+@ElementInfo(name = "Armor", blur = true)
 class Armor(x: Double = -8.0, y: Double = 57.0, scale: Float = 1F,
             side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.DOWN)) : Element(x, y, scale, side) {
     private val colorModeValue = ListValue("Text-Color", arrayOf("Custom", "Astolfo"), "Custom")
@@ -32,7 +32,6 @@ class Armor(x: Double = -8.0, y: Double = 57.0, scale: Float = 1F,
     private val redValue = IntegerValue("Text-R", 255, 0, 255)
     private val greenValue = IntegerValue("Text-G", 255, 0, 255)
     private val blueValue = IntegerValue("Text-B", 255, 0, 255)
-    private val newRainbowIndex = IntegerValue("NewRainbowOffset", 1, 1, 50)
     private val saturationValue = FloatValue("Saturation", 0.9f, 0f, 1f)
     private val speed = IntegerValue("AllSpeed", 0, 0, 400)
 
@@ -67,7 +66,7 @@ class Armor(x: Double = -8.0, y: Double = 57.0, scale: Float = 1F,
                 }
                 val stack = mc.thePlayer.inventory.armorInventory[index] ?: continue
                 RenderUtils.drawGradientSidewaysV(x.toDouble(), 0.0,x.toDouble() + 18 ,17.0,colorall,Color(140,140,140,40).rgb)
-                Fonts.fontSFUI24.drawStringWithShadow(((stack.maxDamage - stack.itemDamage)).toString(),x.toFloat() + 4f,20f,colorall)
+                Fonts.fontComfortaa24.drawStringWithShadow(((stack.maxDamage - stack.itemDamage)).toString(),x.toFloat() + 4f,20f,colorall)
                 RenderUtils.drawRect(x.toFloat(),25f,x.toFloat() + 18f,26f,Color(140,140,140,220).rgb)
                 RenderUtils.drawRect(x.toFloat(),25f,x.toFloat() + (18f * (stack.maxDamage - stack.itemDamage) / stack.maxDamage),26f,colorall)
                 renderItem.renderItemIntoGUI(stack, x + 1, y)

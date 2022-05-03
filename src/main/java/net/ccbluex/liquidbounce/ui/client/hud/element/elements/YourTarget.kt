@@ -33,7 +33,7 @@ import java.math.BigDecimal
 import kotlin.math.abs
 import kotlin.math.pow
 
-@ElementInfo(name = "YourTarget")
+@ElementInfo(name = "YourTarget", blur = true)
 class YourTarget : Element() {
     private val fadeSpeed = FloatValue("FadeSpeed", 2F, 1F, 9F)
     private val redValue = IntegerValue("Red", 255, 0, 255)

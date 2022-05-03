@@ -80,7 +80,7 @@ object KillInsults : Module() {
 
     @EventTarget
     fun onKilled(event: EntityKilledEvent) {
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302"){
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
@@ -95,13 +95,13 @@ object KillInsults : Module() {
 
         when (modeValue.get().lowercase()) {
             "clear" -> {
-                sendInsultWords("L ${target.name} kill within FDPClinet-LaoShui ", target.name)
+                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S} ", target.name)
             }
             "withwords" -> {
-                sendInsultWords("L ${target.name} kill within FDPClinet-LaoShui " + getRandomOne(), target.name)
+                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S} " + getRandomOne(), target.name)
             }
             "rawwords" -> {
-                sendInsultWords(getRandomOne(), target.name + "kill within FDPClinet-LaoShui")
+                sendInsultWords(getRandomOne(), target.name + "kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}")
             }
         }
     }
@@ -123,7 +123,7 @@ object KillInsults : Module() {
             message = prefixValue.get() + " $message"
         }
 
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302"){
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")

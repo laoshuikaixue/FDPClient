@@ -21,7 +21,7 @@ import java.awt.Color
  *
  * Shows a horizontal display of current armor
  */
-@ElementInfo(name = "Inventory2")
+@ElementInfo(name = "Inventory2", blur = true)
 class Inventory2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F) : Element(x, y, scale) {
     private val lineValue = BoolValue("Line", true)
     private val rainbowList = ListValue("Rainbow", arrayOf("Off", "CRainbow", "Sky", "LiquidSlowly", "Fade"), "LiquidSlowly")

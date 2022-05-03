@@ -30,7 +30,7 @@ import kotlin.math.sqrt
  *
  * Allows to draw custom text
  */
-@ElementInfo(name = "Graph")
+@ElementInfo(name = "Graph", blur = true)
 class Graph(x: Double = 75.0, y: Double = 110.0, scale: Float = 1F,
             side: Side = Side(Side.Horizontal.MIDDLE, Side.Vertical.DOWN)) : Element(x, y, scale, side) {
 

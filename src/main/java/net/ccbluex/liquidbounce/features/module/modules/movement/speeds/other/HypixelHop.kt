@@ -1,10 +1,9 @@
 package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other
 
 import net.ccbluex.liquidbounce.event.JumpEvent
-import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.event.MoveEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
-import net.ccbluex.liquidbounce.utils.ClientUtils
+//import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
 class HypixelHop : SpeedMode("HypixelHop") {
@@ -21,7 +20,7 @@ class HypixelHop : SpeedMode("HypixelHop") {
                     mc.thePlayer.speedInAir = 0.0223f
                     mc.thePlayer.jump()
                     mc.thePlayer.motionY = 0.032
-                    ClientUtils.displayChatMessage("MotionY:"+mc.thePlayer.motionY.toString())
+//                    ClientUtils.displayChatMessage("MotionY:"+mc.thePlayer.motionY.toString())
                     event.y = 0.42
                 }
             }

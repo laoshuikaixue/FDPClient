@@ -47,6 +47,9 @@ public class Fonts {
     @FontDetails(fontName = "Roboto Regular", fontSize = 50, fileName = "Roboto-Bold.ttf")
     public static GameFontRenderer fontRoboto50;
 
+    @FontDetails(fontName = "Comfortaa Regular", fontSize = 24, fileName = "Comfortaa.ttf")
+    public static GameFontRenderer fontComfortaa24;
+
     @FontDetails(fontName = "Comfortaa Regular", fontSize = 30, fileName = "Comfortaa.ttf")
     public static GameFontRenderer fontComfortaa30;
 
@@ -70,9 +73,6 @@ public class Fonts {
 
     @FontDetails(fontName = "Small", fontSize = 35, fileName = "GoogleSans.ttf")
     public static GameFontRenderer fontgoogle35;
-
-    @FontDetails(fontName = "SFUI Regular", fontSize = 24, fileName = "sfui.ttf")
-    public static GameFontRenderer fontSFUI24;
 
     @FontDetails(fontName = "SFUI Regular", fontSize = 35, fileName = "sfui.ttf")
     public static GameFontRenderer fontSFUI35;

@@ -13,7 +13,10 @@ import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.ElementInfo
 import net.ccbluex.liquidbounce.ui.client.hud.element.Side
 import net.ccbluex.liquidbounce.ui.font.Fonts
-import net.ccbluex.liquidbounce.utils.*
+import net.ccbluex.liquidbounce.utils.CPSCounter
+import net.ccbluex.liquidbounce.utils.MovementUtils
+import net.ccbluex.liquidbounce.utils.ServerUtils
+import net.ccbluex.liquidbounce.utils.SessionUtils
 import net.ccbluex.liquidbounce.utils.extensions.ping
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
@@ -26,14 +29,13 @@ import java.awt.Color
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import kotlin.math.sqrt
-import java.lang.Math.pow
 
 /**
  * CustomHUD text element
  *
  * Allows to draw custom text
  */
-@ElementInfo(name = "Text2", blur=true)
+@ElementInfo(name = "Text2", blur = true)
 class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
            side: Side = Side.default()) : Element(x, y, scale, side) {
 
@@ -53,12 +55,11 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
 
             text.displayString.set("%clientName%")
             text.shadow.set(true)
-            text.fontValue.set(Fonts.font40)
+            text.fontValue.set(Fonts.fontMiSansNormal40)
             text.setColor(Color(255, 255, 255))
 
             return text
         }
-
     }
 
     private val displayString = TextValue("DisplayText", "")
@@ -200,9 +201,6 @@ class Text2(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
             Side.Horizontal.MIDDLE -> GL11.glTranslatef(-fontRenderer.getStringWidth(displayText).toFloat() / 2F, 0F, -fontRenderer.getStringWidth(displayText).toFloat() / 2F)
             Side.Horizontal.RIGHT -> GL11.glTranslatef(-fontRenderer.getStringWidth(displayText).toFloat(), 0F, -fontRenderer.getStringWidth(displayText).toFloat())
         }
-
-        val floatX = renderX.toFloat()
-        val floatY = renderY.toFloat()
 
         if (backgroundValue.get()) {
             RenderUtils.drawRect(-2F, -2F, fontRenderer.getStringWidth(displayText) + 2F, fontRenderer.FONT_HEIGHT + 0F, Color(bgredValue.get(), bggreenValue.get(), bgblueValue.get(), bgalphaValue.get()))

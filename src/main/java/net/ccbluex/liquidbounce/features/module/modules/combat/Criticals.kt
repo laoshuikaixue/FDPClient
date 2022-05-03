@@ -30,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -38,7 +38,7 @@ class Criticals : Module() {
     private val delayValue = IntegerValue("Delay", 0, 0, 500)
     private val s08FlagValue = BoolValue("FlagPause", true)
     private val s08DelayValue = IntegerValue("FlagPauseTime", 100, 100, 5000).displayable { s08FlagValue.get() }
-    private val hurtTimeValue = IntegerValue("HurtTime", 10, 0, 10)
+    private val hurtTimeValue = IntegerValue("HurtTime", 10, 0, 15)
     private val lookValue = BoolValue("UseC06Packet", false)
     private val debugValue = BoolValue("DebugMessage", true)
 
@@ -52,7 +52,7 @@ class Criticals : Module() {
     var attacks = 0
 
     override fun onEnable() {
-        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302"){
+        if (Display.getTitle() == "${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L}${LiquidBounce.S} ${LiquidBounce.CLIENT_VERSION} (${LiquidBounce.CLIENT_BRANCH}) 项目开源地址:${LiquidBounce.WEBSITE} 官方群:1028574302 禁止一切商用行为"){
             ClientUtils.logInfo("Detected by settitle")
         } else {
             ClientUtils.logError("Failed settitle detection")
@@ -92,7 +92,6 @@ class Criticals : Module() {
             }
 
             when (modeValue.get().lowercase()) {
-
                 "newpacket" -> {
                     sendCriticalPacket(yOffset = 0.104080378093037,ground = false)
                     sendCriticalPacket(yOffset = 0.105454222033912,ground = false)
@@ -117,8 +116,14 @@ class Criticals : Module() {
                 "packet3" -> {
                     sendCriticalPacket(yOffset = 0.0625080378093, ground = false)
                     sendCriticalPacket(yOffset = 0.1015634532004, ground = false)
-                    sendCriticalPacket(yOffset = 0.0140220332227, ground = false)
+                    sendCriticalPacket(yOffset = 0.0640220332227, ground = false)
                     sendCriticalPacket(yOffset = 0.0015082393037, ground = false)
+                }
+
+                "packet4" -> {
+                    sendCriticalPacket(yOffset = 0.0825080378093, ground = false)
+                    sendCriticalPacket(yOffset = 0.0215634532004, ground = false)
+                    sendCriticalPacket(yOffset = 0.1040220332227, ground = false)
                 }
 
                 "ncppacket" -> {
