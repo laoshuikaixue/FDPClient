@@ -51,7 +51,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
 
         var ULY = 3f
         val UpdateLogs = arrayOf(
-            "${LiquidBounce.CLIENT_NAME}(${LiquidBounce.CLIENT_BRANCH})-${LiquidBounce.L}${LiquidBounce.S}",
+            "${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}",
             "",
             "CopyRight Mojang AB",
             "",
@@ -59,7 +59,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             "",
             "",
             "",
-            "${LiquidBounce.CLIENT_VERSION} Update log:",
+            "${LiquidBounce.CLIENT_VERSION}(${LiquidBounce.CLIENT_BRANCH}) Update log:",
             "",
             "[+] Add | [*] Fix | [-] Removed / delete | [·] notes",
             "",
