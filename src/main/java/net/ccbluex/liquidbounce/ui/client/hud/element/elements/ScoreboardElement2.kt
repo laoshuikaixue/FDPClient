@@ -123,9 +123,9 @@ class ScoreboardElement2(
                 val stripped = StringUtils.fixString(ColorUtils.stripColor(name))
             if(changeDomain.get()){
                 if (cachedDomains.contains(stripped)) {
-                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                    name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                 } else if (ServerUtils.isHypixelDomain(stripped)) {
-                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                    name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                     cachedDomains.add(stripped)
                 } else
                     for (domain in domainList) {
