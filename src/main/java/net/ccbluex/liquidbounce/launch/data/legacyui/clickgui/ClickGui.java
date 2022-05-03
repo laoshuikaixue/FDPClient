@@ -119,6 +119,11 @@ public class ClickGui extends GuiScreen {
                 }
             }
         }
+
+        GlStateManager.disableLighting();
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.scale(1, 1, 1);
+
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
