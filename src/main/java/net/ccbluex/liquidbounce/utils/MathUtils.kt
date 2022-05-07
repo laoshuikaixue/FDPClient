@@ -1,5 +1,6 @@
 package net.ccbluex.liquidbounce.utils
 
+import java.math.BigDecimal
 import java.security.SecureRandom
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -87,5 +88,19 @@ object MathUtils {
         }
 
         return outPoints.toTypedArray()
+    }
+
+    fun round(value: Double, inc: Double): Double {
+        if (inc == 0.0) return value
+        if (inc == 1.0) return Math.round(value).toDouble()
+        val halfOfInc = inc / 2.0
+        val floored = Math.floor(value / inc) * inc
+        return if (value >= floored + halfOfInc) BigDecimal(Math.ceil(value / inc) * inc)
+            .toDouble() else BigDecimal(floored)
+            .toDouble()
+    }
+
+    fun roundToHalf(d: Double): Double {
+        return Math.round(d * 2.0) / 2.0
     }
 }

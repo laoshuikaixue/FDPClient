@@ -111,6 +111,8 @@ class Scaffold : Module() {
     private val motionSpeedEnabledValue = BoolValue("MotionSpeedSet", false)
     private val motionSpeedValue = FloatValue("MotionSpeed", 0.1f, 0.05f, 1f).displayable { motionSpeedEnabledValue.get() }
     private val speedModifierValue = FloatValue("SpeedModifier", 1f, 0f, 2f)
+    private val bobbingValue = BoolValue("Bobbing", true)
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.3f, 0f, 1f).displayable { bobbingValue.get() }
 
     // Boost
     private val boostValue = ListValue("Boost", arrayOf("None", "1", "2", "3"), "None")
@@ -405,6 +407,10 @@ class Scaffold : Module() {
     fun onMotion(event: MotionEvent) {
         val eventState = event.eventState
         towerStatus = false
+        if (bobbingValue.get()) {
+            mc.thePlayer.cameraYaw = bobbingAmountValue.get()
+            mc.thePlayer.prevCameraYaw = bobbingAmountValue.get()
+        }
         // Boost
         when (boostValue.get().lowercase()) {
             "1" -> {

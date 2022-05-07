@@ -18,6 +18,7 @@ import net.ccbluex.liquidbounce.utils.render.*
 import net.ccbluex.liquidbounce.value.*
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.GuiChat
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.entity.Entity
@@ -33,7 +34,7 @@ import kotlin.math.pow
 @ElementInfo(name = "NewTargets", blur = true)
 class NewTargets : Element() {
     private val decimalFormat2 = DecimalFormat("##0.0", DecimalFormatSymbols(Locale.ENGLISH))
-    private val styleValue = ListValue("Style", arrayOf("Flux", "Novoline", "Slowly", "Rise", "Exhibition"), "Rise")
+    private val styleValue = ListValue("Style", arrayOf("Flux", "Novoline", "Slowly", "Rise", "Exhibition", "Chill"), "Rise")
     private val fadeSpeed = FloatValue("FadeSpeed", 5F, 1F, 9F)
     private val tSlideAnim = BoolValue("TSlide-Animation", true)
     private val showUrselfWhenChatOpen = BoolValue("DisplayWhenChat", true)
@@ -44,6 +45,9 @@ class NewTargets : Element() {
     private val gradientAmountValue = IntegerValue("Rise-Gradient-Amount", 4, 1, 40)
     private val distanceValue = IntegerValue("Rise-Distance", 50, 1, 200)
     private val riseParticleSpeed = FloatValue("Rise-ParticleSpeed", 0.05F, 0.01F, 0.2F)
+    private val chillFontSpeed = FloatValue("Chill-FontSpeed", 0.5F, 0.01F, 1F)
+    private val chillHealthBarValue = BoolValue("Chill-Healthbar", true)
+    private val chillFadingValue = BoolValue("Chill-FadingAnim", true)
     private val exhiFontValue = FontValue("Exhi-Font", Fonts.fontSFUI35)
     private val colorModeValue = ListValue("Color", arrayOf("Custom", "Rainbow", "Sky", "LiquidSlowly", "Fade", "Health"), "LiquidSlowly")
     private val redValue = IntegerValue("Red", 55, 0, 255)
@@ -60,7 +64,7 @@ class NewTargets : Element() {
     private val borderColorGreenValue = IntegerValue("Liquid-Border-Green", 0, 0, 255)
     private val borderColorBlueValue = IntegerValue("Liquid-Border-Blue", 0, 0, 255)
     private val borderColorAlphaValue = IntegerValue("Liquid-Border-Alpha", 0, 0, 255)
-
+    private val decimalFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
     private val shieldIcon = ResourceLocation("fdpclient/shield.png")
 
     private var easingHealth: Float = 0F
@@ -72,7 +76,75 @@ class NewTargets : Element() {
 
     private var progress: Float = 0F
 
+    private var progressChill = 0F
+
     private var target: EntityPlayer? = null
+
+    private val numberRenderer = CharRenderer(false)
+
+    private class CharRenderer(val small: Boolean) {
+        var moveY = FloatArray(20)
+        var moveX = FloatArray(20)
+
+        private val numberList = listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".")
+
+        private val deFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
+
+        init {
+            for (i in 0..19) {
+                moveX[i] = 0F
+                moveY[i] = 0F
+            }
+        }
+
+        fun renderChar(number: Float, orgX: Float, orgY: Float, initX: Float, initY: Float, scaleX: Float, scaleY: Float, shadow: Boolean, fontSpeed: Float, color: Int): Float {
+            val reFormat = deFormat.format(number.toDouble()) // string
+            val fontRend = if (small) Fonts.font40 else Fonts.font72
+            val delta = RenderUtils.deltaTime
+            val scaledRes = ScaledResolution(mc)
+
+            var indexX = 0
+            var indexY = 0
+            var animX = 0F
+
+            val cutY = initY + fontRend.FONT_HEIGHT.toFloat() * (3F / 4F)
+
+            GL11.glEnable(3089)
+            RenderUtils.makeScissorBox(0F, orgY + initY - 4F * scaleY, scaledRes.getScaledWidth().toFloat(), orgY + cutY - 4F * scaleY)
+            for (char in reFormat.toCharArray()) {
+                moveX[indexX] = AnimationUtils.animate(animX.toDouble(), moveX[indexX].toDouble(), fontSpeed * 0.025F * delta.toDouble()).toFloat()
+                animX = moveX[indexX]
+
+                val pos = numberList.indexOf("$char")
+                val expectAnim = (fontRend.FONT_HEIGHT.toFloat() + 2F) * pos
+                val expectAnimMin = (fontRend.FONT_HEIGHT.toFloat() + 2F) * (pos - 2)
+                val expectAnimMax = (fontRend.FONT_HEIGHT.toFloat() + 2F) * (pos + 2)
+
+                if (pos >= 0) {
+                    moveY[indexY] = AnimationUtils.animate(expectAnim.toDouble(), moveY[indexY].toDouble(), fontSpeed * 0.02F * delta.toDouble()).toFloat()
+
+                    GL11.glTranslatef(0F, initY - moveY[indexY], 0F)
+                    numberList.forEachIndexed { index, num ->
+                        if ((fontRend.FONT_HEIGHT.toFloat() + 2F) * index >= expectAnimMin && (fontRend.FONT_HEIGHT.toFloat() + 2F) * index <= expectAnimMax) {
+                            fontRend.drawString(num, initX + moveX[indexX], (fontRend.FONT_HEIGHT.toFloat() + 2F) * index, color, shadow)
+                        }
+                    }
+                    GL11.glTranslatef(0F, -initY + moveY[indexY], 0F)
+                } else {
+                    moveY[indexY] = 0F
+                    fontRend.drawString("$char", initX + moveX[indexX], initY, color, shadow)
+                }
+
+                animX += fontRend.getStringWidth("$char")
+                indexX++
+                indexY++
+            }
+            GL11.glDisable(3089)
+
+            return animX
+        }
+    }
+
 
     override fun drawElement(partialTicks: Float): Border? {
         val kaTarget = (LiquidBounce.moduleManager[KillAura::class.java] as KillAura).target
@@ -92,22 +164,36 @@ class NewTargets : Element() {
         val borderColor = Color(borderColorRedValue.get(), borderColorGreenValue.get(), borderColorBlueValue.get(), borderColorAlphaValue.get())
 
         progress += 0.0025F * RenderUtils.deltaTime * if (actualTarget != null) -1F else 1F
+        progressChill += 0.0075F * RenderUtils.deltaTime * if (actualTarget != null) -1F else 1F
 
         if (progress < 0F)
             progress = 0F
         else if (progress > 1F)
             progress = 1F
 
-        if (actualTarget == null && tSlideAnim.get()) {
-            if (progress >= 1F && target != null)
-                target = null
-        } else
-            target = actualTarget
+        if (progressChill < 0F || !chillFadingValue.get())
+            progressChill = 0F
+        else if (progressChill > 1F)
+            progressChill = 1F
+
+        if (styleValue.get().equals("chill", true)) {
+            if (actualTarget == null && chillFadingValue.get()) {
+                if (progressChill >= 1F && target != null)
+                    target = null
+            } else
+                target = actualTarget
+        } else {
+            if (actualTarget == null && tSlideAnim.get()) {
+                if (progress >= 1F && target != null)
+                    target = null
+            } else
+                target = actualTarget
+        }
 
         val animProgress = EaseUtils.easeInQuart(progress.toDouble())
         val tHeight = getTBorder().y2 - getTBorder().y
 
-        if (tSlideAnim.get() && !styleValue.get().equals("rise", true)) {
+        if (tSlideAnim.get() && !styleValue.get().equals("rise", true) && !styleValue.get().equals("chill", true)) {
             GL11.glPushMatrix()
             GL11.glTranslated(0.0, (-renderY - tHeight.toDouble()) * animProgress, 0.0)
         }
@@ -200,8 +286,8 @@ class NewTargets : Element() {
 
                     val length = font.getStringWidth(name).coerceAtLeast(font.getStringWidth(info)).toFloat() + 40F
 
-                    val floatX = renderX.toFloat()
-                    val floatY = renderY.toFloat()
+                    renderX.toFloat()
+                    renderY.toFloat()
 
                     if (riseShadow.get()) {
                         UiUtils.fastShadowRoundedRect(0F, 0F, 10F + length, 55F, 3F, shadowStrengthValue.get().toFloat(), bgColor)
@@ -354,6 +440,103 @@ class NewTargets : Element() {
                     GlStateManager.disableCull()
                     GL11.glPopMatrix()
                 }
+                "Chill" -> {
+                    easingHealth += ((convertedTarget.health - easingHealth) / 2.0F.pow(10.0F - fadeSpeed.get())) * RenderUtils.deltaTime
+
+                    val name = convertedTarget.name
+                    val health = convertedTarget.health
+                    val tWidth = (45F + Fonts.font40.getStringWidth(name).coerceAtLeast(Fonts.font72.getStringWidth(decimalFormat.format(health)))).coerceAtLeast(if (chillHealthBarValue.get()) 150F else 90F)
+                    val playerInfo = mc.netHandler.getPlayerInfo(convertedTarget.uniqueID)
+
+                    val reColorBg = Color(bgColor.red / 255.0F, bgColor.green / 255.0F, bgColor.blue / 255.0F, bgColor.alpha / 255.0F * (1F - progressChill))
+                    val reColorBar = Color(barColor.red / 255.0F, barColor.green / 255.0F, barColor.blue / 255.0F, barColor.alpha / 255.0F * (1F - progressChill))
+                    val reColorText = Color(1F, 1F, 1F, 1F - progressChill)
+
+                    val floatX = renderX.toFloat()
+                    val floatY = renderY.toFloat()
+
+                    val calcScaleX = (progressChill * (4F / (tWidth / 2F)))
+                    val calcScaleY = if (chillHealthBarValue.get()) (progressChill * (4F / 24F))
+                    else (progressChill * (4F / 19F))
+                    val calcTranslateX = floatX + tWidth / 2F * calcScaleX
+                    val calcTranslateY = floatY + if (chillHealthBarValue.get()) (24F * (progressChill * (4F / 24F)))
+                    else (19F * (progressChill * (4F / 19F)))
+
+                    // translation/scaling
+                    GL11.glScalef(1f, 1f, 1f)
+                    GL11.glPopMatrix()
+
+                    GL11.glPushMatrix()
+
+                    if (chillFadingValue.get()) {
+                        GL11.glTranslatef(
+                            calcTranslateX, calcTranslateY, 0F)
+                        GL11.glScalef(
+                            1F - calcScaleX, 1F - calcScaleY, 1F - calcScaleX)
+                    } else {
+                        GL11.glTranslated(renderX, renderY, 0.0)
+                        GL11.glScalef(1F, 1F, 1F)
+                    }
+
+                    /*
+                    some calculation
+                    0.2 of 15 = 3 // 3/15 = 0.2
+                    0.2 of 20 = 4 // 4/20 = 0.2
+                    0.066 of 60 = 4 // 4/60 = 0.0(6)
+                     */
+
+                    // background
+                    RenderUtils.drawRoundedRect(0F, 0F, tWidth, if (chillHealthBarValue.get()) 48F else 38F, 7F, reColorBg.rgb)
+                    GlStateManager.resetColor()
+                    GL11.glColor4f(1F, 1F, 1F, 1F)
+
+                    // head
+                    if (playerInfo != null) {
+                        Stencil.write(false)
+                        GL11.glDisable(GL11.GL_TEXTURE_2D)
+                        GL11.glEnable(GL11.GL_BLEND)
+                        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+                        RenderUtils.fastRoundedRect(4F, 4F, 34F, 34F, 8F)
+                        GL11.glDisable(GL11.GL_BLEND)
+                        GL11.glEnable(GL11.GL_TEXTURE_2D)
+                        Stencil.erase(true)
+                        //GL11.glTranslated(renderX, renderY, 0.0)
+                        drawHead(playerInfo.locationSkin, 4, 4, 30, 30, 1F - progressChill)
+                        //GL11.glTranslated(-renderX, -renderY, 0.0)
+                        Stencil.dispose()
+                    }
+
+                    GlStateManager.resetColor()
+                    GL11.glColor4f(1F, 1F, 1F, 1F)
+
+                    // name + health
+                    Fonts.font40.drawString(name, 38F, 6F, reColorText.rgb, false)
+                    numberRenderer.renderChar(health, calcTranslateX, calcTranslateY, 38F, 17F, calcScaleX, calcScaleY, false, chillFontSpeed.get(), reColorText.rgb)
+
+                    GlStateManager.resetColor()
+                    GL11.glColor4f(1F, 1F, 1F, 1F)
+
+                    // health bar
+                    if (chillHealthBarValue.get()) {
+                        RenderUtils.drawRoundedRect(4F, 38F, tWidth - 4F, 44F, 3F, reColorBar.darker().darker().darker().rgb)
+
+                        Stencil.write(false)
+                        GL11.glDisable(GL11.GL_TEXTURE_2D)
+                        GL11.glEnable(GL11.GL_BLEND)
+                        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+                        RenderUtils.fastRoundedRect(4F, 38F, tWidth - 4F, 44F, 3F)
+                        GL11.glDisable(GL11.GL_BLEND)
+                        Stencil.erase(true)
+                        RenderUtils.drawRect(4F, 38F, 4F + (easingHealth / convertedTarget.maxHealth) * (tWidth - 8F), 44F, reColorBar.rgb)
+                        Stencil.dispose()
+                    }
+
+                    GL11.glScalef(1F, 1F, 1F)
+                    GL11.glPopMatrix()
+
+                    GL11.glPushMatrix()
+                    GL11.glTranslated(renderX, renderY, 0.0)
+                }
             }
         } else if (target == null) {
             easingHealth = 0F
@@ -361,7 +544,7 @@ class NewTargets : Element() {
             particleList.clear()
         }
 
-        if (tSlideAnim.get() && !styleValue.get().equals("rise", true))
+        if (tSlideAnim.get() && !styleValue.get().equals("rise", true) && !styleValue.get().equals("chill", true))
             GL11.glPopMatrix()
 
         GlStateManager.resetColor()
@@ -376,6 +559,7 @@ class NewTargets : Element() {
         "Slowly" -> Border(0F, 0F, 90F, 36F)
         "Rise" -> Border(0F, 0F, 90F, 55F)
         "Exhibition" -> Border(0F, 3F, 140F, 48F)
+        "Chill" -> Border(0F, 0F, 110F, 46F)
         else -> Border(0F, 0F, 120F, 36F)
     }
 
@@ -408,6 +592,13 @@ class NewTargets : Element() {
 
     private fun drawHead(skin: ResourceLocation, x: Int, y: Int, width: Int, height: Int) {
         GL11.glColor4f(1F, 1F, 1F, 1F)
+        mc.textureManager.bindTexture(skin)
+        Gui.drawScaledCustomSizeModalRect(x, y, 8F, 8F, 8, 8, width, height,
+            64F, 64F)
+    }
+
+    private fun drawHead(skin: ResourceLocation, x: Int, y: Int, width: Int, height: Int, alpha: Float) {
+        GL11.glColor4f(1F, 1F, 1F, alpha)
         mc.textureManager.bindTexture(skin)
         Gui.drawScaledCustomSizeModalRect(x, y, 8F, 8F, 8, 8, width, height,
             64F, 64F)

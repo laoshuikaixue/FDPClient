@@ -20,6 +20,9 @@ import java.util.List;
 
 public class Fonts {
 
+    @FontDetails(fontName = "Light", fontSize = 18, fileName = "regular.ttf")
+    public static GameFontRenderer font18;
+
     @FontDetails(fontName = "Light", fontSize = 32, fileName = "regular.ttf")
     public static GameFontRenderer font32;
 
@@ -28,6 +31,9 @@ public class Fonts {
 
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
     public static GameFontRenderer font40;
+
+    @FontDetails(fontName = "Medium", fontSize = 72, fileName = "regular.ttf")
+    public static GameFontRenderer font72;
 
     @FontDetails(fontName = "SFTHIN Regular", fontSize = 17, fileName = "SFTHIN.ttf")
     public static GameFontRenderer fontSFTHIN17;
@@ -89,6 +95,9 @@ public class Fonts {
     @FontDetails(fontName = "MiSansNormal Regular", fontSize = 30, fileName = "MiSans-Normal.ttf")
     public static GameFontRenderer fontMiSansNormal30;
 
+    @FontDetails(fontName = "MiSansNormal Regular", fontSize = 32, fileName = "MiSans-Normal.ttf")
+    public static GameFontRenderer fontMiSansNormal32;
+
     @FontDetails(fontName = "MiSansNormal Regular", fontSize = 35, fileName = "MiSans-Normal.ttf")
     public static GameFontRenderer fontMiSansNormal35;
 
@@ -100,6 +109,9 @@ public class Fonts {
 
     @FontDetails(fontName = "MiSansNormal Regular", fontSize = 40, fileName = "MiSans-Light.ttf")
     public static GameFontRenderer fontMiSansLight40;
+
+    @FontDetails(fontName = "NovoIcon", fontSize = 20, fileName = "novoicon.ttf")
+    public static GameFontRenderer fontNovoIcon20;
 
 //    @FontDetails(fontName = "Huge", fontSize = 60, fileName = "regular.ttf")
 //    public static GameFontRenderer font60;

@@ -1,6 +1,6 @@
 package net.ccbluex.liquidbounce.utils.render
 
-class Animation(
+open class Animation(
     val type: EaseUtils.EnumEasingType,
     val order: EaseUtils.EnumEasingOrder,
     val from: Double,
