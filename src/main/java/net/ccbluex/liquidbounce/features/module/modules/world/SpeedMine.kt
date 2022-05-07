@@ -26,8 +26,6 @@ class SpeedMine : Module() {
     private var bzx = 0.0F
     var blockPos: BlockPos? = null
     private var facing: EnumFacing? = null
-    override val tag: String
-        get() = modeValue.get()
     @EventTarget
     fun onPacket(event: PacketEvent) {
         if(modeValue.get() == "Hypixel") {
@@ -95,4 +93,7 @@ class SpeedMine : Module() {
             }
         }
     }
+
+    override val tag: String
+        get() = modeValue.get()
 }

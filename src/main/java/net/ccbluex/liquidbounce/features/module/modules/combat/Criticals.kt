@@ -107,10 +107,10 @@ class Criticals : Module() {
                 }
 
                 "packet2" -> {
-                    sendCriticalPacket(yOffset = 0.0625, ground = false)
-                    sendCriticalPacket(yOffset = 0.0433, ground = false)
-                    sendCriticalPacket(yOffset = 0.2088, ground = false)
-                    sendCriticalPacket(yOffset = 0.9963, ground = false)
+                    sendCriticalPacket(yOffset = 0.100001357912, ground = false)
+                    sendCriticalPacket(yOffset = 0.104080378023, ground = false)
+                    sendCriticalPacket(yOffset = 0.115454222034, ground = false)
+                    sendCriticalPacket(yOffset = 0.996363453245, ground = false)
                 }
 
                 "packet3" -> {

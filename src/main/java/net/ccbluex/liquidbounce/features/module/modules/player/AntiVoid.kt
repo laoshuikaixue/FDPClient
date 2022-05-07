@@ -28,7 +28,7 @@ import net.minecraft.util.BlockPos
 @ModuleInfo(name = "AntiVoid", category = ModuleCategory.PLAYER)
 class AntiVoid : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Blink", "TPBack", "MotionFlag", "PacketFlag", "GroundSpoof", "OldHypixel", "Jartex", "OldCubecraft", "Watchdog", "VulCanFLag"), "Blink")
-    private val maxFallDistValue = FloatValue("MaxFallDistance", 10F, 5F, 20F)
+    private val maxFallDistValue = FloatValue("MaxFallDistance", 5F, 5F, 20F)
     private val resetMotionValue = BoolValue("ResetMotion", false).displayable { modeValue.equals("Blink") }
     private val startFallDistValue = FloatValue("BlinkStartFallDistance", 2F, 0F, 5F).displayable { modeValue.equals("Blink") }
     private val autoScaffoldValue = BoolValue("BlinkAutoScaffold", true).displayable { modeValue.equals("Blink") }
@@ -292,4 +292,7 @@ class AntiVoid : Module() {
             }
         }
     }
+
+    override val tag: String
+        get() = modeValue.get()
 }
