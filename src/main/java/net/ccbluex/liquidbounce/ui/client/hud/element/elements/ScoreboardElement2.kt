@@ -130,7 +130,7 @@ class ScoreboardElement2(
                 } else
                     for (domain in domainList) {
                         if(stripped.contains(domain,true)){
-                            name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                            name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                             cachedDomains.add(stripped)
                             break
                         }
