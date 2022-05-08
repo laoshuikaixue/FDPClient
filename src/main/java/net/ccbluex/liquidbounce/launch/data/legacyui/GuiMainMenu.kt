@@ -63,25 +63,21 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             "",
             "[+] Add | [*] Fix | [-] Removed / delete | [·] notes",
             "",
-            "[+] A new protection",
+            "[+] A new ClickGui",
             "",
-            "[+] Better criticals",
+            "[+] Better TargetStrafe",
             "",
-            "[+] The blur mode of some UI functions",
+            "[+] Better Inventory",
             "",
-            "[*] TargetStrafe",
+            "[+] Better RoundedButtonRenderer",
             "",
-            "[*] Some Speeds",
+            "[*] ScoreboardElement2",
             "",
-            "[*] Better HUD",
+            "[*] Criticals",
             "",
-            "[*] Some font problems in UI",
+            "[*] PlayerHealthSend",
             "",
-            "[-] Some useless speed",
-            "",
-            "[-] Some useless utils" ,
-            "",
-            "[·] Optimize import"
+            "[*] FontRenderer"
         )
 
         for (ChangeLog in UpdateLogs) {
