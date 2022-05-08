@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
- */
 package net.ccbluex.liquidbounce.utils;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
@@ -10,7 +5,10 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.entity.Entity;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public final class ServerUtils extends MinecraftInstance {
 
     public static ServerData serverData;
@@ -23,11 +21,11 @@ public final class ServerUtils extends MinecraftInstance {
     }
 
     public static String getRemoteIp() {
-        String serverIp = "Idling";
+        if (mc.theWorld == null) return "Undefined";
 
-        if (mc.isIntegratedServerRunning()) {
-            serverIp = "SinglePlayer";
-        } else if (mc.theWorld != null && mc.theWorld.isRemote) {
+        String serverIp = "Singleplayer";
+
+        if (mc.theWorld.isRemote) {
             final ServerData serverData = mc.getCurrentServerData();
             if(serverData != null)
                 serverIp = serverData.serverIP;
