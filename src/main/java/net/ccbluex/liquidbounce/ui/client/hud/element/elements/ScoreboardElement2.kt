@@ -183,16 +183,16 @@ class ScoreboardElement2(
             GlStateManager.resetColor()
             if(changeDomain.get()) {
                 if (cachedDomains.contains(stripped)) {
-                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                    name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                     changed = true
                 }/* else if (ServerUtils.isHypixelDomain(stripped)) {
-                    name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                    name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                     changed = true
                     cachedDomains.add(stripped)
                 } else
                     for (domain in domainList) {
                         if (stripped.contains(domain, true)) {
-                            name = LiquidBounce.CLIENT_NAME+LiquidBounce.L+LiquidBounce.S
+                            name = LiquidBounce.CLIENT_NAME+"-"+LiquidBounce.L+LiquidBounce.S
                             changed = true
                             cachedDomains.add(stripped)
                             break;
