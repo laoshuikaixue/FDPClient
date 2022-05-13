@@ -529,3 +529,6 @@ module.NoFallPlus.description=Prevents you from taking fall damage
 
 module.Glide.name=Glide
 module.Glide.description=Glides fly
+
+module.WallClimb.name=WallClimb
+module.WallClimb.description=Allows you to climb up walls like a spider

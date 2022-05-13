@@ -508,3 +508,6 @@ module.NoFallPlus.description=更好的抵消你的掉落伤害
 
 module.Glide.name=滑行
 module.Glide.description=滑行飞行
+
+module.WallClimb.name=爬墙
+module.WallClimb.description=让你像蜘蛛一样爬上墙壁
