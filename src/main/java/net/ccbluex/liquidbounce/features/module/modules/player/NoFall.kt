@@ -11,10 +11,7 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.render.FreeCam
-import net.ccbluex.liquidbounce.utils.MovementUtils
-import net.ccbluex.liquidbounce.utils.PacketUtils
-import net.ccbluex.liquidbounce.utils.RotationUtils
-import net.ccbluex.liquidbounce.utils.VecRotation
+import net.ccbluex.liquidbounce.utils.*
 import net.ccbluex.liquidbounce.utils.block.BlockUtils
 import net.ccbluex.liquidbounce.utils.misc.FallingPlayer
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
@@ -43,11 +40,13 @@ import kotlin.math.sqrt
 @ModuleInfo(name = "NoFall", category = ModuleCategory.PLAYER)
 class NoFall : Module() {
     val modeValue = ListValue("Mode", arrayOf(
-        "SpoofGround", "AlwaysSpoofGround", "NoGround",
+        "SpoofGround", "AlwaysSpoofGround", "NoGround", "NoPacket",
         "Packet", "Packet1", "Packet2",
         "MLG",
         "OldAAC", "LAAC", "AAC3.3.11", "AAC3.3.15", "AACv4", "AAC4.4.X-Flag", "LoyisaAAC4.4.2", "AAC5.0.4", "AAC5.0.14",
-        "Spartan", "CubeCraft", "OldHypixel", "OldHypSpoof", "Phase", "Verus", "Medusa",
+        "Spartan", "CubeCraft",
+        "OldHypixel", "OldHypSpoof", "Watchdog",
+        "Phase", "Verus", "Medusa",
         "Damage", "MotionFlag",
         "OldMatrix", "Matrix6.2.X", "Matrix6.2.X-Packet", "Matrix6.6.3", "Vulcan"
     ), "SpoofGround")
@@ -82,6 +81,7 @@ class NoFall : Module() {
     private var matrixSend = false
     private var nextSpoof = false
     private var doSpoof = false
+    private var watchdogtick = 0
 
     override fun onEnable() {
         nextSpoof = false
@@ -103,6 +103,7 @@ class NoFall : Module() {
         isDmgFalling = false
         matrixFlagWait = 0
         aac4FlagCooldown.reset()
+        watchdogtick = 0
     }
 
     override fun onDisable() {
@@ -396,6 +397,15 @@ class NoFall : Module() {
                     nextSpoof = true
                 }
             }
+            "watchdog" -> {
+                val offset = 2.5
+                if (!mc.thePlayer.onGround && mc.thePlayer.fallDistance - watchdogtick * offset >= 0.0) {
+                    mc.netHandler.addToSendQueue(C03PacketPlayer(true))
+                    watchdogtick++
+                } else if (mc.thePlayer.onGround) {
+                    watchdogtick = 1
+                }
+            }
         }
     }
 
@@ -548,6 +558,12 @@ class NoFall : Module() {
                 packet.onGround = true
             } else if (mode.equals("NoGround", ignoreCase = true)) {
                 packet.onGround = false
+            } else if (mode.equals("NoPacket", true)
+                && mc.thePlayer != null && mc.thePlayer.fallDistance > 2
+            ) {
+                if (mc.thePlayer.ticksExisted % 2 == 0) {
+                    packet.onGround = true
+                    packet.setMoving(false) }
             } else if (mode.equals("OldHypixel", ignoreCase = true) && mc.thePlayer != null && mc.thePlayer.fallDistance > 1.5) {
                 packet.onGround = mc.thePlayer.ticksExisted % 2 == 0
             } else if (mode.equals("OldHypSpoof", ignoreCase = true)) {

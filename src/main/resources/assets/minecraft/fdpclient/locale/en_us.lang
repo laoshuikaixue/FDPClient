@@ -532,3 +532,6 @@ module.Glide.description=Glides fly
 
 module.WallClimb.name=WallClimb
 module.WallClimb.description=Allows you to climb up walls like a spider
+
+module.PotionSaver.name=PotionSaver
+module.PotionSaver.description=Freezes all potion effects while you are standing still

@@ -1,8 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
- */
 package net.ccbluex.liquidbounce.features.module.modules.movement
 
 import net.ccbluex.liquidbounce.event.EventTarget
@@ -14,20 +9,17 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 @ModuleInfo(name = "Strafe", category = ModuleCategory.MOVEMENT)
 class Strafe : Module() {
-
-    private var strengthValue= FloatValue("Strength", 0.5F, 0F, 1F)
+    private var strengthValue = FloatValue("Strength", 0.5F, 0F, 1F)
     private var noMoveStopValue = BoolValue("NoMoveStop", false)
     private var onGroundStrafeValue = BoolValue("OnGroundStrafe", false)
     private var allDirectionsJumpValue = BoolValue("AllDirectionsJump", false)
 
-    private var wasDown = false
-    private var jump = false
+    private var wasDown: Boolean = false
+    private var jump: Boolean = false
 
     @EventTarget
     fun onJump(event: JumpEvent) {
@@ -82,7 +74,7 @@ class Strafe : Module() {
     }
 
 
-    fun getMoveYaw(): Float {
+    private fun getMoveYaw(): Float {
         var moveYaw = mc.thePlayer!!.rotationYaw
         if (mc.thePlayer!!.moveForward != 0F && mc.thePlayer!!.moveStrafing == 0F) {
             moveYaw += if(mc.thePlayer!!.moveForward > 0) 0 else 180
