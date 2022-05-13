@@ -26,7 +26,7 @@ import kotlin.concurrent.schedule
 @ModuleInfo(name = "AutoPlay", category = ModuleCategory.MISC)
 class AutoPlay : Module() {
 
-    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HuaYuTingBWGG1", "HuaYuTingBWGG2", "HuaYuTingMW"), "RedeSky")
+    private val modeValue = ListValue("Server", arrayOf("RedeSky", "BlocksMC", "Minemora", "Hypixel", "Jartex", "HyCraft", "HuaYuTingBWGG1", "HuaYuTingBWGG2", "HuaYuTingMW"), "RedeSky")
     private val delayValue = IntegerValue("JoinDelay", 3, 0, 7)
 
     private var clicking = false
@@ -151,6 +151,16 @@ class AutoPlay : Module() {
                         }
                     }
                     process(packet.chatComponent)
+                }
+                "hycraft" -> {
+                    packet.chatComponent.siblings.forEach { sib ->
+                        val clickEvent = sib.chatStyle.chatClickEvent
+                        if(clickEvent != null && clickEvent.action == ClickEvent.Action.RUN_COMMAND && clickEvent.value.contains("playagain")) {
+                            queueAutoPlay {
+                                mc.thePlayer.sendChatMessage(clickEvent.value)
+                            }
+                        }
+                    }
                 }
                 "huayutingbwgg1" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {

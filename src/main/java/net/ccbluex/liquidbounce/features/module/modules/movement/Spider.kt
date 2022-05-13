@@ -70,7 +70,7 @@ class Spider : Module() {
             }
         }
     }
-    
+
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
@@ -81,7 +81,7 @@ class Spider : Module() {
             packet.z = packet.z + cos(yaw) * 0.00000001
         }
     }
-    
+
     override fun onDisable() {
         mc.timer.timerSpeed = 1f
         wasTimer = false

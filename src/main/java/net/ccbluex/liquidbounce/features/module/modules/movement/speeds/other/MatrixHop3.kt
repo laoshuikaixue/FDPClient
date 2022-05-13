@@ -9,9 +9,9 @@ class MatrixHop3 : SpeedMode("Matrix6.7.0") {
     private var noVelocityY = 0
 
     override fun onUpdate() {
-        if (noVelocityY >= 0) {
-            noVelocityY = noVelocityY - 1
-        }
+	if (noVelocityY >= 0) {
+	    noVelocityY = noVelocityY - 1
+	}
         if (!mc.thePlayer.onGround && noVelocityY <= 0) {
             if (mc.thePlayer.motionY > 0) {
                 mc.thePlayer.motionY -= 0.0005
@@ -48,12 +48,12 @@ class MatrixHop3 : SpeedMode("Matrix6.7.0") {
         noVelocityY = 0
     }
     override fun onPacket(event: PacketEvent) {
-        val packet = event.packet
+    	val packet = event.packet
         if (packet is S12PacketEntityVelocity) {
-            if (mc.thePlayer == null || (mc.theWorld?.getEntityByID(packet.entityID) ?: return) != mc.thePlayer) {
+	    if (mc.thePlayer == null || (mc.theWorld?.getEntityByID(packet.entityID) ?: return) != mc.thePlayer) {
                 return
             }
-            noVelocityY = 10
-        }
+	    noVelocityY = 10
+	}
     }
 }

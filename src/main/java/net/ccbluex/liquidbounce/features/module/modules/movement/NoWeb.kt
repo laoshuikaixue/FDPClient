@@ -86,7 +86,7 @@ class NoWeb : Module() {
                 mc.thePlayer.jumpMovementFactor = 0.12425f
                 mc.thePlayer.motionY = -0.0125
                 if (mc.gameSettings.keyBindSneak.isKeyDown) mc.thePlayer.motionY = -0.1625
-                
+
                 if (mc.thePlayer.ticksExisted % 40 == 0) {
                     mc.timer.timerSpeed = 3.0F
                     usedTimer = true
