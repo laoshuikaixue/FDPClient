@@ -52,31 +52,11 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         val UpdateLogs = arrayOf(
             "${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}",
             "",
+            "VERSION:${LiquidBounce.CLIENT_VERSION}(${LiquidBounce.CLIENT_BRANCH})",
+            "",
             "CopyRight Mojang AB",
             "",
             "Minecraft 1.8.9",
-            "",
-            "",
-            "",
-            "${LiquidBounce.CLIENT_VERSION}(${LiquidBounce.CLIENT_BRANCH}) Update log:",
-            "",
-            "[+] Add | [*] Fix | [-] Removed / delete | [·] notes",
-            "",
-            "[+] A new ClickGui",
-            "",
-            "[+] Better TargetStrafe",
-            "",
-            "[+] Better Inventory",
-            "",
-            "[+] Better RoundedButtonRenderer",
-            "",
-            "[*] ScoreboardElement2",
-            "",
-            "[*] Criticals",
-            "",
-            "[*] PlayerHealthSend",
-            "",
-            "[*] FontRenderer"
         )
 
         for (ChangeLog in UpdateLogs) {
