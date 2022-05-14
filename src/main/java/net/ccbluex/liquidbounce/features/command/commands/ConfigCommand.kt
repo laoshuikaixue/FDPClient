@@ -4,6 +4,7 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import org.lwjgl.opengl.Display
+import java.awt.TrayIcon
 import java.io.File
 import java.nio.file.Files
 
@@ -22,6 +23,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (!file.exists()) {
                             LiquidBounce.configManager.load(args[2], true)
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Created config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Created config ${args[2]}")
                         } else {
                             alert("Config ${args[2]} already exists")
@@ -42,6 +44,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
                             LiquidBounce.configManager.load(args[2], args[1].equals("load", true))
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Loaded config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Loaded config ${args[2]}")
                         } else {
                             alert("Config ${args[2]} does not exist")
@@ -62,6 +65,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
                             file.delete()
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Successfully deleted config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Successfully deleted config ${args[2]}")
                         } else {
                             alert("Config ${args[2]} does not exist")

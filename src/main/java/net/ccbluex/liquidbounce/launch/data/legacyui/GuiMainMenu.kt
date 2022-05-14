@@ -18,7 +18,6 @@ import java.awt.Color
 class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
     override fun initGui() {
         val defaultHeight = (this.height / 3.5).toInt()
-
         this.buttonList.add(GuiButton(1, this.width / 2 - 50, defaultHeight, 100, 20, I18n.format("menu.singleplayer")))
         this.buttonList.add(GuiButton(2, this.width / 2 - 50, defaultHeight + 24, 100, 20, I18n.format("menu.multiplayer")))
         this.buttonList.add(GuiButton(100, this.width / 2 - 50, defaultHeight + 24 * 2, 100, 20, "%ui.altmanager%"))
@@ -98,6 +97,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             102 -> mc.displayGuiScreen(GuiBackground(this))
             103 -> mc.displayGuiScreen(GuiModList(this))
         }
+        LiquidBounce.tipSoundManager.enter.asyncPlay()
     }
 
     override fun keyTyped(typedChar: Char, keyCode: Int) {}

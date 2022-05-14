@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager
 import org.lwjgl.opengl.Display
 import oshi.SystemInfo
 import oshi.software.os.windows.nt.CentralProcessor
+import java.awt.*
 import java.io.File
 import java.util.*
 
@@ -106,6 +107,21 @@ ClientUtils : MinecraftInstance() {
         val jsonObject = JsonObject()
         jsonObject.addProperty("text", message)
         mc.thePlayer.addChatMessage(IChatComponent.Serializer.jsonToComponent(jsonObject.toString()))
+    }
+
+    fun isWindows10(): Boolean {
+        return System.getProperty("os.name").contains("Windows 10")
+    }
+
+    @Throws(AWTException::class)
+    fun NotificationPublisher(title: String?, msg: String?, msgType: TrayIcon.MessageType?) {
+        val tray = SystemTray.getSystemTray()
+        val image: Image = Toolkit.getDefaultToolkit().createImage("icon.png")
+        val trayIcon = TrayIcon(image, "Tray Demo")
+        trayIcon.isImageAutoSize = true
+        trayIcon.toolTip = "System tray icon demo"
+        tray.add(trayIcon)
+        trayIcon.displayMessage(title, msg, msgType)
     }
 
     enum class EnumOSType(val friendlyName: String) {

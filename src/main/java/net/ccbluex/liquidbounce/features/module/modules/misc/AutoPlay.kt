@@ -3,7 +3,6 @@ package net.ccbluex.liquidbounce.features.module.modules.misc
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.PacketEvent
-import net.ccbluex.liquidbounce.event.WorldEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
@@ -20,6 +19,7 @@ import net.minecraft.network.play.server.S2DPacketOpenWindow
 import net.minecraft.network.play.server.S2FPacketSetSlot
 import net.minecraft.util.IChatComponent
 import org.lwjgl.opengl.Display
+import java.awt.TrayIcon
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -165,18 +165,21 @@ class AutoPlay : Module() {
                 "huayutingbwgg1" -> {
                     if (text.contains("      喜欢      一般      不喜欢", true)) {
                         mc.thePlayer.sendChatMessage("@ GG")
+                        if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(this.name, "Successfully send GG", TrayIcon.MessageType.INFO)
                         LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
                 "huayutingbwgg2" -> {
                     if (text.contains("赢得了游戏", true)) {
                         mc.thePlayer.sendChatMessage("@ GG")
+                        if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(this.name, "Successfully send GG", TrayIcon.MessageType.INFO)
                         LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
                 "huayutingmw" -> {
                     if (text.contains("                                击杀排行榜", true)) {
                         mc.thePlayer.sendChatMessage("!GG")
+                        if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(this.name, "Successfully send GG", TrayIcon.MessageType.INFO)
                         LiquidBounce.hud.addNotification(Notification(this.name, "游戏结束", NotifyType.WARNING, 3000))
                     }
                 }
@@ -208,7 +211,7 @@ class AutoPlay : Module() {
     }
 
     @EventTarget
-    fun onWorld(event: WorldEvent) {
+    fun onWorld() {
         clicking = false
         clickState = 0
         queued = false

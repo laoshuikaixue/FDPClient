@@ -5,6 +5,7 @@
  */
 package net.ccbluex.liquidbounce.launch.data.legacyui;
 
+import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.EventTarget;
 import net.ccbluex.liquidbounce.event.PacketEvent;
 import net.ccbluex.liquidbounce.features.module.Module;
@@ -48,6 +49,7 @@ public class ClickGUIModule extends Module {
 
     @Override
     public void onEnable() {
+        LiquidBounce.tipSoundManager.getClickguiopen().asyncPlay();
         if(styleValue.get().contains("Novoline")) {
             mc.displayGuiScreen(new ClickyUI());
             this.setState(false);

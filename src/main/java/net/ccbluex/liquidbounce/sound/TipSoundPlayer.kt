@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.ui.sound
+package net.ccbluex.liquidbounce.sound
 
 import java.io.File
 import javax.sound.sampled.AudioSystem
