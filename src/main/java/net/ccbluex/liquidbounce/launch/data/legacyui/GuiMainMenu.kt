@@ -49,7 +49,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
         }
 
         var ULY = 3f
-        val UpdateLogs = arrayOf(
+        val Logs = arrayOf(
             "${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}",
             "",
             "VERSION:${LiquidBounce.CLIENT_VERSION}(${LiquidBounce.CLIENT_BRANCH})",
@@ -59,7 +59,7 @@ class GuiMainMenu : GuiScreen(), GuiYesNoCallback {
             "Minecraft 1.8.9",
         )
 
-        for (ChangeLog in UpdateLogs) {
+        for (ChangeLog in Logs) {
             Fonts.fontMiSansNormal35.drawStringWithShadow(ChangeLog, 2f, ULY, Color(255, 255, 255, 160).rgb)
             ULY += 5f
         }
