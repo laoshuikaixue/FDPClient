@@ -10,10 +10,10 @@ import java.awt.TrayIcon
 
 class GuiLaunchOptionSelectMenu : GuiScreen() {
     override fun initGui() {
-        if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Thank you for using ${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L+LiquidBounce.S}", TrayIcon.MessageType.INFO)
-        LiquidBounce.tipSoundManager.startup.asyncPlay()
         this.buttonList.add(GuiButton(0, this.width / 2 - 50, height / 2 - 20, 100, 20, "Legacy UI"))
         this.buttonList.add(GuiButton(1, this.width / 2 - 50, height / 2 + 10, 100, 20, "Fancy UI"))
+        if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Thank you for using ${LiquidBounce.CLIENT_NAME} - ${LiquidBounce.L+LiquidBounce.S}", TrayIcon.MessageType.INFO)
+        LiquidBounce.tipSoundManager.startup.asyncPlay()
     }
 
     override fun drawScreen(mouseX: Int, mouseY: Int, pTicks: Float) {

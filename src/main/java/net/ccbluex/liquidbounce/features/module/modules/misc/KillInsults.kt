@@ -95,13 +95,13 @@ object KillInsults : Module() {
 
         when (modeValue.get().lowercase()) {
             "clear" -> {
-                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S} ", target.name)
+                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME} for ${LiquidBounce.L}${LiquidBounce.S} ", target.name)
             }
             "withwords" -> {
-                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S} " + getRandomOne(), target.name)
+                sendInsultWords("L ${target.name} kill within ${LiquidBounce.CLIENT_NAME} for ${LiquidBounce.L}${LiquidBounce.S} " + getRandomOne(), target.name)
             }
             "rawwords" -> {
-                sendInsultWords(getRandomOne(), target.name + "kill within ${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}")
+                sendInsultWords(getRandomOne(), target.name + "kill within ${LiquidBounce.CLIENT_NAME} for ${LiquidBounce.L}${LiquidBounce.S}")
             }
         }
     }
@@ -110,14 +110,14 @@ object KillInsults : Module() {
         var message = msg.replace("%name%", name)
 
         if (waterMarkValue.get() && clientname.get()) {
-            message = "[${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}] $message"
+            message = "[${LiquidBounce.CLIENT_NAME} for ${LiquidBounce.L}${LiquidBounce.S}] $message"
         }
         else{
             message = "$message"
         }
 
         if (waterMark2Value.get() && clientname.get()) {
-            message = prefixValue.get() + "[${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}] " + " $message"
+            message = prefixValue.get() + "[${LiquidBounce.CLIENT_NAME} for ${LiquidBounce.L}${LiquidBounce.S}] " + " $message"
         }
         else{
             message = prefixValue.get() + " $message"
