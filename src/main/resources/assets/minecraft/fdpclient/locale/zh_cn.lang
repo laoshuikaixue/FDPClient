@@ -514,3 +514,6 @@ module.WallClimb.description=让你像蜘蛛一样爬上墙壁
 
 module.PotionSaver.name=冻结药水效果
 module.PotionSaver.description=当你站着不动时冻结所有药水效果
+
+module.MurderDetector.name=杀手检测
+module.MurderDetector.description=在Hypixel服务器的密室杀手游戏中检测杀手
