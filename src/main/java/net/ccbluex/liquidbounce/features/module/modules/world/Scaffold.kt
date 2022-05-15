@@ -111,8 +111,8 @@ class Scaffold : Module() {
     private val motionSpeedEnabledValue = BoolValue("MotionSpeedSet", false)
     private val motionSpeedValue = FloatValue("MotionSpeed", 0.1f, 0.05f, 1f).displayable { motionSpeedEnabledValue.get() }
     private val speedModifierValue = FloatValue("SpeedModifier", 1f, 0f, 2f)
-    private val bobbingValue = BoolValue("Bobbing", true)
-    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.3f, 0f, 1f).displayable { bobbingValue.get() }
+    private val bobbingValue = BoolValue("Bobbing", false)
+    private val bobbingAmountValue = FloatValue("BobbingAmount", 0.2f, 0f, 1f).displayable { bobbingValue.get() }
 
     // Boost
     private val boostValue = ListValue("Boost", arrayOf("None", "1", "2", "3"), "None")

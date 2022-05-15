@@ -25,6 +25,7 @@ import net.minecraft.network.play.INetHandlerPlayServer
 import net.minecraft.network.play.client.*
 import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.network.play.server.S30PacketWindowItems
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
 import java.util.*
@@ -32,7 +33,7 @@ import kotlin.math.sqrt
 
 @ModuleInfo(name = "NoSlow", category = ModuleCategory.MOVEMENT)
 class NoSlow : Module() {
-    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "NoPacket", "LiquidBounce", "Custom", "WatchDog", "Watchdog2", "NCP", "AAC", "AAC5", "Matrix", "Vulcan"), "Vanilla")
+    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "NoPacket", "LiquidBounce", "Custom", "Watchdog", "OldWatchDog", "OldHypixel", "NCP", "AAC", "AAC5", "Matrix", "Vulcan"), "Vanilla")
     private val blockForwardMultiplier = FloatValue("BlockForwardMultiplier", 1.0F, 0.2F, 1.0F)
     private val blockStrafeMultiplier = FloatValue("BlockStrafeMultiplier", 1.0F, 0.2F, 1.0F)
     private val consumeForwardMultiplier = FloatValue("ConsumeForwardMultiplier", 1.0F, 0.2F, 1.0F)
@@ -51,6 +52,8 @@ class NoSlow : Module() {
     private val teleportCustomYValue = BoolValue("Teleport-CustomY", false).displayable { teleportValue.get() && teleportModeValue.equals("Custom") }
     private val teleportDecreasePercentValue = FloatValue("Teleport-DecreasePercent", 0.13f, 0f, 1f).displayable { teleportValue.get() && teleportModeValue.equals("Decrease") }
     private val alert1Value = BoolValue("updateAlert1", true).displayable { false }
+    private val sendPacketValue = BoolValue("SendPacket", true).displayable { modeValue.get().equals("watchdog", true) }
+    private val debugValue = BoolValue("Debug", false).displayable { modeValue.get().equals("watchdog", true) }
 
     private var pendingFlagApplyPacket = false
     private var lastMotionX = 0.0
@@ -95,13 +98,13 @@ class NoSlow : Module() {
                 mc.netHandler.addToSendQueue(digging)
             }
         }
-        if (sendC08 && event.eventState == EventState.POST) {
-            if (delay && msTimer.hasTimePassed(delayValue) && !watchDog) {
+        if(sendC08 && event.eventState == EventState.POST) {
+            if(delay && msTimer.hasTimePassed(delayValue) && !watchDog) {
                 mc.netHandler.addToSendQueue(blockPlace)
                 msTimer.reset()
-            } else if (!delay && !watchDog) {
+            } else if(!delay && !watchDog) {
                 mc.netHandler.addToSendQueue(blockPlace)
-            } else if (watchDog) {
+            } else if(watchDog) {
                 mc.netHandler.addToSendQueue(blockMent)
             }
         }
@@ -152,19 +155,28 @@ class NoSlow : Module() {
                 }
 
                 "watchdog" -> {
-                    if (mc.thePlayer.ticksExisted % 2 == 0) {
-                        sendPacket(event, true, false, true, 50, true)
+                    if (sendPacketValue.get() && !killAura.blockingStatus) {
+                        if (event.eventState == EventState.PRE) {
+                            mc.netHandler.addToSendQueue(C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos(-1, -1, -1), EnumFacing.DOWN))
+                        } else {
+                            mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(BlockPos(-1, -1, -1), 255, null, 0F, 0F, 0F))
+                        }
+                    }
+                }
+
+                "oldwatchdog" -> {
+                    if(mc.thePlayer.ticksExisted % 2 == 0) {
+                        sendPacket(event, true, false, false, 50, true)
                     } else {
                         sendPacket(event, false, true, false, 0, true, true)
                     }
                 }
 
-                "watchdog2" -> {
-                    if (event.eventState == EventState.PRE) {
-                        mc.netHandler.addToSendQueue(C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN))
-                    } else {
+                "oldhypixel" -> {
+                    if (event.eventState == EventState.PRE)
+                        mc.netHandler.addToSendQueue(C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos(-1, -1, -1), EnumFacing.DOWN))
+                    else
                         mc.netHandler.addToSendQueue(C08PacketPlayerBlockPlacement(BlockPos(-1, -1, -1), 255, null, 0.0f, 0.0f, 0.0f))
-                    }
                 }
             }
         }
@@ -229,6 +241,12 @@ class NoSlow : Module() {
     @EventTarget
     fun onPacket(event: PacketEvent) {
         val packet = event.packet
+        if (modeValue.get().equals("watchdog", true) && event.packet is S30PacketWindowItems && (mc.thePlayer.isUsingItem() || mc.thePlayer.isBlocking())) {
+            event.cancelEvent()
+
+            if (debugValue.get())
+                alert("Detected reset item packet")
+        }
 
         if((modeValue.equals("Matrix") || modeValue.equals("Vulcan")) && nextTemp) {
             if((packet is C07PacketPlayerDigging || packet is C08PacketPlayerBlockPlacement) && isBlocking) {

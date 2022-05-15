@@ -23,8 +23,8 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (!file.exists()) {
                             LiquidBounce.configManager.load(args[2], true)
-                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Created config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Created config ${args[2]}")
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Created config ${args[2]}", TrayIcon.MessageType.INFO)
                         } else {
                             alert("Config ${args[2]} already exists")
                         }
@@ -44,8 +44,8 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
                             LiquidBounce.configManager.load(args[2], args[1].equals("load", true))
-                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Loaded config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Loaded config ${args[2]}")
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Loaded config ${args[2]}", TrayIcon.MessageType.INFO)
                         } else {
                             alert("Config ${args[2]} does not exist")
                         }
@@ -65,8 +65,8 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                         val file = File(LiquidBounce.fileManager.configsDir, "${args[2]}.json")
                         if (file.exists()) {
                             file.delete()
-                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Successfully deleted config ${args[2]}", TrayIcon.MessageType.INFO)
                             alert("Successfully deleted config ${args[2]}")
+                            if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Successfully deleted config ${args[2]}", TrayIcon.MessageType.INFO)
                         } else {
                             alert("Config ${args[2]} does not exist")
                         }
@@ -113,6 +113,7 @@ class ConfigCommand : Command("config", arrayOf("cfg")) {
                     }
                     LiquidBounce.configManager.save(true, true)
                     alert("Saved config ${LiquidBounce.configManager.nowConfig}")
+                    if (ClientUtils.isWindows10()) ClientUtils.NotificationPublisher(LiquidBounce.CLIENT_NAME, "Saved config ${LiquidBounce.configManager.nowConfig}", TrayIcon.MessageType.INFO)
                 }
 
                 "reload" -> {
