@@ -24,7 +24,7 @@ import net.minecraft.util.ResourceLocation
 class HitEffect : Module() {
 
     private val timingValue = ListValue("Timing", arrayOf("Attack", "Kill"), "Attack")
-    private val modeValue = ListValue("Mode", arrayOf("Lighting", "Blood", "Fire", "Critical", "MagicCritical"), "Lighting")
+    private val modeValue = ListValue("Mode", arrayOf("Lighting", "Blood", "Fire", "Critical", "MagicCritical"), "Critical")
     private val timesValue = IntegerValue("Times", 1, 1, 10)
     private val lightingSoundValue = BoolValue("LightingSound", true).displayable { modeValue.equals("Lighting") }
 

@@ -26,7 +26,7 @@ import net.minecraft.util.EnumFacing
 
 @ModuleInfo(name = "LongJump", category = ModuleCategory.MOVEMENT, autoDisable = EnumAutoDisableType.FLAG)
 class LongJump : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("NCP", "NCPDamage", "JartexWater", "AACv1", "AACv2", "AACv3", "Mineplex", "Mineplex2", "Mineplex3", "RedeSkyTest", "RedeSky", "RedeSky2", "RedeSky3", "OldBlocksMC", "OldBlocksMC2", "HYT4v4"), "NCP")
+    private val modeValue = ListValue("Mode", arrayOf("NCP", "NCPDamage", "JartexWater", "AACv1", "AACv2", "AACv3", "Mineplex", "Mineplex2", "Mineplex3", "RedeSkyTest", "RedeSky", "RedeSky2", "RedeSky3", "InfiniteRedesky", "OldBlocksMC", "OldBlocksMC2", "AAC5.1", "AAC5.2"), "NCP")
     private val ncpBoostValue = FloatValue("NCPBoost", 4.25f, 1f, 10f)
 
     // redesky
@@ -152,7 +152,7 @@ class LongJump : Module() {
 //    }
 
     @EventTarget
-    fun onUpdate(event: UpdateEvent) {
+    fun onUpdate() {
         mc.thePlayer ?: return
 
         if (jumped) {
@@ -285,6 +285,13 @@ class LongJump : Module() {
                         }
                     }
 
+                    "InfiniteRedesky" -> {
+                        if (mc.thePlayer.fallDistance > 0.6f) mc.thePlayer.motionY += 0.02
+                        MovementUtils.strafe(
+                            0.85.coerceAtMost(0.25.coerceAtLeast(MovementUtils.getSpeed() * 1.05878)).toFloat()
+                        )
+                    }
+
                     "oldblocksmc" -> {
                         mc.thePlayer.jumpMovementFactor = 0.1f
                         mc.thePlayer.motionY += 0.0132
@@ -305,10 +312,15 @@ class LongJump : Module() {
                         mc.timer.timerSpeed = 0.8f
                     }
 
-                    "hyt4v4" -> {
+                    "aac5.1" -> {
                         mc.thePlayer.motionY += 0.031470000997
                         MovementUtils.strafe(MovementUtils.getSpeed() * 1.0114514f)
                         mc.timer.timerSpeed = 1.0114514f
+                    }
+
+                    "aac5.2" -> {
+                        mc.thePlayer.jumpMovementFactor = 0.15f
+                        mc.thePlayer.motionY += 0.05F
                     }
                 }
             }

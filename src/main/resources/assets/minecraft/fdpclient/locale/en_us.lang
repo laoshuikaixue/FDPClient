@@ -128,7 +128,7 @@ module.KillInsults.name=KillInsults
 module.KillInsults.description=Automatically insults player you killed
 
 module.AutoAdvertise.name=AutoAdvertise
-module.AutoAdvertise.description=Keep this on, we need your support
+module.AutoAdvertise.description=Automatically send advertisements
 
 module.AutoArmor.name=AutoArmor
 module.AutoArmor.description=Automatically equips the best armor in your inventory
@@ -479,17 +479,11 @@ module.Performance.description=Make the game faster
 module.AutoKit.name=AutoKit
 module.AutoKit.description=Automatically selects kits for you in BlocksMC Skywars
 
-# module.NewNameTags.name=NewNameTags
-# module.NewNameTags.description=Render the name tag
-
 module.PackSpoofer.name=PackSpoofer
 module.PackSpoofer.description=Prevents servers from forcing you to download their resource pack
 
 module.AntiBan.name=AntiBan
 module.AntiBan.description=Anti staff on BlocksMC. Automatically leaves a map if detected known staffs
-
-module.SpinBot.name=SpinBot
-module.SpinBot.description=CS-GO Feeling but client side (by the old solegit)
 
 module.AntiAFK.name=AntiFAK
 module.AntiAFK.description=Prevents you from getting kicked for being AFK
@@ -521,9 +515,6 @@ module.KeepSprint.description=Move keep sprint and no slow down
 module.KickWarn.name=KickWarn
 module.KickWarn.description=KickWarn
 
-module.LnkTargetHUD.name=LnkTargetHUD
-module.LnkTargetHUD.description=Lnk.TargetHUD
-
 module.NoFallPlus.name=NoFallPlus
 module.NoFallPlus.description=Prevents you from taking fall damage
 
@@ -538,3 +529,6 @@ module.PotionSaver.description=Freezes all potion effects while you are standing
 
 module.MurderDetector.name=MurderDetector
 module.MurderDetector.description=Murder Detector Killer in Hypixel Server
+
+module.BowJump.name=BowJump
+module.BowJump.description=Allows you to jump further with auto bow shoot

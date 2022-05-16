@@ -128,7 +128,7 @@ module.KillInsults.name=自动骂人
 module.KillInsults.description=自动骂你杀的人
 
 module.AutoAdvertise.name=自动广告
-module.AutoAdvertise.description=保持这个开启，我们需要你的帮助！
+module.AutoAdvertise.description=自动发送广告
 
 module.AutoArmor.name=自动穿甲
 module.AutoArmor.description=自动穿戴盔甲
@@ -458,17 +458,11 @@ module.SilentDisconnect.description=当你与服务器断开连接时，不会�
 module.AutoKit.name=自动套件
 module.AutoKit.description=在BlocksMC Skywars中自动为您选择套件
 
-# module.NewNameTags.name=新的名称标签
-# module.NewNameTags.description=更好的改变名称标签的样式让你能持续看到
-
 module.PackSpoofer.name=防止资源包
 module.PackSpoofer.description=防止服务器强制您下载其资源包
 
 module.AntiBan.name=反客服封禁
 module.AntiBan.description=BlocksMC上的反客服,如果检测到已知客服，则自动离开游戏
-
-module.SpinBot.name=旋转机器人
-module.SpinBot.description=CS-GO感觉但是客户端（由旧solegit提供）
 
 module.AntiAFK.name=防止挂机
 module.AntiAFK.description=防止你因为挂机而被踢
@@ -500,9 +494,6 @@ module.KeepSprint.description=保持疾跑 没有减速
 module.KickWarn.name=KickWarn
 module.KickWarn.description=KickWarn
 
-module.LnkTargetHUD.name=LnkTargetHUD
-module.LnkTargetHUD.description=Lnk.TargetHUD
-
 module.NoFallPlus.name=更好的无掉落伤害
 module.NoFallPlus.description=更好的抵消你的掉落伤害
 
@@ -517,3 +508,6 @@ module.PotionSaver.description=当你站着不动时冻结所有药水效果
 
 module.MurderDetector.name=杀手检测
 module.MurderDetector.description=在Hypixel服务器的密室杀手游戏中检测杀手
+
+module.BowJump.name=弓箭远跳
+module.BowJump.description=使用弓箭自伤自己来达到更远的跳跃
