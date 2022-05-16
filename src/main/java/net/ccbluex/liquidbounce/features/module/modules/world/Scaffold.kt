@@ -115,7 +115,7 @@ class Scaffold : Module() {
     private val bobbingAmountValue = FloatValue("BobbingAmount", 0.2f, 0f, 1f).displayable { bobbingValue.get() }
 
     // Boost
-    private val boostValue = ListValue("Boost", arrayOf("None", "1", "2", "3"), "None")
+    private val boostValue = ListValue("Boost", arrayOf("None", "1", "2", "3", "4"), "None")
 
     // Tower
     private val towerModeValue = ListValue(
@@ -417,9 +417,12 @@ class Scaffold : Module() {
                 MovementUtils.setMotion(0.172)
             }
             "2" -> {
-                MovementUtils.setMotion(0.202)
+                MovementUtils.setMotion(0.181)
             }
             "3" -> {
+                MovementUtils.setMotion(0.202)
+            }
+            "4" -> {
                 MovementUtils.setMotion(0.222)
             }
         }
