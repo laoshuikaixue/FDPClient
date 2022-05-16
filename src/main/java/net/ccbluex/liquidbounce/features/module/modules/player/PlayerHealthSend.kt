@@ -14,7 +14,7 @@ import kotlin.math.abs
 class PlayerHealthSend : Module() {
     private val healthData=HashMap<Int,Float>()
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         for(entity in mc.theWorld.loadedEntityList){
                 if(entity is EntityLivingBase && EntityUtils.isSelected(entity,true)){
                     val lastHealth=healthData.getOrDefault(mc.thePlayer.entityId,mc.thePlayer.maxHealth)

@@ -9,6 +9,7 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.event.PacketEvent
+import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
@@ -120,7 +121,7 @@ class ChestStealer : Module() {
     }
 
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         val screen = mc.currentScreen ?: return
 
         if (eventModeValue.get().equals("update", true))
@@ -159,7 +160,7 @@ class ChestStealer : Module() {
             return
 
         // inventory cleaner
-        val inventoryCleaner = LiquidBounce.moduleManager.getModule(InventoryCleaner::class.java) as InventoryCleaner
+        val inventoryCleaner = LiquidBounce.moduleManager[InventoryCleaner::class.java]!!
 
         // Is empty?
         if (!isEmpty(screen) && !(closeOnFullValue.get() && fullInventory)) {
@@ -230,7 +231,7 @@ class ChestStealer : Module() {
     }
 
     private fun isEmpty(chest: GuiChest): Boolean {
-        val inventoryCleaner = LiquidBounce.moduleManager.getModule(InventoryCleaner::class.java) as InventoryCleaner
+        val inventoryCleaner = LiquidBounce.moduleManager[InventoryCleaner::class.java]!!
 
         for (i in 0 until chest.inventoryRows * 9) {
             val slot = chest.inventorySlots.inventorySlots[i]

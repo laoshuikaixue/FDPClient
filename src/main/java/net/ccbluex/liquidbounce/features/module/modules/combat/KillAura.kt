@@ -406,7 +406,7 @@ class KillAura : Module() {
      * Update event
      */
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         if (cancelRun) {
             target = null
             currentTarget = null

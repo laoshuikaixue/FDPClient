@@ -152,7 +152,7 @@ class LongJump : Module() {
 //    }
 
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         mc.thePlayer ?: return
 
         if (jumped) {

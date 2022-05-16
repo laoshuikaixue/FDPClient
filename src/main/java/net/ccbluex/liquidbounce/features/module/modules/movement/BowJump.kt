@@ -4,6 +4,7 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.MoveEvent
 import net.ccbluex.liquidbounce.event.PacketEvent
+import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
@@ -64,7 +65,7 @@ class BowJump : Module() {
     }
 
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         mc.timer.timerSpeed = 1f
         var forceDisable = false
         when (bowState) {

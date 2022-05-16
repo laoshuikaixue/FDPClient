@@ -2,6 +2,7 @@ package net.ccbluex.liquidbounce.features.module.modules.misc
 
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
+import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
@@ -62,7 +63,7 @@ class MurderDetector : Module() {
     private var killerData = HashMap<EntityPlayer, KillerData?>()
 
     @EventTarget
-    fun onUpdate() {
+    fun onUpdate(event: UpdateEvent) {
         val stripped = StringUtils.fixString(ColorUtils.stripColor(name))
         if (ServerUtils.isHypixelDomain(stripped)) {
             for (entity in mc.theWorld.loadedEntityList) {
