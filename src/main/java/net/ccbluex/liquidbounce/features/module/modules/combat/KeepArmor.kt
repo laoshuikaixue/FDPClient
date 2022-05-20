@@ -13,6 +13,7 @@ import java.util.*
 
 @ModuleInfo(name = "KeepArmor", category = ModuleCategory.COMBAT)
 class KeepArmor : Module() {
+
     val timer = Timer()
     var check = true
 

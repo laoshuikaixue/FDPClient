@@ -54,6 +54,10 @@
     "render.MixinTileEntityMobSpawnerRenderer",
     "render.MixinTileEntityRendererDispatcher",
     "render.MixinVisGraph",
+    "item.MixinItemStack",
+    "item.MixinNBTTagCompound",
+    "world.MixinWorld",
+    "world.MixinWorldClient",
     "splash.MixinSplashProgress",
     "splash.MixinSplashProgressRunnable"
   ],

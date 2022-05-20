@@ -92,7 +92,7 @@ class AutoReport : Module() {
                 return false
             }
 
-            if (AntiBot.isBot(entity)) {
+            if (AntiBot.isbot(entity)) {
                 return false
             }
 

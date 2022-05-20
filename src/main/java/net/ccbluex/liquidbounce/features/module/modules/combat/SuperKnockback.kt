@@ -20,6 +20,7 @@ import net.minecraft.network.play.client.C0BPacketEntityAction
 
 @ModuleInfo(name = "SuperKnockback", category = ModuleCategory.COMBAT)
 class SuperKnockback : Module() {
+
     private val hurtTimeValue = IntegerValue("HurtTime", 10, 0, 10)
     private val modeValue = ListValue("Mode", arrayOf("ExtraPacket", "WTap", "Packet"), "ExtraPacket")
     private val onlyMoveValue = BoolValue("OnlyMove", false)

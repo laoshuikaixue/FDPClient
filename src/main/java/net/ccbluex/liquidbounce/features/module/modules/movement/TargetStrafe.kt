@@ -1,10 +1,7 @@
 package net.ccbluex.liquidbounce.features.module.modules.movement
 
 import net.ccbluex.liquidbounce.LiquidBounce
-import net.ccbluex.liquidbounce.event.EventState
-import net.ccbluex.liquidbounce.event.EventTarget
-import net.ccbluex.liquidbounce.event.MotionEvent
-import net.ccbluex.liquidbounce.event.MoveEvent
+import net.ccbluex.liquidbounce.event.*
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
@@ -19,6 +16,7 @@ import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.AxisAlignedBB
 import org.lwjgl.opengl.GL11
 import java.awt.Color
@@ -26,9 +24,10 @@ import java.util.*
 
 @ModuleInfo(name = "TargetStrafe", category = ModuleCategory.MOVEMENT)
 class TargetStrafe : Module() {
-    public val radius = FloatValue("Radius", 2.0f, 0.1f, 4.0f)
+
+    val radius = FloatValue("Radius", 2.0f, 0.1f, 4.0f)
     private val render = BoolValue("Render", true)
-    private val alwaysRender = BoolValue("Always-Render", true)
+    private val alwaysRender = BoolValue("Always-Render", true).displayable { render.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "None")
     private val safewalk = BoolValue("SafeWalk", true)
     val thirdPerson = BoolValue("ThirdPerson", true)
@@ -42,14 +41,15 @@ class TargetStrafe : Module() {
     private val thicknessValue = FloatValue("Thickness", 1F, 0.1F, 5F)
     private val outLine = BoolValue("Outline", true)
     private val expMode = BoolValue("ExperimentalSpeed", false)
-
     private lateinit var killAura: KillAura
     private lateinit var speed: Speed
     private lateinit var fly: Fly
 
-    var direction: Int = 1
-    var lastView: Int = 0
-    var hasChangedThirdPerson: Boolean = true
+    var direction = 1
+    var lastView = 0
+    var hasChangedThirdPerson = true
+
+    var hasModifiedMovement = false
 
     override fun onInitialize() {
         killAura = LiquidBounce.moduleManager.getModule(KillAura::class.java) as KillAura
@@ -87,14 +87,15 @@ class TargetStrafe : Module() {
         }
     }
 
-    @EventTarget
+    @EventTarget(priority = 2)
     fun onMove(event: MoveEvent) {
         if (canStrafe) {
-            strafe(event, MovementUtils.getSpeed3(event.x, event.z))
+            if (!hasModifiedMovement) strafe(event, MovementUtils.getSpeed3(event.x, event.z))
 
             if (safewalk.get() && checkVoid())
                 event.isSafeWalk = true
         }
+        hasModifiedMovement = false
     }
 
     fun strafe(event: MoveEvent, moveSpeed: Double) {
@@ -104,12 +105,14 @@ class TargetStrafe : Module() {
         val rotYaw = RotationUtils.getRotationsEntity(target).yaw
 
         val forward = if (mc.thePlayer.getDistanceToEntity(target) <= radius.get()) 0.0 else 1.0
-        val modifySpeed = if (expMode.get()) maximizeSpeed(moveSpeed, killAura.rangeValue.get()) else moveSpeed
+        val strafe = direction.toDouble()
+        val modifySpeed = if (expMode.get()) maximizeSpeed(target, moveSpeed, killAura.rangeValue.get()) else moveSpeed
 
-        MovementUtils.setSpeed(event, modifySpeed, rotYaw, direction.toDouble(), forward)
+        MovementUtils.setSpeed(event, modifySpeed, rotYaw, strafe, forward)
+        hasModifiedMovement = true
     }
 
-    private fun maximizeSpeed(speed: Double, range: Float): Double {
+    private fun maximizeSpeed(ent: EntityLivingBase, speed: Double, range: Float): Double {
         mc.thePlayer ?: return 0.0
         /*val dist = mc.thePlayer.getDistanceToEntity(ent).toDouble()
         val maxDist = (range * range).coerceAtMost(radius.get() * radius.get() - 0.25f).toDouble() - (dist * dist)*/
@@ -156,7 +159,7 @@ class TargetStrafe : Module() {
     }
 
     @EventTarget
-    fun onRender3D() {
+    fun onRender3D(event: Render3DEvent) {
         val target = killAura.target
         if ((canStrafe || alwaysRender.get()) && render.get()) {
             target?:return

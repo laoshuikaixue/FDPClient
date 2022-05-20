@@ -11,9 +11,10 @@ import net.ccbluex.liquidbounce.features.module.modules.client.Target.deadValue
 import net.ccbluex.liquidbounce.features.module.modules.client.Target.invisibleValue
 import net.ccbluex.liquidbounce.features.module.modules.client.Target.mobValue
 import net.ccbluex.liquidbounce.features.module.modules.client.Target.playerValue
-import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot.isBot
+import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
 import net.ccbluex.liquidbounce.features.module.modules.misc.Teams
 import net.ccbluex.liquidbounce.utils.render.ColorUtils.stripColor
+import net.minecraft.client.network.NetworkPlayerInfo
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.EntityDragon
@@ -26,6 +27,7 @@ import net.minecraft.entity.passive.EntityBat
 import net.minecraft.entity.passive.EntitySquid
 import net.minecraft.entity.passive.EntityVillager
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.scoreboard.ScorePlayerTeam
 
 object EntityUtils : MinecraftInstance() {
     fun isSelected(entity: Entity, canAttackCheck: Boolean): Boolean {
@@ -33,7 +35,7 @@ object EntityUtils : MinecraftInstance() {
             if (invisibleValue.get() || !entity.isInvisible()) {
                 if (playerValue.get() && entity is EntityPlayer) {
                     if (canAttackCheck) {
-                        if (isBot(entity)) {
+                        if (AntiBot.isbot(entity)) {
                             return false
                         }
 
@@ -73,11 +75,18 @@ object EntityUtils : MinecraftInstance() {
         return LiquidBounce.fileManager.friendsConfig.isFriend(entity)
     }
 
-    fun isAnimal(entity: Entity): Boolean {
+    private fun isAnimal(entity: Entity): Boolean {
         return entity is EntityAnimal || entity is EntitySquid || entity is EntityGolem || entity is EntityVillager || entity is EntityBat
     }
 
-    fun isMob(entity: Entity): Boolean {
+    private fun isMob(entity: Entity): Boolean {
         return entity is EntityMob || entity is EntitySlime || entity is EntityGhast || entity is EntityDragon
+    }
+
+    fun getName(networkPlayerInfoIn: NetworkPlayerInfo): String? {
+        return if (networkPlayerInfoIn.displayName != null) networkPlayerInfoIn.displayName.formattedText else ScorePlayerTeam.formatPlayerName(
+            networkPlayerInfoIn.playerTeam,
+            networkPlayerInfoIn.gameProfile.name
+        )
     }
 }

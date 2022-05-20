@@ -2506,4 +2506,7 @@ public final class RenderUtil extends MinecraftInstance {
         else
             glDisable(cap);
     }
+    public static void bindTexture(int texture) {
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
 }

@@ -50,7 +50,7 @@ class FriendCommand : Command("friend", arrayOf("friends")) {
                          var added: Int = 0
 
                          mc.theWorld.playerEntities
-                             .filter { !AntiBot.isBot(it) && it.displayName.getFormattedText().contains(coloredRegex, false) }
+                             .filter { !AntiBot.isbot(it) && it.displayName.getFormattedText().contains(coloredRegex, false) }
                              .forEach {
                                  if (friendsConfig.addFriend(it.name)) {
                                      added++

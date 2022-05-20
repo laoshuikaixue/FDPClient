@@ -130,8 +130,9 @@ public abstract class MixinItemRenderer {
                         GL11.glTranslated(animations.getTranslateXValue().get(), animations.getTranslateYValue().get(), animations.getTranslateZValue().get());
                         switch (animations.getBlockingModeValue().get()) {
                             case "1.7": {
-                                this.transformFirstPersonItem(equipProgress, swingProgress);
-                                this.func_178103_d();
+                                this.transformFirstPersonItem(f, f1);
+                                GlStateManager.translate(0, 0.3, 0);
+                                this.doBlockTransformations();
                                 break;
                             }
                             case "Throw": {
@@ -482,17 +483,16 @@ public abstract class MixinItemRenderer {
                         }
                         break;
                     case BOW:
-                        this.transformFirstPersonItem(f, f1);
+                        this.transformFirstPersonItem(f, 0.0F);
                         this.doBowTransformations(partialTicks, abstractclientplayer);
                 }
-            }else{
-                if (!animations.getSwingAnimValue().get())
-                    this.doItemUsedTransformations(f1);
+            } else {
+                this.doItemUsedTransformations(f1);
                 this.transformFirstPersonItem(f, f1);
             }
 
             this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
-        }else if(!abstractclientplayer.isInvisible()) {
+        } else if (!abstractclientplayer.isInvisible()) {
             this.renderPlayerArm(abstractclientplayer, f, f1);
         }
 

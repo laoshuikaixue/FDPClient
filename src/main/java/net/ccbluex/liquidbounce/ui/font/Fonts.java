@@ -23,10 +23,10 @@ public class Fonts {
     @FontDetails(fontName = "Light", fontSize = 18, fileName = "regular.ttf")
     public static GameFontRenderer font18;
 
-    @FontDetails(fontName = "Light", fontSize = 32, fileName = "regular.ttf")
+    @FontDetails(fontName = "Medium", fontSize = 32, fileName = "regular.ttf")
     public static GameFontRenderer font32;
 
-    @FontDetails(fontName = "Small", fontSize = 35, fileName = "regular.ttf")
+    @FontDetails(fontName = "Medium", fontSize = 35, fileName = "regular.ttf")
     public static GameFontRenderer font35;
 
     @FontDetails(fontName = "Medium", fontSize = 40, fileName = "regular.ttf")
@@ -70,6 +70,12 @@ public class Fonts {
 
     @FontDetails(fontName = "XiYuanGBT Regular", fontSize = 35, fileName = "GEETYPE-XiYuanGBT-Flash.ttf")
     public static GameFontRenderer fontXiYuanGBT35;
+
+    @FontDetails(fontName = "Whitney-Book Regular", fontSize = 35, fileName = "Whitney-Book.ttf")
+    public static GameFontRenderer fontWhitneyBook35;
+
+    @FontDetails(fontName = "Whitney-Book Regular", fontSize = 40, fileName = "Whitney-Book.ttf")
+    public static GameFontRenderer fontWhitneyBook40;
 
     @FontDetails(fontName = "Whitney-Light Regular", fontSize = 35, fileName = "Whitney-Light.ttf")
     public static GameFontRenderer fontWhitneyLight35;

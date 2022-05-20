@@ -27,6 +27,7 @@ import net.minecraft.potion.Potion
 
 @ModuleInfo(name = "AutoPot", category = ModuleCategory.COMBAT)
 class AutoPot : Module() {
+
     private val healthValue = FloatValue("Health", 15F, 1F, 20F)
     private val delayValue = IntegerValue("Delay", 500, 500, 1000)
     private val throwTickValue = IntegerValue("ThrowTick", 3, 1, 10)

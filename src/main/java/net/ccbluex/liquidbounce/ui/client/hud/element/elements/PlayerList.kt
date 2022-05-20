@@ -1,9 +1,3 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
- */
-// skid in https://github.com/WYSI-Foundation/LiquidBouncePlus/
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
 import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot
@@ -64,14 +58,16 @@ class PlayerList : Element() {
         val color = Color(redValue.get(), greenValue.get(), blueValue.get(), alphaValue.get()).rgb
         val bgColor = Color(bgredValue.get(), bggreenValue.get(), bgblueValue.get(), bgalphaValue.get())
 
-        var playerList: MutableList<EntityPlayer> = mc.theWorld.playerEntities.filter { !AntiBot.isBot(it) && it != mc.thePlayer }.toMutableList()
+        var playerList: MutableList<EntityPlayer> = mc.theWorld.playerEntities.filter { !AntiBot.isbot(it) && it != mc.thePlayer }.toMutableList()
 
         nameLength = font.getStringWidth("Name (${playerList.size})").toFloat()
 
         when (sortValue.get()) {
-            "Alphabet" -> playerList.sortWith(compareBy { it.name.toLowerCase() })
-            "Distance" -> playerList.sortWith(Comparator{ a, b -> mc.thePlayer.getDistanceToEntityBox(a).compareTo(mc.thePlayer.getDistanceToEntityBox(b)) })
-            else -> playerList.sortWith(Comparator{ a, b -> a.health.compareTo(b.health) })
+            "Alphabet" -> playerList.sortWith(compareBy { it.name.lowercase(Locale.getDefault()) })
+            "Distance" -> playerList.sortWith { a, b ->
+                mc.thePlayer.getDistanceToEntityBox(a).compareTo(mc.thePlayer.getDistanceToEntityBox(b))
+            }
+            else -> playerList.sortWith { a, b -> a.health.compareTo(b.health) }
         }
 
         if (reverse) playerList = playerList.reversed().toMutableList()
@@ -90,7 +86,7 @@ class PlayerList : Element() {
         if (lineValue.get()) {
             val barLength = (nameLength + hpLength + distLength + 50F).toDouble()
 
-            for (i in 0..(gradientAmountValue.get()-1)) {
+            for (i in 0 until gradientAmountValue.get()) {
                 val barStart = i.toDouble() / gradientAmountValue.get().toDouble() * barLength
                 val barEnd = (i + 1).toDouble() / gradientAmountValue.get().toDouble() * barLength
                 RenderUtils.drawGradientSideways(barStart, -1.0, barEnd, 0.0, 

@@ -23,6 +23,7 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange
 
 @ModuleInfo(name = "AutoWeapon", category = ModuleCategory.COMBAT)
 class AutoWeapon : Module() {
+
     private val onlySwordValue = BoolValue("OnlySword", false)
     private val silentValue = BoolValue("SpoofItem", false)
     private val ticksValue = IntegerValue("SpoofTicks", 10, 1, 20)

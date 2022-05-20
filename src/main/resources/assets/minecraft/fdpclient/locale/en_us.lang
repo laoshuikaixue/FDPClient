@@ -532,3 +532,66 @@ module.MurderDetector.description=Murder Detector Killer in Hypixel Server
 
 module.BowJump.name=BowJump
 module.BowJump.description=Allows you to jump further with auto bow shoot
+
+module.ComboOneHit.name=ComboOneHit
+module.ComboOneHit.description=Automatically deals hits within one click. Only works if no attack delay is present
+
+module.AutoLeave.name=AutoLeave
+module.AutoLeave.description=Automatically makes you leave the server whenever your health is low
+
+module.Ignite.name=Ignite
+module.Ignite.description=Automatically sets targets around you on fire
+
+module.BedGodMode.name=BedGodMode
+module.BedGodMode.description=Allows you to walk around lying in a bed. (For 1.9)
+
+module.Damage.name=Damage
+module.Damage.description=Deals damage to yourself
+
+module.Ghost.name=Ghost
+module.Ghost.description=Allows you to walk around and interact with your environment after dying
+
+module.GodMode.name=GodMode
+module.GodMode.description=GodMode Exploit for old AAC
+
+module.KeepContainer.name=KeepContainer
+module.KeepContainer.description=Allows you to open a formerly closed inventory container everywhere. (Press INSERT Key to open)
+
+module.AntiExploit.name=AntiExploit
+module.AntiExploit.description=Prevent servers from doing certain harmful things
+
+module.AirLadder.name=AirLadder
+module.AirLadder.description=Allows you to climb up ladders/vines without touching them
+
+module.AutoWalk.name=AutoWalk
+module.AutoWalk.description=Automatically makes you walk
+
+module.BlockWalk.name=BlockWalk
+module.BlockWalk.description=Allows you to walk on non-fullblock blocks
+
+module.BufferSpeed.name=BufferSpeed
+module.BufferSpeed.description=Allows you to walk faster on slabs and stairs
+
+module.FastClimb.name=FastClimb
+module.FastClimb.description=Allows you to climb up ladders and vines faster
+
+module.FastStairs.name=FastStairs
+module.FastStairs.description=Allows you to climb up stairs faster
+
+module.IceSpeed.name=IceSpeed
+module.IceSpeed.description=Allows you to walk faster on ice
+
+module.LadderJump.name=LadderJump
+module.LadderJump.description=Boosts you up when touching a ladder
+
+module.NoClip.name=NoClip
+module.NoClip.description=Allows you to freely move through walls (A sandblock has to fall on your head)
+
+module.PerfectHorseJump.name=PerfectHorseJump
+module.PerfectHorseJump.description=Automatically jumps when the jump bar of a horse is filled up completely
+
+module.AutoFish.name=AutoFish
+module.AutoFish.description=Automatically catches fish when using a rod
+
+module.KeepAlive.name=KeepAlive
+module.KeepAlive.description=Tries to prevent you from dying

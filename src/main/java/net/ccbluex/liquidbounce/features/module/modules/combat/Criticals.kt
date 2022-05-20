@@ -30,7 +30,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "AACV5", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -140,6 +140,13 @@ class Criticals : Module() {
                 "aac5.0.4" -> { //aac5.0.4 moment but with bad cfg(cuz it will flag for timer)
                     sendCriticalPacket(yOffset = 0.00133545, ground = false)
                     sendCriticalPacket(yOffset = -0.000000433, ground = false)
+                }
+
+                "aacv5" -> {
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.0625, mc.thePlayer.posZ, false))
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.09858, mc.thePlayer.posZ, false))
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.04114514, mc.thePlayer.posZ, false))
+                    mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.025, mc.thePlayer.posZ, false))
                 }
 
                 "hypixel" -> {

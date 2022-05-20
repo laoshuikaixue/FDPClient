@@ -47,7 +47,7 @@ class NameTags : Module() {
         for (entity in mc.theWorld.loadedEntityList) {
             if (EntityUtils.isSelected(entity, false)) {
                 renderNameTag(entity as EntityLivingBase,
-                    if (hackerValue.get() && LiquidBounce.moduleManager[HackerDetector::class.java]!!.isHacker(entity)) { "§c" } else { "" } + if (!modeValue.equals("Liquid") && AntiBot.isBot(entity)) { "§e" } else { "" } +
+                    if (hackerValue.get() && LiquidBounce.moduleManager[HackerDetector::class.java]!!.isHacker(entity)) { "§c" } else { "" } + if (!modeValue.equals("Liquid") && AntiBot.isbot(entity)) { "§e" } else { "" } +
                             if (clearNamesValue.get()) { entity.name } else { entity.getDisplayName().unformattedText })
             }
         }
@@ -63,10 +63,10 @@ class NameTags : Module() {
         if (teams.isInYourTeam(entity)) {
             pre = "$pre§a[TEAM] "
         }
-        if (AntiBot.isBot(entity)) {
+        if (AntiBot.isbot(entity)) {
             pre = "$pre§e[BOT] "
         }
-        if (!AntiBot.isBot(entity) && !teams.isInYourTeam(entity)) {
+        if (!AntiBot.isbot(entity) && !teams.isInYourTeam(entity)) {
             pre = if (LiquidBounce.fileManager.friendsConfig.isFriend(entity.name)) {
                 "§b[Friend] §c"
             } else {
@@ -129,7 +129,7 @@ class NameTags : Module() {
 
             "liquid" -> {
                 // Modify tag
-                val bot = AntiBot.isBot(entity)
+                val bot = AntiBot.isbot(entity)
                 val nameColor = if (bot) "§3" else if (entity.isInvisible) "§6" else if (entity.isSneaking) "§4" else "§7"
                 val ping = entity.ping
 
