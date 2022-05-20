@@ -130,9 +130,8 @@ public abstract class MixinItemRenderer {
                         GL11.glTranslated(animations.getTranslateXValue().get(), animations.getTranslateYValue().get(), animations.getTranslateZValue().get());
                         switch (animations.getBlockingModeValue().get()) {
                             case "1.7": {
-                                this.transformFirstPersonItem(f, f1);
-                                GlStateManager.translate(0, 0.3, 0);
-                                this.doBlockTransformations();
+                                this.transformFirstPersonItem(f - 0.3F, f1);
+                                this.func_178103_d();
                                 break;
                             }
                             case "Throw": {
