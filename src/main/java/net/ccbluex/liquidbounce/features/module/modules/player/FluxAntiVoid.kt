@@ -1,12 +1,13 @@
 package net.ccbluex.liquidbounce.features.module.modules.player
 
+import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
-import net.ccbluex.liquidbounce.event.PacketReceiveEvent
-import net.ccbluex.liquidbounce.event.PacketSendEvent
+import net.ccbluex.liquidbounce.event.PacketEvent
 import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
-import net.ccbluex.liquidbounce.utils.ClientUtils
+import net.ccbluex.liquidbounce.features.module.modules.movement.Fly
+import net.ccbluex.liquidbounce.features.module.modules.world.Scaffold
 import net.ccbluex.liquidbounce.utils.MoveUtils
 import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.utils.timer.TimeHelper
@@ -30,41 +31,49 @@ class FluxAntiVoid : Module() {
         }
         return true
     }
-    fun onPacket(e: PacketSendEvent) {
-        if (!packets.isEmpty() && mc.thePlayer.ticksExisted < 100) packets.clear()
-        if (e.getPacket() is C03PacketPlayer) {
-            val packet = e.getPacket() as C03PacketPlayer
-            if (isInVoid()) {
-                e.setCancelled(true)
-                packets.add(packet)
-                if (timer.isDelayComplete(pullbackTime.get().toDouble())) {
-                    ClientUtils.displayChatMessage("Send Packets")
-                    PacketUtils.sendPacketNoEvent(
-                        C04PacketPlayerPosition(
-                            lastGroundPos[0], lastGroundPos[1] - 1,
-                            lastGroundPos[2], true
+    @EventTarget
+    fun onPacket(e: PacketEvent) {
+        if (!LiquidBounce.moduleManager.get(Fly::class.java)!!.state && !LiquidBounce.moduleManager.get(Scaffold::class.java)!!.state) {
+            if (!packets.isEmpty() && mc.thePlayer.ticksExisted < 100) packets.clear()
+            if (e.packet is C03PacketPlayer) {
+                if (isInVoid()) {
+                    e.cancelEvent()
+                    packets.add(e.packet)
+                    if (timer.delay(pullbackTime.get().toLong())) {
+                        PacketUtils.sendPacketNoEvent(
+                            C04PacketPlayerPosition(
+                                lastGroundPos[0], lastGroundPos[1] - 1.0,
+                                lastGroundPos[2], true
+                            )
                         )
-                    )
+                    }
+                } else {
+                    lastGroundPos[0] = mc.thePlayer.posX
+                    lastGroundPos[1] = mc.thePlayer.posY
+                    lastGroundPos[2] = mc.thePlayer.posZ
+                    if (!packets.isEmpty()) {
+                        val var3: Iterator<*> = packets.iterator()
+                        alert("[AntiVoid] Release Packets - " + packets.size)
+                        while (var3.hasNext()) {
+                            val p = var3.next() as C03PacketPlayer
+                            PacketUtils.sendPacketNoEvent(p)
+                        }
+                        packets.clear()
+                    }
+                    timer.reset()
                 }
-            } else {
-                lastGroundPos[0] = mc.thePlayer.posX
-                lastGroundPos[1] = mc.thePlayer.posY
-                lastGroundPos[2] = mc.thePlayer.posZ
-                if (!packets.isEmpty()) {
-                    ClientUtils.displayChatMessage("Release Packets - " + packets.size)
-                    for (p in packets) PacketUtils.sendPacketNoEvent(p)
-                    packets.clear()
-                }
-                timer.reset()
             }
         }
     }
 
     @EventTarget
-    fun onRevPacket(e: PacketReceiveEvent) {
-        if (e.getPacket() is S08PacketPlayerPosLook && packets.size > 1) {
-            ClientUtils.displayChatMessage("Pullbacks Detected, clear packets list!")
+    fun onRevPacket(e: PacketEvent) {
+        if (e.packet is S08PacketPlayerPosLook && packets.size > 1) {
+            alert("[AntiVoid] Pullbacks Detected, clear packets list!")
             packets.clear()
         }
     }
+
+    override val tag: String
+        get() = pullbackTime.get().toString()
 }

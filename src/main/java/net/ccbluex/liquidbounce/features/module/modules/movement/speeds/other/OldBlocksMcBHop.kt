@@ -5,8 +5,8 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMod
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 
-class BlocksMcBHop : SpeedMode("BlocksMcBHop") {
-    val BoostValue = BoolValue("Boost", true)
+class OldBlocksMcBHop : SpeedMode("OldBlocksMcBHop") {
+    private val BoostValue = BoolValue("Boost", true)
 
     override fun onMove(event: MoveEvent) {
         if (BoostValue.get())

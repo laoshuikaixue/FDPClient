@@ -119,7 +119,7 @@ ClientUtils : MinecraftInstance() {
         val image: Image = Toolkit.getDefaultToolkit().createImage("icon.png")
         val trayIcon = TrayIcon(image, "Tray Demo")
         trayIcon.isImageAutoSize = true
-        trayIcon.toolTip = "System tray icon demo"
+        trayIcon.toolTip = "${LiquidBounce.CLIENT_NAME}-${LiquidBounce.L}${LiquidBounce.S}"
         tray.add(trayIcon)
         trayIcon.displayMessage(title, msg, msgType)
     }

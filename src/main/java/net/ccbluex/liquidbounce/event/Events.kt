@@ -76,6 +76,10 @@ class KeyEvent(val key: Int) : Event()
  */
 class MotionEvent(val eventState: EventState) : Event()
 
+class MotionEvent2(var x: Double, var y: Double, var z: Double, var yaw: Float, var pitch: Float, var onGround: Boolean) : Event() {
+    var eventState: EventState = EventState.PRE
+}
+
 /**
  * Called in "onLivingUpdate" when the player is using a use item.
  *

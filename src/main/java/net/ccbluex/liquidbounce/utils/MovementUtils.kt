@@ -3,18 +3,19 @@
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
  * https://github.com/laoshuikaixue/FDPClient
  */
-
 package net.ccbluex.liquidbounce.utils
 
 import net.ccbluex.liquidbounce.event.MoveEvent
+import net.minecraft.block.BlockIce
+import net.minecraft.block.BlockPackedIce
 import net.minecraft.entity.Entity
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.potion.Potion
 import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.BlockPos
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
-
 
 object MovementUtils : MinecraftInstance() {
     val jumpMotion: Float
@@ -67,10 +68,6 @@ object MovementUtils : MinecraftInstance() {
 
     fun getSpeedEffect(): Int {
         return if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1 else 0
-    }
-
-    fun getJumpEffect(): Int {
-        return if (mc.thePlayer.isPotionActive(Potion.jump)) mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier + 1 else 0
     }
 
     fun strafe() {
@@ -208,6 +205,68 @@ object MovementUtils : MinecraftInstance() {
         }
     }
 
+    fun setMotion3(event: MoveEvent, speed: Double, motion: Double, smoothStrafe: Boolean) {
+        var forward = mc.thePlayer.movementInput.moveForward.toDouble()
+        var strafe = mc.thePlayer.movementInput.moveStrafe.toDouble()
+        var yaw = mc.thePlayer.rotationYaw.toDouble()
+        val direction = if (smoothStrafe) 45 else 90
+        if (forward == 0.0 && strafe == 0.0) {
+            event.x = 0.0
+            event.z = 0.0
+        } else {
+            if (forward != 0.0) {
+                if (strafe > 0.0) {
+                    yaw += (if (forward > 0.0) -direction else direction).toDouble()
+                } else if (strafe < 0.0) {
+                    yaw += (if (forward > 0.0) direction else -direction).toDouble()
+                }
+                strafe = 0.0
+                if (forward > 0.0) {
+                    forward = 1.0
+                } else if (forward < 0.0) {
+                    forward = -1.0
+                }
+            }
+            val cos = Math.cos(Math.toRadians(yaw + 90.0f))
+            val sin = Math.sin(Math.toRadians(yaw + 90.0f))
+            event.x = (forward * speed * cos + strafe * speed * sin) * motion
+            event.z = (forward * speed * sin - strafe * speed * cos) * motion
+        }
+    }
+
+    fun setMotion3(speed: Double, smoothStrafe: Boolean) {
+        var forward = mc.thePlayer.movementInput.moveForward.toDouble()
+        var strafe = mc.thePlayer.movementInput.moveStrafe.toDouble()
+        var yaw = mc.thePlayer.rotationYaw
+        val direction = if (smoothStrafe) 45 else 90
+        if (forward == 0.0 && strafe == 0.0) {
+            mc.thePlayer.motionX = 0.0
+            mc.thePlayer.motionZ = 0.0
+        } else {
+            if (forward != 0.0) {
+                if (strafe > 0.0) {
+                    yaw += (if (forward > 0.0) -direction else direction).toFloat()
+                } else if (strafe < 0.0) {
+                    yaw += (if (forward > 0.0) direction else -direction).toFloat()
+                }
+                strafe = 0.0
+                if (forward > 0.0) {
+                    forward = 1.0
+                } else if (forward < 0.0) {
+                    forward = -1.0
+                }
+            }
+            mc.thePlayer.motionX =
+                forward * speed * -Math.sin(Math.toRadians(yaw.toDouble())) + strafe * speed * Math.cos(
+                    Math.toRadians(yaw.toDouble())
+                )
+            mc.thePlayer.motionZ =
+                forward * speed * Math.cos(Math.toRadians(yaw.toDouble())) - strafe * speed * -Math.sin(
+                    Math.toRadians(yaw.toDouble())
+                )
+        }
+    }
+
     fun updateBlocksPerSecond() {
         if (mc.thePlayer == null || mc.thePlayer.ticksExisted < 1) {
             bps = 0.0
@@ -294,6 +353,33 @@ object MovementUtils : MinecraftInstance() {
         return baseSpeed
     }
 
+    fun getJumpEffect(): Int {
+        return if (mc.thePlayer.isPotionActive(Potion.jump)) mc.thePlayer.getActivePotionEffect(Potion.jump).amplifier + 1 else 0
+    }
+
+    fun isOnIce(): Boolean {
+        val player = mc.thePlayer
+        val blockUnder = mc.theWorld.getBlockState(BlockPos(player.posX, player.posY - 1.0, player.posZ)).block
+        return blockUnder is BlockIce || blockUnder is BlockPackedIce
+    }
+
+    fun getBaseMoveSpeed2(): Double {
+        var baseSpeed = 0.2873
+        if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            baseSpeed *= 1.0 + 0.2 * (mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier + 1).toDouble()
+        }
+        return baseSpeed
+    }
+
+    fun getBaseMoveSpeed2(customSpeed: Double): Double {
+        var baseSpeed = if (isOnIce()) 0.258977700006 else customSpeed
+        if (mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            val amplifier = mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).amplifier
+            baseSpeed *= 1.0 + 0.2 * (amplifier + 1)
+        }
+        return baseSpeed
+    }
+
     fun setSpeed3(moveEvent: MoveEvent?, moveSpeed: Double) {
         setSpeed3(
             moveEvent!!, moveSpeed, mc.thePlayer.rotationYaw,
@@ -367,5 +453,34 @@ object MovementUtils : MinecraftInstance() {
     }
     fun getPredictedMotionY(motionY: Double): Double {
         return (motionY - 0.08) * 0.98f
+    }
+    fun getPredictionYaw(x: Double, z: Double): Float {
+        if (mc.thePlayer == null) {
+            lastX = -999999.0
+            lastZ = -999999.0
+            return 0f
+        }
+        if (lastX == -999999.0) lastX = mc.thePlayer.prevPosX
+        if (lastZ == -999999.0) lastZ = mc.thePlayer.prevPosZ
+        val returnValue = (Math.atan2(z - lastZ, x - lastX) * 180f / Math.PI).toFloat()
+        lastX = x
+        lastZ = z
+        return returnValue
+    }
+    fun getRawDirection(): Float {
+        return getRawDirectionRotation(mc.thePlayer.rotationYaw, mc.thePlayer.moveStrafing, mc.thePlayer.moveForward)
+    }
+
+    fun getRawDirection(yaw: Float): Float {
+        return getRawDirectionRotation(yaw, mc.thePlayer.moveStrafing, mc.thePlayer.moveForward)
+    }
+    fun getRawDirectionRotation(yaw: Float, pStrafe: Float, pForward: Float): Float {
+        var rotationYaw = yaw
+        if (pForward < 0f) rotationYaw += 180f
+        var forward = 1f
+        if (pForward < 0f) forward = -0.5f else if (pForward > 0f) forward = 0.5f
+        if (pStrafe > 0f) rotationYaw -= 90f * forward
+        if (pStrafe < 0f) rotationYaw += 90f * forward
+        return rotationYaw
     }
 }

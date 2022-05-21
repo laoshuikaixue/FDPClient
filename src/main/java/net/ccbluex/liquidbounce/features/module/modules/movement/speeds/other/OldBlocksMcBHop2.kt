@@ -8,7 +8,7 @@ package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
-class BlocksMcBHop2 : SpeedMode("BlocksMcBHop2") {
+class OldBlocksMcBHop2 : SpeedMode("OldBlocksMcBHop2") {
     override fun onPreMotion() {
         if (!MovementUtils.isMoving() || mc.thePlayer.movementInput.jump) return
         if (mc.thePlayer.onGround) {

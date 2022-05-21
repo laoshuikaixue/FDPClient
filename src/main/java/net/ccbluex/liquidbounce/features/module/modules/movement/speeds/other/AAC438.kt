@@ -4,7 +4,6 @@ import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMod
 import net.ccbluex.liquidbounce.utils.MovementUtils
 
 class AACHop438 : SpeedMode("AACHop4.3.8") {
-
     override fun onUpdate() {
         val thePlayer = mc.thePlayer ?: return
 

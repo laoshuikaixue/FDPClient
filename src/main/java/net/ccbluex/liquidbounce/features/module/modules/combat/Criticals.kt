@@ -27,10 +27,11 @@ import net.minecraft.network.play.server.S0BPacketAnimation
 import net.minecraft.stats.StatList
 import org.lwjgl.opengl.Display
 
+
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "AACV5", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "AACV5", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -167,6 +168,19 @@ class Criticals : Module() {
                             C04PacketPlayerPosition(
                                 mc.thePlayer.posX,
                                 mc.thePlayer.posY + offset + Math.random() * 0.001,
+                                mc.thePlayer.posZ,
+                                false
+                            )
+                        )
+                    }
+                }
+
+                "hypixel4" -> {
+                    for (offset in doubleArrayOf(0.05,0.0016,0.0018,0.0016,0.002,0.04,0.0011)) {
+                        mc.thePlayer.sendQueue.addToSendQueue(
+                            C04PacketPlayerPosition(
+                                mc.thePlayer.posX,
+                                mc.thePlayer.posY + offset,
                                 mc.thePlayer.posZ,
                                 false
                             )
