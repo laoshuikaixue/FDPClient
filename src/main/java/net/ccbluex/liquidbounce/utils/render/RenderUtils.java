@@ -32,7 +32,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.GLUtessellator;
 import org.lwjgl.util.glu.GLUtessellatorCallbackAdapter;
-
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
@@ -41,8 +40,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import static java.lang.Math.*;
+import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
+import static net.minecraft.client.renderer.GlStateManager.disableBlend;
 import static net.ccbluex.liquidbounce.utils.render.GLUtils.glDisable;
 import static net.ccbluex.liquidbounce.utils.render.GLUtils.glEnable;
 import static org.lwjgl.opengl.GL11.*;
@@ -1591,5 +1591,53 @@ public final class RenderUtils extends MinecraftInstance {
             glVertex2d(x1 + Math.sin(i * degree) * radius, y2 + Math.cos(i * degree) * radius);
         glEnd();
         GL11.glDisable(GL_LINE_SMOOTH);
+    }
+    public static void setColor(Color color) {
+        float alpha = (color.getRGB() >> 24 & 0xFF) / 255.0F;
+        float red = (color.getRGB() >> 16 & 0xFF) / 255.0F;
+        float green = (color.getRGB() >> 8 & 0xFF) / 255.0F;
+        float blue = (color.getRGB() & 0xFF) / 255.0F;
+        GL11.glColor4f(red, green, blue, alpha);
+    }
+    public static void start2D() {
+        glEnable(3042);
+        glDisable(3553);
+        glBlendFunc(770, 771);
+        glEnable(2848);
+    }
+
+    public static void stop2D() {
+        glEnable(3553);
+        glDisable(3042);
+        glDisable(2848);
+        enableTexture2D();
+        disableBlend();
+        glColor4f(1, 1, 1, 1);
+    }
+    public static void drawCheck(double x, double y, int lineWidth, int color) {
+        start2D();
+        GL11.glPushMatrix();
+        GL11.glLineWidth(lineWidth);
+        setColor(new Color(color));
+        GL11.glBegin(GL_LINE_STRIP);
+        GL11.glVertex2d(x, y);
+        GL11.glVertex2d(x + 2, y + 3);
+        GL11.glVertex2d(x + 6, y - 2);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+        stop2D();
+    }
+    public static void drawArrow(double x, double y, int lineWidth, int color, double length) {
+        start2D();
+        GL11.glPushMatrix();
+        GL11.glLineWidth(lineWidth);
+        setColor(new Color(color));
+        GL11.glBegin(GL_LINE_STRIP);
+        GL11.glVertex2d(x, y);
+        GL11.glVertex2d(x + 3, y + length);
+        GL11.glVertex2d(x + 3 * 2, y);
+        GL11.glEnd();
+        GL11.glPopMatrix();
+        stop2D();
     }
 }

@@ -341,6 +341,9 @@ module.NoFOV.description=Disables FOV changes caused by speed effect, etc
 module.NoFall.name=NoFall
 module.NoFall.description=Prevents you from taking fall damage
 
+module.NoFall2.name=NoFall2
+module.NoFall2.description=Prevents you from taking fall damage
+
 module.NoJumpDelay.name=NoJumpDelay
 module.NoJumpDelay.description=Removes delay between jumps
 

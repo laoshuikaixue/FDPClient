@@ -341,6 +341,9 @@ module.NoFOV.description=禁止视野变化效果
 module.NoFall.name=无掉落伤害
 module.NoFall.description=抵消你的掉落伤害
 
+module.NoFall2.name=无掉落伤害2
+module.NoFall2.description=抵消你的掉落伤害
+
 module.NoJumpDelay.name=无跳跃延时
 module.NoJumpDelay.description=移除跳跃延时
 

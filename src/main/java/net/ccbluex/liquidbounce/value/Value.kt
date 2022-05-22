@@ -1,15 +1,10 @@
-/*
- * FDPClient Hacked Client
- * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient
- */
 package net.ccbluex.liquidbounce.value
 
 import com.google.gson.JsonElement
 import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.utils.ClientUtils
 
-abstract class Value<T>(val name: String, protected var value: T) {
+abstract class Value<T>(val name: String, var value: T) {
     val default = value
 
     private var displayableFunc: () -> Boolean = { true }
@@ -71,3 +66,4 @@ abstract class Value<T>(val name: String, protected var value: T) {
         }
     }
 }
+abstract class NumberValue<T>(name: String, value: T, val minimum: T, val maximum: T) : Value<T>(name, value)

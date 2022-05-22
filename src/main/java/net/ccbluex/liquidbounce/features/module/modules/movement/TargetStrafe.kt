@@ -106,7 +106,7 @@ class TargetStrafe : Module() {
 
         val forward = if (mc.thePlayer.getDistanceToEntity(target) <= radius.get()) 0.0 else 1.0
         val strafe = direction.toDouble()
-        val modifySpeed = if (expMode.get()) maximizeSpeed(target, moveSpeed, killAura.rangeValue.get()) else moveSpeed
+        var modifySpeed = if (expMode.get()) maximizeSpeed(target, moveSpeed, killAura.rangeValue.get()) else moveSpeed
 
         MovementUtils.setSpeed(event, modifySpeed, rotYaw, strafe, forward)
         hasModifiedMovement = true

@@ -11,6 +11,7 @@ import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
 import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.features.special.AutoDisable
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.AddSettings
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.NotifyType
 import net.ccbluex.liquidbounce.utils.ClassUtils
@@ -22,7 +23,7 @@ class ModuleManager : Listenable {
 
     val modules = mutableListOf<Module>()
     private val moduleClassMap = hashMapOf<Class<*>, Module>()
-
+    fun getModuleInCategory(category: ModuleCategory) = modules.filter { it.category == category }
     var pendingBindModule: Module? = null
 
     init {
@@ -98,6 +99,9 @@ class ModuleManager : Listenable {
         }
 
         LiquidBounce.commandManager.registerCommand(ModuleCommand(module, values))
+        for (value in values) {
+            AddSettings.add(module, value)
+        }
     }
 
     /**
@@ -140,7 +144,6 @@ class ModuleManager : Listenable {
         if (pendingBindModule != null || Minecraft.getMinecraft().currentScreen != null) {
             return
         }
-
         modules.filter { it.triggerType == EnumTriggerType.PRESS }.forEach { it.state = Keyboard.isKeyDown(it.keyBind) }
     }
 

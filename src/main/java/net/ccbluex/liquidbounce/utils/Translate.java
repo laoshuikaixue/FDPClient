@@ -1,6 +1,6 @@
 package net.ccbluex.liquidbounce.utils;
 
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.AnimationUtil;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.AnimationUtils;
 
 public final class Translate {
     private boolean AckerRunCRACKED_f;
@@ -55,14 +55,14 @@ public final class Translate {
         double IIiiiiiiIiIii = 0;
         Translate IIiiiiiiIiIii2 = this;
         this.AckerRunCRACKED_a = f;
-        IIiiiiiiIiIii2.AckerRunCRACKED_ALLATORIxDEMO = (float) AnimationUtil.animate(f2, IIiiiiiiIiIii2.AckerRunCRACKED_ALLATORIxDEMO, (double)IIiiiiiiIiIii);
+        IIiiiiiiIiIii2.AckerRunCRACKED_ALLATORIxDEMO = (float) AnimationUtils.animate(f2, IIiiiiiiIiIii2.AckerRunCRACKED_ALLATORIxDEMO, (double)IIiiiiiiIiIii);
     }
 
     public final void interpolate(float IIiiiiiiIiIii, float IIiiiiiiIiIii2, double IIiiiiiiIiIii3) {
         Translate IIiiiiiiIiIii4 = this;
         if (IIiiiiiiIiIii4.AckerRunCRACKED_f) {
-            IIiiiiiiIiIii4.AckerRunCRACKED_a = (float)AnimationUtil.animate(IIiiiiiiIiIii, IIiiiiiiIiIii4.AckerRunCRACKED_a, IIiiiiiiIiIii3);
-            IIiiiiiiIiIii4.AckerRunCRACKED_ALLATORIxDEMO = (float)AnimationUtil.animate(IIiiiiiiIiIii2, IIiiiiiiIiIii4.AckerRunCRACKED_ALLATORIxDEMO, IIiiiiiiIiIii3);
+            IIiiiiiiIiIii4.AckerRunCRACKED_a = (float)AnimationUtils.animate(IIiiiiiiIiIii, IIiiiiiiIiIii4.AckerRunCRACKED_a, IIiiiiiiIiIii3);
+            IIiiiiiiIiIii4.AckerRunCRACKED_ALLATORIxDEMO = (float)AnimationUtils.animate(IIiiiiiiIiIii2, IIiiiiiiIiIii4.AckerRunCRACKED_ALLATORIxDEMO, IIiiiiiiIiIii3);
             return;
         }
         Translate translate = IIiiiiiiIiIii4;

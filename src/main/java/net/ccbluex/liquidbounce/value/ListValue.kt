@@ -33,4 +33,26 @@ open class ListValue(name: String, val values: Array<String>, value: String) : V
     override fun fromJson(element: JsonElement) {
         if (element.isJsonPrimitive) changeValue(element.asString)
     }
+
+    fun getModeListNumber(modeName: String) : Int {
+        for(i in this.values.indices) {
+            if(values[i] == modeName) {
+                return i
+            }
+        }
+        return 0
+    }
+
+    open fun getModes() : List<String> {
+        return this.values.toList()
+    }
+
+    fun getModeAt(modeName: String): String {
+        for (i in this.values.indices) {
+            if (this.values[i] == modeName) {
+                return this.values[i]
+            }
+        }
+        return "null"
+    }
 }

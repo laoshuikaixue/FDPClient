@@ -13,7 +13,7 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.ModuleInfo;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.ClickGui;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.*;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.ClickyUI;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.DropdownGUI;
 import net.ccbluex.liquidbounce.launch.options.LegacyUiLaunchOption;
 import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.ccbluex.liquidbounce.value.BoolValue;
@@ -51,7 +51,7 @@ public class ClickGUIModule extends Module {
     public void onEnable() {
         LiquidBounce.tipSoundManager.getClickguiopen().asyncPlay();
         if(styleValue.get().contains("Novoline")) {
-            mc.displayGuiScreen(new ClickyUI());
+            mc.displayGuiScreen(new DropdownGUI());
             this.setState(false);
         }else {
             updateStyle();
