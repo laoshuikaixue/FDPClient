@@ -577,3 +577,6 @@ module.AutoFish.description=使用鱼竿时自动钓鱼
 
 module.KeepAlive.name=持久生存
 module.KeepAlive.description=试图阻止你死亡
+
+module.FastBow.name=快速射箭
+module.FastBow.description=把你的弓变成机关枪

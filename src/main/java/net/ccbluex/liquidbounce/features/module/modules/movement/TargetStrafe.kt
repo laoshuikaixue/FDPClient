@@ -6,7 +6,6 @@ import net.ccbluex.liquidbounce.features.module.Module
 import net.ccbluex.liquidbounce.features.module.ModuleCategory
 import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura
-import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.RotationUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
@@ -14,23 +13,26 @@ import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.AxisAlignedBB
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.util.*
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 @ModuleInfo(name = "TargetStrafe", category = ModuleCategory.MOVEMENT)
 class TargetStrafe : Module() {
 
-    val radius = FloatValue("Radius", 2.0f, 0.1f, 4.0f)
+    private val radiusValue = FloatValue("Range", 2.0F, 1.0F, 5.0F)
+    private val radiusMode = ListValue("RadiusMode", arrayOf("TrueRadius", "Simple"), "Simple")
     private val render = BoolValue("Render", true)
     private val alwaysRender = BoolValue("Always-Render", true).displayable { render.get() }
     private val modeValue = ListValue("KeyMode", arrayOf("Jump", "None"), "None")
-    private val safewalk = BoolValue("SafeWalk", true)
-    val thirdPerson = BoolValue("ThirdPerson", true)
     private val colorType = ListValue("Color", arrayOf("Custom", "Dynamic", "Rainbow", "Rainbow2", "Sky", "Fade"), "Custom")
     private val redValue = IntegerValue("Red", 255, 0, 255)
     private val greenValue = IntegerValue("Green", 255, 0, 255)
@@ -40,16 +42,15 @@ class TargetStrafe : Module() {
     private val accuracyValue = IntegerValue("Accuracy", 0, 0, 59)
     private val thicknessValue = FloatValue("Thickness", 1F, 0.1F, 5F)
     private val outLine = BoolValue("Outline", true)
-    private val expMode = BoolValue("ExperimentalSpeed", false)
     private lateinit var killAura: KillAura
     private lateinit var speed: Speed
     private lateinit var fly: Fly
 
     var direction = 1
-    var lastView = 0
-    var hasChangedThirdPerson = true
+    private var lastView = 0
+    private var hasChangedThirdPerson = true
 
-    var hasModifiedMovement = false
+    private var consts = 0
 
     override fun onInitialize() {
         killAura = LiquidBounce.moduleManager.getModule(KillAura::class.java) as KillAura
@@ -63,72 +64,106 @@ class TargetStrafe : Module() {
     }
 
     @EventTarget
-    fun onMotion(event: MotionEvent) {
-        if (thirdPerson.get()) { // smart change back lol
-            if (canStrafe) {
-                if (hasChangedThirdPerson) lastView = mc.gameSettings.thirdPersonView
-                mc.gameSettings.thirdPersonView = 1
-                hasChangedThirdPerson = false
-            } else if (!hasChangedThirdPerson) {
-                mc.gameSettings.thirdPersonView = lastView
-                hasChangedThirdPerson = true
-            }
+    fun movestrafe(event: MoveEvent) {
+        if (mc.thePlayer.isCollidedHorizontally || checkVoid()) direction = if (direction == 1) -1 else 1
+        if (mc.gameSettings.keyBindLeft.isKeyDown) {
+            direction = 1
         }
-
-        if (event.eventState == EventState.PRE) {
-            if (mc.thePlayer.isCollidedHorizontally)
-                this.direction = -this.direction
-
-            if (mc.gameSettings.keyBindLeft.pressed)
-                this.direction = 1
-
-            if (mc.gameSettings.keyBindRight.pressed)
-                this.direction = -1
+        if (mc.gameSettings.keyBindRight.isKeyDown) {
+            direction = -1
+        }
+        if (!isVoid(0, 0) && canStrafe) {
+            val strafe = RotationUtils.getRotations2(killAura.target)
+            setSpeed(event, sqrt(event.x.pow(2.0) + event.z.pow(2.0)), strafe[0], radiusValue.get(), 1.0)
         }
     }
 
-    @EventTarget(priority = 2)
-    fun onMove(event: MoveEvent) {
-        if (canStrafe) {
-            if (!hasModifiedMovement) strafe(event, MovementUtils.getSpeed3(event.x, event.z))
-
-            if (safewalk.get() && checkVoid())
-                event.isSafeWalk = true
-        }
-        hasModifiedMovement = false
-    }
-
-    fun strafe(event: MoveEvent, moveSpeed: Double) {
-        if (killAura.target == null) return
-
-        val target = killAura.target!!
-        val rotYaw = RotationUtils.getRotationsEntity(target).yaw
-
-        val forward = if (mc.thePlayer.getDistanceToEntity(target) <= radius.get()) 0.0 else 1.0
-        val strafe = direction.toDouble()
-        var modifySpeed = if (expMode.get()) maximizeSpeed(target, moveSpeed, killAura.rangeValue.get()) else moveSpeed
-
-        MovementUtils.setSpeed(event, modifySpeed, rotYaw, strafe, forward)
-        hasModifiedMovement = true
-    }
-
-    private fun maximizeSpeed(ent: EntityLivingBase, speed: Double, range: Float): Double {
-        mc.thePlayer ?: return 0.0
-        /*val dist = mc.thePlayer.getDistanceToEntity(ent).toDouble()
-        val maxDist = (range * range).coerceAtMost(radius.get() * radius.get() - 0.25f).toDouble() - (dist * dist)*/
-
-        return speed.coerceIn(0.0, /*maxDist*/range.toDouble())
-    }
-
-    val keyMode: Boolean
+    private val keyMode: Boolean
         get() = when (modeValue.get().lowercase(Locale.getDefault())) {
-            "jump" -> mc.gameSettings.keyBindJump.isKeyDown
-            "none" -> mc.thePlayer.movementInput.moveStrafe != 0f || mc.thePlayer.movementInput.moveForward != 0f
+            "jump" -> mc.gameSettings.keyBindJump.isKeyDown && mc.thePlayer.movementInput.moveStrafe == 0f || mc.thePlayer.movementInput.moveForward == 0f
+            "none" -> mc.thePlayer.movementInput.moveStrafe == 0f || mc.thePlayer.movementInput.moveForward == 0f
             else -> false
         }
 
     val canStrafe: Boolean
-        get() = (state && (speed.state || fly.state) && killAura.state && killAura.target != null && !mc.thePlayer.isSneaking && keyMode)
+        get() = (killAura.state && (fly.state || speed.state) && killAura.target != null && !mc.thePlayer.isSneaking
+                && keyMode)
+
+    private val cansize: Float
+        get() = when {
+            radiusMode.get().lowercase(Locale.getDefault()) == "simple" ->
+                45f / mc.thePlayer!!.getDistance(killAura.target!!.posX, mc.thePlayer!!.posY, killAura.target!!.posZ).toFloat()
+            else -> 45f
+        }
+    private val Enemydistance: Double
+        get() = mc.thePlayer!!.getDistance(killAura.target!!.posX, mc.thePlayer!!.posY, killAura.target!!.posZ)
+
+    private val algorithm: Float
+        get() = (Enemydistance - radiusValue.get()).coerceAtLeast(Enemydistance - (Enemydistance - radiusValue.get() / (radiusValue.get() * 2)))
+            .toFloat()
+
+
+    fun setSpeed(moveEvent: MoveEvent, moveSpeed: Double, pseudoYaw: Float, pseudoStrafe: Float,
+                 pseudoForward: Double) {
+        var yaw = pseudoYaw
+        var forward = pseudoForward
+        var strafe = pseudoStrafe
+        var strafe2 = 0f
+
+        check()
+
+        when {
+            modeValue.get().lowercase(Locale.getDefault()) == "jump" ->
+                strafe = pseudoStrafe * Minecraft.getMinecraft().thePlayer.movementInput.moveStrafe * consts
+            modeValue.get().lowercase(Locale.getDefault()) == "none" ->
+                strafe = consts.toFloat()
+        }
+
+        if (forward != 0.0) {
+            if (strafe > 0.0) {
+                if (radiusMode.get().lowercase(Locale.getDefault()) == "trueradius")
+                    yaw += (if (forward > 0.0) -cansize else cansize)
+                strafe2 += (if (forward > 0.0) -45 / algorithm else 45 / algorithm)
+            } else if (strafe < 0.0) {
+                if (radiusMode.get().lowercase(Locale.getDefault()) == "trueradius")
+                    yaw += (if (forward > 0.0) cansize else -cansize)
+                strafe2 += (if (forward > 0.0) 45 / algorithm else -45 / algorithm)
+            }
+            strafe = 0.0f
+            if (forward > 0.0)
+                forward = 1.0
+            else if (forward < 0.0)
+                forward = -1.0
+
+        }
+        if (strafe > 0.0)
+            strafe = 1.0f
+        else if (strafe < 0.0)
+            strafe = -1.0f
+
+
+        val mx = cos(Math.toRadians(yaw + 90.0 + strafe2))
+        val mz = sin(Math.toRadians(yaw + 90.0 + strafe2))
+        moveEvent.x = forward * moveSpeed * mx + strafe * moveSpeed * mz
+        moveEvent.z = forward * moveSpeed * mz - strafe * moveSpeed * mx
+    }
+
+    private fun check() {
+        if (mc.thePlayer!!.isCollidedHorizontally || checkVoid()) {
+            if (consts < 2) consts += 1
+            else {
+                consts = -1
+            }
+        }
+        when (consts) {
+            0 -> {
+                consts = 1
+            }
+            2 -> {
+                consts = -1
+            }
+        }
+    }
 
     private fun checkVoid(): Boolean {
         for (x in -1..0) {
@@ -142,12 +177,16 @@ class TargetStrafe : Module() {
     }
 
     private fun isVoid(X: Int, Z: Int): Boolean {
-        if (mc.thePlayer.posY < 0.0) {
+        val fly = LiquidBounce.moduleManager.getModule(Fly::class.java) as Fly
+        if (fly.state) {
+            return false
+        }
+        if (mc.thePlayer!!.posY < 0.0) {
             return true
         }
         var off = 0
-        while (off < mc.thePlayer.posY.toInt() + 2) {
-            val bb: AxisAlignedBB = mc.thePlayer.entityBoundingBox.offset(X.toDouble(), (-off).toDouble(), Z.toDouble())
+        while (off < mc.thePlayer!!.posY.toInt() + 2) {
+            val bb: AxisAlignedBB = mc.thePlayer!!.entityBoundingBox.offset(X.toDouble(), (-off).toDouble(), Z.toDouble())
             if (mc.theWorld!!.getCollidingBoundingBoxes(mc.thePlayer as Entity, bb).isEmpty()) {
                 off += 2
                 continue
@@ -156,6 +195,9 @@ class TargetStrafe : Module() {
             off += 2
         }
         return true
+    }
+    fun strafe(event: MoveEvent, moveSpeed: Double) {
+        val target = killAura.target ?: return
     }
 
     @EventTarget
@@ -182,7 +224,7 @@ class TargetStrafe : Module() {
                 GL11.glBegin(GL11.GL_LINE_LOOP)
 
                 for (i in 0..360 step 60 - accuracyValue.get()) { // You can change circle accuracy  (60 - accuracy)
-                    GL11.glVertex2f(Math.cos(i * Math.PI / 180.0).toFloat() * radius.get(), (Math.sin(i * Math.PI / 180.0).toFloat() * radius.get()))
+                    GL11.glVertex2f(cos(i * Math.PI / 180.0).toFloat() * radiusValue.get(), (sin(i * Math.PI / 180.0).toFloat() * radiusValue.get()))
                 }
 
                 GL11.glEnd()
@@ -207,7 +249,7 @@ class TargetStrafe : Module() {
                     "Sky" -> GL11.glColor3f(sky.red / 255.0f, sky.green / 255.0f, sky.blue / 255.0f)
                     else -> GL11.glColor3f(fade.red / 255.0f, fade.green / 255.0f, fade.blue / 255.0f)
                 }
-                GL11.glVertex2f(Math.cos(i * Math.PI / 180.0).toFloat() * radius.get(), (Math.sin(i * Math.PI / 180.0).toFloat() * radius.get()))
+                GL11.glVertex2f(cos(i * Math.PI / 180.0).toFloat() * radiusValue.get(), (sin(i * Math.PI / 180.0).toFloat() * radiusValue.get()))
             }
 
             GL11.glEnd()

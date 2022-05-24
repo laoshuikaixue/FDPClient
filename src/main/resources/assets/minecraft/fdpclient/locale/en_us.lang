@@ -598,3 +598,6 @@ module.AutoFish.description=Automatically catches fish when using a rod
 
 module.KeepAlive.name=KeepAlive
 module.KeepAlive.description=Tries to prevent you from dying
+
+module.FastBow.name=FastBow
+module.FastBow.description=Turns your bow into a machine gun

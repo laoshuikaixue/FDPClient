@@ -447,29 +447,23 @@ class NoFall : Module() {
         } else if (modeValue.equals("MLG")) {
             if (event.eventState == EventState.PRE) {
                 currentMlgRotation = null
-
                 mlgTimer.update()
 
-                if (!mlgTimer.hasTimePassed(10)) {
+                if (!mlgTimer.hasTimePassed(10))
                     return
-                }
+
 
                 if (mc.thePlayer.fallDistance > minFallDistanceValue.get()) {
                     val fallingPlayer = FallingPlayer(mc.thePlayer)
-
                     val maxDist = mc.playerController.blockReachDistance + 1.5
-
                     val collision = fallingPlayer.findCollision(ceil(1.0 / mc.thePlayer.motionY * -maxDist).toInt()) ?: return
-
                     var ok = Vec3(mc.thePlayer.posX, mc.thePlayer.posY + mc.thePlayer.eyeHeight, mc.thePlayer.posZ).distanceTo(Vec3(collision).addVector(0.5, 0.5, 0.5)) < mc.playerController.blockReachDistance + sqrt(0.75)
 
-                    if (mc.thePlayer.motionY < collision.y + 1 - mc.thePlayer.posY) {
+                    if (mc.thePlayer.motionY < collision.y + 1 - mc.thePlayer.posY)
                         ok = true
-                    }
 
-                    if (!ok) {
+                    if (!ok)
                         return
-                    }
 
                     var index = -1
 
@@ -479,14 +473,13 @@ class NoFall : Module() {
                         if (itemStack != null && (itemStack.item == Items.water_bucket || itemStack.item is ItemBlock && (itemStack.item as ItemBlock).block == Blocks.web)) {
                             index = i - 36
 
-                            if (mc.thePlayer.inventory.currentItem == index) {
+                            if (mc.thePlayer.inventory.currentItem == index)
                                 break
-                            }
                         }
                     }
-                    if (index == -1) {
+
+                    if (index == -1)
                         return
-                    }
 
                     currentMlgItemIndex = index
                     currentMlgBlock = collision
@@ -501,16 +494,13 @@ class NoFall : Module() {
             } else if (currentMlgRotation != null) {
                 val stack = mc.thePlayer.inventory.mainInventory[currentMlgItemIndex]
 
-                if (stack.item is ItemBucket) {
+                if (stack.item is ItemBucket)
                     mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, stack)
-                } else {
-                    if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, stack, currentMlgBlock, EnumFacing.UP, Vec3(0.0,0.0,0.0))) {
-                        mlgTimer.reset()
-                    }
-                }
-                if (mc.thePlayer.inventory.currentItem != currentMlgItemIndex) {
+                else if (mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, stack, currentMlgBlock, EnumFacing.UP, Vec3(0.0,0.5,0.0).add(Vec3(currentMlgBlock ?: return))))
+                    mlgTimer.reset()
+
+                if (mc.thePlayer.inventory.currentItem != currentMlgItemIndex)
                     mc.thePlayer.sendQueue.addToSendQueue(C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem))
-                }
             }
         }
     }

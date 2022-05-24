@@ -94,7 +94,8 @@ class Sprint : Module() {
         if (noPacket.get() && packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.START_SPRINTING || packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING)) {
             event.cancelEvent()
         }
-        if (noStopServerSide.get() && packet is C0BPacketEntityAction && packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING) {
+        if (
+            noStopServerSide.get() && packet is C0BPacketEntityAction && packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING) {
             event.cancelEvent()
         }
     }

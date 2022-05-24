@@ -9,6 +9,7 @@ import io.netty.buffer.Unpooled;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.PacketEvent;
 import net.ccbluex.liquidbounce.features.module.modules.misc.SilentDisconnect;
+//import net.ccbluex.liquidbounce.features.module.modules.exploit.AntiExploit;
 import net.ccbluex.liquidbounce.features.special.AntiForge;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.minecraft.client.ClientBrandRetriever;
@@ -67,6 +68,8 @@ public abstract class MixinNetHandlerPlayClient {
         final String url = p_handleResourcePack_1_.getURL();
         final String hash = p_handleResourcePack_1_.getHash();
 
+        // fix this later final AntiExploit antiExploit = (AntiExploit) LiquidBounce.moduleManager.getModule(AntiExploit.class);
+
         try {
             final String scheme = new URI(url).getScheme();
             final boolean isLevelProtocol = "level".equals(scheme);
@@ -81,13 +84,18 @@ public abstract class MixinNetHandlerPlayClient {
                 File file2 = new File(file1, s2);
                 if (file2.isFile()
                         && !url.toLowerCase().contains(LiquidBounce.CLIENT_NAME.toLowerCase())
-                        /* lmao imagine check the client legal with this exploit, zqat.top */) {
+                    /* lmao imagine check the client legal with this exploit, zqat.top */) {
                     netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.ACCEPTED));
                     // a legit client will send SUCCESSFULLY_LOADED back even [java.util.zip.ZipException] is thrown
                     netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.SUCCESSFULLY_LOADED));
                 } else {
                     netManager.sendPacket(new C19PacketResourcePackStatus(hash, C19PacketResourcePackStatus.Action.FAILED_DOWNLOAD));
                 }
+
+                /* fix this later if (antiExploit.getState() && antiExploit.getNotifyValue().get()) {
+                    ClientUtils.displayChatMessage("§B[§6§lFDPCLIENT§8] §6Resourcepack exploit detected.");
+                    ClientUtils.displayChatMessage("§B[§6§lFDPCLIENT§8] §BExploit target directory: §r" + url);*/
+
                 throw new IllegalStateException("Exploit founded!");
             }
         } catch (final URISyntaxException e) {
