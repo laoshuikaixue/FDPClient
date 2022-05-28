@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 

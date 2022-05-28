@@ -1,9 +1,9 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.client.HUD;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Manager;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.SettingType;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Manager;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.SettingType;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -24,13 +24,13 @@ public class Module {
     public int yPerModule, y;
     public Tab tab;
     public boolean opened;
-    public List<net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.Setting> settings = new CopyOnWriteArrayList<>();
+    public List<net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.Setting> settings = new CopyOnWriteArrayList<>();
 
     public Module(net.ccbluex.liquidbounce.features.module.Module module, Tab tab) {
         this.module = module;
         this.tab = tab;
-        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting setting : Manager.getSettingsByMod(module)) {
-            settings.add(new net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.Setting(setting, this));
+        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting setting : Manager.getSettingsByMod(module)) {
+            settings.add(new net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.Setting(setting, this));
         }
     }
 
@@ -144,7 +144,7 @@ public class Module {
     public int getY() {
         if (opened) {
             int gay = 17;
-            for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.Setting setting : settings.stream().filter(s -> s.setting.getSupplier() != null ? s.setting.getSupplier().get() : true).collect(Collectors.toList())) {
+            for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.Setting setting : settings.stream().filter(s -> s.setting.getSupplier() != null ? s.setting.getSupplier().get() : true).collect(Collectors.toList())) {
                 switch (setting.setting.getSettingType()) {
                     case COLOR_PICKER:
                     case TEXTBOX:
@@ -181,7 +181,7 @@ public class Module {
                                     module.opened = false;
                             });
                         opened = !opened;
-                        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting setting : Manager.getSettingsByMod(module)) {
+                        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting setting : Manager.getSettingsByMod(module)) {
                             if (setting.getSettingType() == SettingType.TEXTBOX) {
                                 setting.setTextHovered(false);
                             }

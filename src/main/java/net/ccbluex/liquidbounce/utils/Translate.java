@@ -1,6 +1,6 @@
 package net.ccbluex.liquidbounce.utils;
 
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.AnimationUtils;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.AnimationUtils;
 
 public final class Translate {
     private boolean AckerRunCRACKED_f;

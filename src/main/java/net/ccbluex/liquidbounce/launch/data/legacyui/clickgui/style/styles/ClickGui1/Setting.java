@@ -1,9 +1,9 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.client.HUD;
 import net.ccbluex.liquidbounce.launch.data.legacyui.ClickGUIModule;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.SettingType;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.SettingType;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.ccbluex.liquidbounce.utils.timer.TimerUtil;
@@ -19,18 +19,18 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting.incValue;
+import static net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting.incValue;
 
 public class Setting {
 
-    public net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting setting;
+    public net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting setting;
     private Module module;
     public boolean opened;
     private final TimerUtil backSpace = new TimerUtil();
     public int height;
     public float percent = 0;
 
-    public Setting(net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting setting, Module module) {
+    public Setting(net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting setting, Module module) {
         this.setting = setting;
         this.module = module;
     }
@@ -299,14 +299,14 @@ public class Setting {
         //    }
         //}
         if (mouseButton == 1 && setting.getSettingType() == SettingType.COLOR_PICKER && isHovered(mouseX, mouseY)) {
-            final net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting.ColorPickerMode[] values = net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting.ColorPickerMode
+            final net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting.ColorPickerMode[] values = net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting.ColorPickerMode
                     .values();
             final int i = (Arrays.binarySearch(values, setting.getColorPickerMode()) + 1) % values.length;
 
             if (setting.getColorPickedDisabledModes() == null) {
                 setting.setColorPickerMode(values[i]);
             } else if (!setting.getColorPickedDisabledModes().isEmpty()) {
-                net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting.ColorPickerMode mode;
+                net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting.ColorPickerMode mode;
 
                 for (int i1 = 0; i1 < values.length - 1; i1++) {
                     mode = values[(i + i1) % values.length];

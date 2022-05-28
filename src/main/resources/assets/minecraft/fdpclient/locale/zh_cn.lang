@@ -580,3 +580,6 @@ module.KeepAlive.description=试图阻止你死亡
 
 module.FastBow.name=快速射箭
 module.FastBow.description=把你的弓变成机关枪
+
+module.DuelInfo.name=决斗信息
+module.DuelInfo.description=显示决斗信息

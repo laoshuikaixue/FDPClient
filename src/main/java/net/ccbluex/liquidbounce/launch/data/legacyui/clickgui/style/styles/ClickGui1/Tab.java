@@ -1,10 +1,8 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.elements.ModuleElement;
 import net.ccbluex.liquidbounce.ui.font.Fonts;
-import net.ccbluex.liquidbounce.value.Value;
 import net.minecraft.client.gui.Gui;
 
 import java.awt.*;

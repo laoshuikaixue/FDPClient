@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

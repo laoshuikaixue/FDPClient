@@ -11,7 +11,7 @@ import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
 import net.ccbluex.liquidbounce.event.UpdateEvent
 import net.ccbluex.liquidbounce.features.special.AutoDisable
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.AddSettings
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.AddSettings
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Notification
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.NotifyType
 import net.ccbluex.liquidbounce.utils.ClassUtils

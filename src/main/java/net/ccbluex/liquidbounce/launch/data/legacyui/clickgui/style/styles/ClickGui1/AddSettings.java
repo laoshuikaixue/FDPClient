@@ -1,9 +1,9 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.features.module.Module;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Manager;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.SettingType;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Manager;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.SettingType;
 import net.ccbluex.liquidbounce.value.*;
 
 public class AddSettings {

@@ -1,7 +1,7 @@
-package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline;
+package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1;
 
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Manager;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Manager;
 import net.ccbluex.liquidbounce.utils.ScaleUtils;
 import net.ccbluex.liquidbounce.utils.render.BlurUtils;
 import net.minecraft.client.gui.GuiScreen;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class DropdownGUI extends GuiScreen {
+public class ClickGui1 extends GuiScreen {
     private final List<Tab> tabs = new CopyOnWriteArrayList<>();
     int alphaBG = 0;
     private int dragX;
@@ -110,7 +110,7 @@ public class DropdownGUI extends GuiScreen {
     }
 
     private boolean areAnyHovered() {
-        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.setting.Setting setting : Manager.getSettingList()) {
+        for (net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Setting setting : Manager.getSettingList()) {
             if (setting.isTextHovered()) {
                 System.out.println(setting.getDisplayName());
                 return true;

@@ -13,7 +13,9 @@ import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.features.module.ModuleInfo;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.ClickGui;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.*;
-import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.novoline.DropdownGUI;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui2.ClickGui2;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui3.ClickGui3;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.ClickGui1;
 import net.ccbluex.liquidbounce.launch.options.LegacyUiLaunchOption;
 import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.ccbluex.liquidbounce.value.BoolValue;
@@ -28,7 +30,7 @@ import java.awt.*;
 
 @ModuleInfo(name = "ClickGUI", category = ModuleCategory.CLIENT, keyBind = Keyboard.KEY_RSHIFT, canEnable = false)
 public class ClickGUIModule extends Module {
-    private final ListValue styleValue = new ListValue("Style", new String[] {"Novoline", "LiquidBounce", "Null", "Null2", "Slowly", "Black", "White"}, "Novoline") {
+    private final ListValue styleValue = new ListValue("Style", new String[] {"ClickGui1", "ClickGui2", "ClickGui3", "LiquidBounce", "Null", "Null2", "Slowly", "Black", "White"}, "ClickGui1") {
         @Override
         protected void onChanged(final String oldValue, final String newValue) {
             updateStyle();
@@ -50,10 +52,19 @@ public class ClickGUIModule extends Module {
     @Override
     public void onEnable() {
         LiquidBounce.tipSoundManager.getClickguiopen().asyncPlay();
-        if(styleValue.get().contains("Novoline")) {
-            mc.displayGuiScreen(new DropdownGUI());
+        if(styleValue.get().contains("ClickGui1")) {
+            mc.displayGuiScreen(new ClickGui1());
             this.setState(false);
-        }else {
+        }
+        else if(styleValue.get().contains("ClickGui2")) {
+            mc.displayGuiScreen(new ClickGui2());
+            this.setState(false);
+        }
+        else if(styleValue.get().contains("ClickGui3")) {
+            mc.displayGuiScreen(new ClickGui3());
+            this.setState(false);
+        }
+        else {
             updateStyle();
             mc.displayGuiScreen(LegacyUiLaunchOption.clickGui);
         }
