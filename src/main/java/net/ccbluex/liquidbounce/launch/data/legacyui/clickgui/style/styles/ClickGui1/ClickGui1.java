@@ -2,11 +2,13 @@ package net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.Clic
 
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
 import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui1.setting.Manager;
+import net.ccbluex.liquidbounce.launch.data.legacyui.clickgui.style.styles.ClickGui3.RenderUtil;
 import net.ccbluex.liquidbounce.utils.ScaleUtils;
 import net.ccbluex.liquidbounce.utils.render.BlurUtils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiChest;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -49,6 +51,9 @@ public class ClickGui1 extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        float scale = 1.0F;
+        ScaledResolution sr = new ScaledResolution(this.mc);
+        RenderUtil.drawImage(new ResourceLocation("fdpclient/misc/background.png"), 0, 0, (int) ((float) sr.getScaledWidth() * (1.0F / scale)), (int) ((float) sr.getScaledHeight() * (1.0F / scale)));
         GL11.glPushMatrix();
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         int x = ScaleUtils.getScaledMouseCoordinates(mc, mouseX, mouseY)[0];

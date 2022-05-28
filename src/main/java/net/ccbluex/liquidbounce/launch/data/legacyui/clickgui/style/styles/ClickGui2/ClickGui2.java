@@ -90,9 +90,9 @@ public class ClickGui2 extends GuiScreen implements GuiYesNoCallback {
 
             GL11.glPushMatrix();
             if (i[m] != ClickGui2.currentModuleType) {
-                RenderUtil.drawFilledCircle(ClickGui2.startX + 30.0F, ClickGui2.startY + 30.0F + (float) (ClickGui2.titlefont.getStringWidth("liquidbounce") + 3) + (float) (m * 40), 15.0D, (new Color(56, 56, 56, (int) this.opacity.getOpacity())).getRGB(), 5);
+                RenderUtil.drawFilledCircle(ClickGui2.startX + 30.0F, ClickGui2.startY + 30.0F + (float) (ClickGui2.titlefont.getStringWidth("FDPClient") + 3) + (float) (m * 40), 15.0D, (new Color(56, 56, 56, (int) this.opacity.getOpacity())).getRGB(), 5);
             } else {
-                RenderUtil.drawFilledCircle(ClickGui2.startX + 30.0F, ClickGui2.startY + 30.0F + (float) (ClickGui2.titlefont.getStringWidth("liquidbounce") + 3) + (float) (m * 40), 15.0D, (new Color(47, 154, 241, (int) this.opacity.getOpacity())).getRGB(), 5);
+                RenderUtil.drawFilledCircle(ClickGui2.startX + 30.0F, ClickGui2.startY + 30.0F + (float) (ClickGui2.titlefont.getStringWidth("FDPClient") + 3) + (float) (m * 40), 15.0D, (new Color(47, 154, 241, (int) this.opacity.getOpacity())).getRGB(), 5);
             }
 
             GL11.glColor3f(1.0F, 1.0F, 1.0F);
@@ -275,14 +275,14 @@ public class ClickGui2 extends GuiScreen implements GuiYesNoCallback {
                         float f1 = ClickGui2.startX + 320.0F;
                         float yyy = ClickGui2.startY + 240.0F;
 
-                        gamefontrenderer.drawStringWithShadow("Bind", ClickGui2.startX + 220.0F, yyy + 50.0F, (new Color(170, 170, 170, ClickGui2.alpha)).getRGB());
-                        RenderUtils.drawRect(f1 + 5.0F, yyy + 45.0F, f1 + 75.0F, yyy + 65.0F, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB());
-                        RenderUtils.drawRect(f1 + 2.0F, yyy + 48.0F, f1 + 78.0F, yyy + 62.0F, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB());
-                        RenderUtil.drawFilledCircle(f1 + 5.0F, yyy + 48.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
-                        RenderUtil.drawFilledCircle(f1 + 5.0F, yyy + 62.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
-                        RenderUtil.drawFilledCircle(f1 + 75.0F, yyy + 48.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
-                        RenderUtil.drawFilledCircle(f1 + 75.0F, yyy + 62.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 45.0F, f1 + 78.0F, yyy + 65.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
-                        gamefontrenderer.drawStringWithShadow(Keyboard.getKeyName(ClickGui2.currentModule.getKeyBind()), f1 + 40.0F - (float) (gamefontrenderer.getStringWidth(Keyboard.getKeyName(ClickGui2.currentModule.getKeyBind())) / 2), yyy + 53.0F, (new Color(255, 255, 255, ClickGui2.alpha)).getRGB());
+                        gamefontrenderer.drawStringWithShadow("Bind", ClickGui2.startX + 220.0F, yyy + 100.0F, (new Color(170, 170, 170, ClickGui2.alpha)).getRGB());
+                        RenderUtils.drawRect(f1 + 5.0F, yyy + 95.0F, f1 + 75.0F, yyy + 115.0F, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB());
+                        RenderUtils.drawRect(f1 + 2.0F, yyy + 98.0F, f1 + 78.0F, yyy + 112.0F, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB());
+                        RenderUtil.drawFilledCircle(f1 + 5.0F, yyy + 98.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
+                        RenderUtil.drawFilledCircle(f1 + 5.0F, yyy + 112.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
+                        RenderUtil.drawFilledCircle(f1 + 75.0F, yyy + 98.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
+                        RenderUtil.drawFilledCircle(f1 + 75.0F, yyy + 112.0F, 3.0D, this.isHovered(f1 + 2.0F, yyy + 95.0F, f1 + 78.0F, yyy + 115.0F, mouseX, mouseY) ? (new Color(80, 80, 80, ClickGui2.alpha)).getRGB() : (new Color(56, 56, 56, ClickGui2.alpha)).getRGB(), 5);
+                        gamefontrenderer.drawStringWithShadow(Keyboard.getKeyName(ClickGui2.currentModule.getKeyBind()), f1 + 40.0F - (float) (gamefontrenderer.getStringWidth(Keyboard.getKeyName(ClickGui2.currentModule.getKeyBind())) / 2), yyy + 103.0F, (new Color(255, 255, 255, ClickGui2.alpha)).getRGB());
                         f = ClickGui2.startX + 300.0F;
                         Fonts.fontMiSansNormal35.drawStringWithShadow(value.getName(), ClickGui2.startX + 210.0F, mY + 1.0F, -1);
                         RenderUtils.drawRect(f + 56.0F, mY, f + 76.0F, mY + 1.0F, (new Color(255, 255, 255, (int) this.opacity.getOpacity())).getRGB());
@@ -386,7 +386,7 @@ public class ClickGui2 extends GuiScreen implements GuiYesNoCallback {
         float f = ClickGui2.startX + 320.0F;
         float f1 = ClickGui2.startY + 240.0F;
 
-        if (this.isHovered(f + 2.0F, f1 + 45.0F, f + 78.0F, f1 + 65.0F, mouseX, mouseY)) {
+        if (this.isHovered(f + 2.0F, f1 + 95.0F, f + 78.0F, f1 + 115.0F, mouseX, mouseY)) {
             this.bind = true;
         }
 
