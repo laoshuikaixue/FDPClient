@@ -4,7 +4,7 @@
 ![GitHub lines of code](https://tokei.rs/b1/github/UnlegitMC/FDPClient)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
-A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
+A free mixin-based injection client for Minecraft using Minecraft Forge based on LiquidBounce.
 
 Latest: [github-actions](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)  
 QQ Group: [1028574302](https://jq.qq.com/?_wv=1027&k=PNxmBQTu)
