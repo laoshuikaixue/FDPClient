@@ -6,7 +6,8 @@
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FSteamTools-Team%2FSteamTools%2Fbadge%3Fref%3Ddevelop&style=flat-square)](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)
 [![Release Download](https://img.shields.io/github/downloads/laoshuikaixue/FDPClient/total?style=flat-square)](https://github.com/laoshuikaixue/FDPClient/releases)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
-![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
+![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)
+
 [![Bilibili](https://img.shields.io/badge/bilibili-老水开学-blue.svg?style=flat-square&logo=bilibili)](https://space.bilibili.com/516771561)
 [![YouTube](https://img.shields.io/badge/YouTube-LaoShui-blue.svg?style=flat-square&logo=youtube)](https://www.youtube.com/channel/UC0mJv6_9CMao8sT1we0zeDA)
 [![QQ群](https://img.shields.io/badge/QQ群-1028574302-blue.svg?style=flat-square&color=12b7f5)](https://jq.qq.com/?_wv=1027&k=6gx9GOp5)
