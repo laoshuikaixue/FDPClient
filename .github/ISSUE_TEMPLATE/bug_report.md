@@ -15,10 +15,10 @@ We will not fix compatibility issues with other clients.
 
 **To Reproduce**
 <Steps to reproduce the behavior (how did you get this bug to occur):>
-1. 
-2. 
-3. 
-4. 
+1.
+2.
+3.
+4.
 
 **Expected behavior**
 <A clear and concise description of what you expected to happen.>
@@ -34,10 +34,10 @@ If your game crashed, please paste your crash report below.
 ```
 
 **System Information**
- - OS: [e.g. Windows 10]
- - Minecraft Version: [e.g. 1.8.9]
- - Forge Version: [e.g. 11.15.1.2318]
- - FDPClient Version: [e.g. 2.0-PRE2]
+- OS: [e.g. Windows 10]
+- Minecraft Version: [e.g. 1.8.9]
+- Forge Version: [e.g. 11.15.1.2318]
+- FDPClient Version: [e.g. 2.0-PRE2]
 
 **Other Installed Mods**
 If you have any other mods installed, please list them here along with their version number.
