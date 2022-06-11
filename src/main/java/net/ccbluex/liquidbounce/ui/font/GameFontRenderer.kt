@@ -14,6 +14,7 @@ import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.resources.IResourceManager
 import net.minecraft.util.ResourceLocation
+import org.lwjgl.opengl.Display.getHeight
 import java.awt.Color
 import java.awt.Font
 
@@ -230,6 +231,10 @@ class GameFontRenderer(font: Font) : FontRenderer(Minecraft.getMinecraft().gameS
 
     fun drawCenteredString(s: String, x: Float, y: Float, color: Int) =
         drawStringWithShadow(s, x - getStringWidth(s) / 2F, y, color)
+
+    fun getMiddleOfBox(boxHeight: Float): Float {
+        return boxHeight / 2f - getHeight() / 2f
+    }
 
     fun collectGarbage() {
         defaultFont.collectGarbage()

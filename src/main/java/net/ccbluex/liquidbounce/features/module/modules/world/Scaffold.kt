@@ -382,7 +382,7 @@ class Scaffold : Module() {
     fun onPacket(event: PacketEvent) {
         if (mc.thePlayer == null) return
         val packet = event.packet
-        
+
         //Verus
         if (packet is C03PacketPlayer) {
             if (doSpoof) {
@@ -407,6 +407,7 @@ class Scaffold : Module() {
     fun onMotion(event: MotionEvent) {
         val eventState = event.eventState
         towerStatus = false
+        // Bobbing
         if (bobbingValue.get()) {
             mc.thePlayer.cameraYaw = bobbingAmountValue.get()
             mc.thePlayer.prevCameraYaw = bobbingAmountValue.get()
@@ -486,7 +487,7 @@ class Scaffold : Module() {
     private fun move() {
         when (towerModeValue.get().lowercase()) {
             "none" -> {
-                 if (mc.thePlayer.onGround) {
+                if (mc.thePlayer.onGround) {
                     fakeJump()
                     mc.thePlayer.motionY = 0.42
                 }

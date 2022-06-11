@@ -52,6 +52,8 @@ class InfiniteAura : Module() {
     private var points = mutableListOf<Vec3>()
     private var thread: Thread? = null
 
+    var target: EntityLivingBase? = null
+
     private fun getDelay(): Int {
         return 1000 / cpsValue.get()
     }

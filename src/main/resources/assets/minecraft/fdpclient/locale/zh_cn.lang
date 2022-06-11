@@ -332,6 +332,9 @@ module.NameProtect.description=客户端改变玩家名字
 module.NameTags.name=名称标签
 module.NameTags.description=改变名称标签的样式让你能持续看到
 
+module.NewNameTag.name=新的名称标签
+module.NewNameTag.description=改变名称标签的样式让你能持续看到
+
 module.NoBob.name=无视角摇晃
 module.NoBob.description=禁止视角摇晃效果
 

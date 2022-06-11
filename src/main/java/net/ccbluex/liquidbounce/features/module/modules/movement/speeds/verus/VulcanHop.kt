@@ -1,15 +1,13 @@
-package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other
+package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.verus
 
-import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MovementUtils
-import kotlin.math.abs
 
-class VulcanHop : SpeedMode("VulCanHop") {
+class VulcanHop : SpeedMode("VulcanHop") {
 
-    override fun onMotion(event: MotionEvent) {
+    override fun onUpdate() {
         mc.timer.timerSpeed = 1.00f
-        if (abs(mc.thePlayer.movementInput.moveStrafe) < 0.1f) {
+        if (Math.abs(mc.thePlayer.movementInput.moveStrafe) < 0.1f) {
             mc.thePlayer.jumpMovementFactor = 0.0265f
         }else {
             mc.thePlayer.jumpMovementFactor = 0.0244f
@@ -25,9 +23,9 @@ class VulcanHop : SpeedMode("VulCanHop") {
             mc.gameSettings.keyBindJump.pressed = false
             mc.thePlayer.jump()
             MovementUtils.strafe()
-            if(MovementUtils.getSpeed() < 0.5f) {
-                MovementUtils.strafe(0.4849f)
-            }
+			if(MovementUtils.getSpeed() < 0.5f) {
+			    MovementUtils.strafe(0.4849f)
+			}
         }else if (!MovementUtils.isMoving()) {
             mc.timer.timerSpeed = 1.00f
             mc.thePlayer.motionX = 0.0

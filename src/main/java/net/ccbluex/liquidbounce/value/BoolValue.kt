@@ -14,4 +14,8 @@ open class BoolValue(name: String, value: Boolean) : Value<Boolean>(name, value)
             value = element.asBoolean || element.asString.equals("true", ignoreCase = true)
         }
     }
+
+    open fun toggle(){
+        this.value = !this.value
+    }
 }

@@ -1,6 +1,7 @@
 package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other
 
 import net.ccbluex.liquidbounce.event.JumpEvent
+import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MoveUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
@@ -10,7 +11,7 @@ class VulCan : SpeedMode("VulCan") {
         if (mc.thePlayer != null) event.cancelEvent()
     }
 
-    override fun onUpdate() {
+    override fun onMotion(event: MotionEvent) {
         if (!MovementUtils.isMoving()) {
             return
         }

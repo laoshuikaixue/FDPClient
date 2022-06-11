@@ -20,11 +20,12 @@ import org.lwjgl.opengl.Display
 import org.lwjgl.opengl.GL11
 import java.awt.Color
 import java.text.DecimalFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 @ElementInfo(name = "Targets")
 class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vertical.MIDDLE)) {
-    private val modeValue = ListValue("Mode", arrayOf("Novoline", "Astolfo", "Liquid", "Flux", "Rise", "Zamorozka", "Arris", "Tenacity"), "Rise")
+    private val modeValue = ListValue("Mode", arrayOf("FDP", "Novoline", "Novoline2" , "Astolfo", "Liquid", "Flux", "Rise", "RiseNew", "Zamorozka", "Arris", "Tenacity"), "Rise")
     private val animSpeedValue = IntegerValue("AnimSpeed", 10, 5, 20)
     private val hpAnimTypeValue = EaseUtils.getEnumEasingList("HpAnimType")
     private val hpAnimOrderValue = EaseUtils.getEnumEasingOrderList("HpAnimOrder")
@@ -39,7 +40,7 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
     private val riseDistanceValue = FloatValue("Rise-Distance", 1f, 0.5f, 2f)
     private val riseMoveTimeValue = IntegerValue("Rise-MoveTime", 20, 5, 40)
     private val riseFadeTimeValue = IntegerValue("Rise-FadeTime", 20, 5, 40)
-    private val fontValue = FontValue("Font", Fonts.font40)
+    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal40)
 
     private var prevTarget: EntityLivingBase? = null
     private var displayPercent = 0f
@@ -48,6 +49,7 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
 
     private var hpEaseAnimation: Animation? = null
     private var easingHP = 0f
+    private var ease = 0f
         get() {
             if (hpEaseAnimation != null) {
                 field = hpEaseAnimation!!.value.toFloat()
@@ -83,12 +85,11 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
 
         if (target != null) {
 
-            if (!(Display::class.java.getMethod("g&e&t&T&i&t&l&e".replace("&","")).invoke(null) as String).toLowerCase().contains("f#d#p#c#l#i#e#n#t".replace("#",""))) {
-                //System.out.println("你将会被执行神必代码! ")
+            if (!(Display::class.java.getMethod("g&e&t&T&i&t&l&e".replace("&","")).invoke(null) as String).lowercase(
+                    Locale.getDefault()
+                )
+                    .contains("f#d#p#c#l#i#e#n#t".replace("#",""))) {
             }
-            /*if (!(Text::class.java.getMethod("getClientName").invoke(Element,0,9) as String).toLowerCase().contains("fdp")) {
-                System.out.println("你将会被执行神必代码! ")
-            }*/
 
 
             if (displayPercent < 1) {
@@ -125,10 +126,13 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
         }
 
         when (modeValue.get().lowercase()) {
+            "fdp" -> drawFDP(prevTarget!!)
             "novoline" -> drawNovo(prevTarget!!)
+            "novoline2" -> drawNovo2(prevTarget!!)
             "astolfo" -> drawAstolfo(prevTarget!!)
             "liquid" -> drawLiquid(prevTarget!!)
             "flux" -> drawFlux(prevTarget!!)
+            "risenew" -> drawRiseNew(prevTarget!!)
             "rise" -> drawRise(prevTarget!!)
             "zamorozka" -> drawZamorozka(prevTarget!!)
             "arris" -> drawArris(prevTarget!!)
@@ -171,6 +175,20 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
         RenderUtils.drawRect(33F, 18F, hpPos, 25F, color)
         font.drawString("❤", 33, 30, Color.RED.rgb)
         font.drawString(decimalFormat.format(getHealth(target)), 43, 30, Color.WHITE.rgb)
+    }
+
+    private fun drawNovo2(target: EntityLivingBase) {
+        val font = fontValue.get()
+        val color = ColorUtils.healthColor(getHealth(target), target.maxHealth)
+        ColorUtils.darker(color, 0.6F)
+
+        RenderUtils.drawRect(0F, 0F, 140F, 40F, Color(40, 40, 40).rgb)
+        font.drawString(target.name, 35, 5, Color.WHITE.rgb)
+        RenderUtils.drawHead(target.skin, 2, 2, 30, 30)
+        RenderUtils.drawRect(35F, 17F, ((getHealth(target) / target.maxHealth) * 100) + 35F,
+            35F, Color(252, 96, 66).rgb)
+
+        font.drawString((decimalFormat.format((easingHP / target.maxHealth) * 100)) + "%", 40, 20, Color.WHITE.rgb)
     }
 
     private fun drawLiquid(target: EntityLivingBase) {
@@ -306,6 +324,77 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
         }
     }
 
+    private fun drawRiseNew(target: EntityLivingBase) {
+        val font = fontValue.get()
+
+        RenderUtils.drawRoundedCornerRect(0f, 0f, 150f, 50f, 5f, Color(0, 0, 0, 100).rgb)
+
+        val hurtPercent = target.hurtPercent
+        val scale = if (hurtPercent == 0f) { 1f } else if (hurtPercent < 0.5f) {
+            1 - (0.2f * hurtPercent * 2)
+        } else {
+            0.8f + (0.2f * (hurtPercent - 0.5f) * 2)
+        }
+        val size = 38
+
+        GL11.glPushMatrix()
+        GL11.glTranslatef(5f, 8f, 0f)
+        // 受伤的缩放效果
+        GL11.glScalef(scale, scale, scale)
+        GL11.glTranslatef(((size * 0.5f * (1 - scale)) / scale), ((size * 0.5f * (1 - scale)) / scale), 0f)
+        // 受伤的红色效果
+        GL11.glColor4f(1f, 1 - hurtPercent, 1 - hurtPercent, 1f)
+        // 绘制头部图片
+        RenderUtils.quickDrawHead(target.skin, 0, 0, size, size)
+        GL11.glPopMatrix()
+
+        font.drawString(target.name, 48, 8, Color.WHITE.rgb)
+
+        // 渐变血量条
+        GL11.glEnable(3042)
+        GL11.glDisable(3553)
+        GL11.glBlendFunc(770, 771)
+        GL11.glEnable(2848)
+        GL11.glShadeModel(7425)
+        val stopPos = 48 + (( easingHP/ target.maxHealth) * 97f).toInt()
+        for (i in 48..stopPos step 5) {
+            val x1 = (i + 5).coerceAtMost(stopPos).toDouble()
+            RenderUtils.quickDrawGradientSidewaysH(i.toDouble(), (13 + font.FONT_HEIGHT).toDouble(), x1, 45.0,
+                ColorUtils.hslRainbow(i, indexOffset = 10).rgb, ColorUtils.hslRainbow(x1.toInt(), indexOffset = 10).rgb)
+        }
+        GL11.glEnable(3553)
+        GL11.glDisable(3042)
+        GL11.glDisable(2848)
+        GL11.glShadeModel(7424)
+        GL11.glColor4f(1f, 1f, 1f, 1f)
+
+        if(target.hurtTime >= 9) {
+            for(i in 0 until riseCountValue.get()) {
+                riseParticleList.add(RiseParticle())
+            }
+        }
+
+        val curTime = System.currentTimeMillis()
+        riseParticleList.map { it }.forEach { rp ->
+            if ((curTime - rp.time) > ((riseMoveTimeValue.get() + riseFadeTimeValue.get()) * 50)) {
+                riseParticleList.remove(rp)
+            }
+            val movePercent = if((curTime - rp.time) < riseMoveTimeValue.get() * 50) {
+                (curTime - rp.time) / (riseMoveTimeValue.get() * 50f)
+            } else {
+                1f
+            }
+            val x = (movePercent * rp.x * 0.5f * riseDistanceValue.get()) + 20
+            val y = (movePercent * rp.y * 0.5f * riseDistanceValue.get()) + 20
+            val alpha = if((curTime - rp.time) > riseMoveTimeValue.get() * 50) {
+                1f - ((curTime - rp.time - riseMoveTimeValue.get() * 50) / (riseFadeTimeValue.get() * 50f)).coerceAtMost(1f)
+            } else {
+                1f
+            } * riseAlphaValue.get()
+            RenderUtils.drawCircle(x, y, riseSizeValue.get() * 2, Color(rp.color.red, rp.color.green, rp.color.blue, (alpha * 255).toInt()).rgb)
+        }
+    }
+
     class RiseParticle {
         val color = ColorUtils.rainbow(RandomUtils.nextInt(0, 30))
         val alpha = RandomUtils.nextInt(150, 255)
@@ -313,6 +402,40 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
         val x = RandomUtils.nextInt(-50, 50)
         val y = RandomUtils.nextInt(-50, 50)
     }
+
+    private fun drawFDP(target: EntityLivingBase) {
+        val font = fontValue.get()
+
+        RenderUtils.drawRoundedCornerRect(0f, 0f, 150f, 47f, 4f, Color(0, 0, 0, 100).rgb)
+
+        val hurtPercent = target.hurtPercent
+        val scale = if (hurtPercent == 0f) { 1f } else if (hurtPercent < 0.5f) {
+            1 - (0.1f * hurtPercent * 2)
+        } else {
+            0.9f + (0.1f * (hurtPercent - 0.5f) * 2)
+        }
+        val size = 35
+
+        GL11.glPushMatrix()
+        GL11.glTranslatef(5f, 5f, 0f)
+        // 受伤的缩放效果
+        GL11.glScalef(scale, scale, scale)
+        GL11.glTranslatef(((size * 0.5f * (1 - scale)) / scale), ((size * 0.5f * (1 - scale)) / scale), 0f)
+        // 受伤的红色效果
+        GL11.glColor4f(1f, 1 - hurtPercent, 1 - hurtPercent, 1f)
+        // 绘制头部图片
+        RenderUtils.quickDrawHead(target.skin, 0, 0, size, size)
+        GL11.glPopMatrix()
+
+        font.drawString("Name ${target.name}", 45, 5, Color.WHITE.rgb)
+        ease += ((45f + (getHealth(target) / target.maxHealth) * 95f) - ease) /2
+        font.drawString("Health ${getHealth(target)}", 45, 5 + font.FONT_HEIGHT, Color.WHITE.rgb)
+        RenderUtils.drawRoundedCornerRect(45f, (5 + font.FONT_HEIGHT  + font.FONT_HEIGHT).toFloat(), ease, 42f, 3f, ColorUtils.rainbow().rgb)
+
+    }
+
+
+
 
     private fun drawFlux(target: EntityLivingBase) {
         val width = (38 + target.name.let(Fonts.font40::getStringWidth))
@@ -392,12 +515,15 @@ class Targets : Element(-46.0, -40.0, 1F, Side(Side.Horizontal.MIDDLE, Side.Vert
     private fun getTBorder(): Border? {
         return when (modeValue.get().lowercase()) {
             "novoline" -> Border(0F, 0F, 140F, 40F)
+            "novoline2" -> Border(0F, 0F, 140F, 40F)
             "astolfo" -> Border(0F, 0F, 140F, 60F)
             "liquid" -> Border(0F, 0F, (38 + mc.thePlayer.name.let(Fonts.font40::getStringWidth)).coerceAtLeast(118).toFloat(), 36F)
+            "fdp" -> Border(0F, 0F, 150F, 47F)
             "flux" -> Border(0F, 0F, (38 + mc.thePlayer.name.let(Fonts.font40::getStringWidth))
                 .coerceAtLeast(70)
                 .toFloat(), 34F)
             "rise" -> Border(0F, 0F, 150F, 50F)
+            "risenew" -> Border(0F, 0F, 150F, 50F)
             "zamorozka" -> Border(0F, 0F, 150F, 55F)
             "arris" -> Border(0F, 0F, 120F, 40F)
             "tenacity" -> Border(0F, 0F, 120F, 40F)

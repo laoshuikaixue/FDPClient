@@ -1,10 +1,7 @@
 package net.ccbluex.liquidbounce.utils
 
 import org.apache.commons.io.IOUtils
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.InputStream
+import java.io.*
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import java.util.zip.ZipInputStream
@@ -66,5 +63,16 @@ object FileUtils {
                 Files.copy(it.toPath(), toFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
             }
         }
+    }
+    fun readInputStream(inputStream: InputStream?): String? {
+        val stringBuilder = StringBuilder()
+        try {
+            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
+            var line: String?
+            while (bufferedReader.readLine().also { line = it } != null) stringBuilder.append(line).append('\n')
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return stringBuilder.toString()
     }
 }

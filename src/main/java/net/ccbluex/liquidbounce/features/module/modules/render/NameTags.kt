@@ -1,7 +1,7 @@
 /*
  * FDPClient Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge by LiquidBounce.
- * https://github.com/laoshuikaixue/FDPClient/
+ * https://github.com/laoshuikaixue/FDPClient
  */
 package net.ccbluex.liquidbounce.features.module.modules.render
 
@@ -29,18 +29,23 @@ import kotlin.math.roundToInt
 
 @ModuleInfo(name = "NameTags", category = ModuleCategory.RENDER)
 class NameTags : Module() {
-    private val modeValue = ListValue("Mode", arrayOf("Simple", "Liquid", "Jello"), "Jello")
+    private val modeValue = ListValue("Mode", arrayOf("Simple", "Liquid", "Jello"), "Simple")
     private val healthValue = BoolValue("Health", true)
     private val pingValue = BoolValue("Ping", true)
     private val distanceValue = BoolValue("Distance", false)
     private val armorValue = BoolValue("Armor", true)
     private val clearNamesValue = BoolValue("ClearNames", true)
-    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal35)
+    private val fontValue = FontValue("Font", Fonts.fontMiSansNormal40)
     private val borderValue = BoolValue("Border", true)
     private val hackerValue = BoolValue("Hacker", true)
     private val jelloColorValue = BoolValue("JelloHPColor", true).displayable { modeValue.equals("Jello") }
     private val jelloAlphaValue = IntegerValue("JelloAlpha", 170, 0, 255).displayable { modeValue.equals("Jello") }
     private val scaleValue = FloatValue("Scale", 1F, 1F, 4F)
+    private val onlyTarget = BoolValue("OnlyTarget",true)
+    private val translateY = FloatValue("TanslateY", 0.55F,-2F,2F)
+
+    private var targetTicks = 0
+    private var entityKeep = "yes"
 
     @EventTarget
     fun onRender3D(event: Render3DEvent) {
@@ -77,6 +82,26 @@ class NameTags : Module() {
     }
 
     private fun renderNameTag(entity: EntityLivingBase, tag: String) {
+        if (onlyTarget.get() && entity != LiquidBounce.combatManager.target && entity.name != entityKeep) {
+            return
+        } else if (onlyTarget.get() && entity == LiquidBounce.combatManager.target) {
+            entityKeep = entity.name
+            targetTicks++
+            if (targetTicks >= 5) {
+                targetTicks = 4
+            }
+        } else if (onlyTarget.get() && LiquidBounce.combatManager.target == null) {
+            targetTicks--
+            if (targetTicks <= -1) {
+                targetTicks = 0
+                entityKeep = "zywl gg"
+            }
+        }
+
+        if (onlyTarget.get() && targetTicks == 0) {
+            return
+        }
+
         // Set fontrenderer local
         val fontRenderer = fontValue.get()
 
@@ -89,7 +114,7 @@ class NameTags : Module() {
 
         glTranslated( // Translate to player position with render pos and interpolate it
             entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * timer.renderPartialTicks - renderManager.renderPosX,
-            entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks - renderManager.renderPosY + entity.eyeHeight.toDouble() + 0.55,
+            entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * timer.renderPartialTicks - renderManager.renderPosY + entity.eyeHeight.toDouble() + translateY.get().toDouble(),
             entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * timer.renderPartialTicks - renderManager.renderPosZ
         )
 

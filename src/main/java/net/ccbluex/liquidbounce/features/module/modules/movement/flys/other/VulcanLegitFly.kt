@@ -7,10 +7,10 @@ import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.value.FloatValue
-import net.minecraft.client.settings.GameSettings
 import net.minecraft.network.play.client.C03PacketPlayer
 import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.client.settings.GameSettings
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -134,8 +134,10 @@ class VulcanLegitFly : FlyMode("VulcanLegit") {
                     }
                 }
                 if (stage == FlyStage.WAIT_APPLY) {
-                    if(sqrt((packet.x - groundX) * (packet.x - groundX)
-                                + (packet.z - groundZ) * (packet.z - groundZ)) < 1.4 && packet.y >= (groundY - 0.5)) {
+                    if(sqrt(
+                            (packet.x - groundX) * (packet.x - groundX)
+                                    + (packet.z - groundZ) * (packet.z - groundZ)
+                        ) < 1.4 && packet.y >= (groundY - 0.5)) {
                         fly.state = false
                         return
                     }

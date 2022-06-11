@@ -46,9 +46,9 @@ import kotlin.concurrent.thread
 object LiquidBounce {
 
     // Client information
-    val L = "Lao"
-    val S = "Shui"
-    val WEBSITE = "https://github.com/laoshuikaixue/FDPClient"
+    const val L = "Lao"
+    const val S = "Shui"
+    const val WEBSITE = "https://github.com/laoshuikaixue/FDPClient"
     const val CLIENT_NAME = "FDPClient"
     const val COLORED_NAME = "§c§lFDP§6§lClient"
     const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"

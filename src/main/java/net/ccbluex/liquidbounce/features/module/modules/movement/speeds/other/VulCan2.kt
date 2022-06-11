@@ -1,6 +1,7 @@
 package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.other
 
 import net.ccbluex.liquidbounce.event.JumpEvent
+import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MoveUtils
 import net.ccbluex.liquidbounce.utils.MovementUtils
@@ -20,7 +21,7 @@ class VulCan2 : SpeedMode("VulCan2") {
         if (mc.thePlayer != null) event.cancelEvent()
     }
 
-    override fun onUpdate() {
+    override fun onMotion(event: MotionEvent) {
         if (mc.thePlayer.onGround) {
             offGroundTicks = 0
         } else {
@@ -35,14 +36,14 @@ class VulCan2 : SpeedMode("VulCan2") {
             }else{
                 if (bool) {
                     if (offGroundTicks > 3)
-                        mc.thePlayer.motionY = MovementUtils.getPredictedMotionY(mc.thePlayer.motionY);
+                        mc.thePlayer.motionY = MovementUtils.getPredictedMotionY(mc.thePlayer.motionY)
 
                     if (PlayerUtils.getBlockRelativeToPlayer(0.0, 2.0, 0.0) is BlockAir)
                         MovementUtils.strafe(MovementUtils.getSpeed() * (1.1 - (Math.random() / 500)).toFloat())
                 }
 
                 if (mc.thePlayer.hurtTime == 9)
-                    MovementUtils.strafe();
+                    MovementUtils.strafe()
             }
         }
     }

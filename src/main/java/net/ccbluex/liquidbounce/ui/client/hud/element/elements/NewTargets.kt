@@ -65,7 +65,7 @@ class NewTargets : Element() {
     private val borderColorBlueValue = IntegerValue("Liquid-Border-Blue", 0, 0, 255)
     private val borderColorAlphaValue = IntegerValue("Liquid-Border-Alpha", 0, 0, 255)
     private val decimalFormat = DecimalFormat("##0.00", DecimalFormatSymbols(Locale.ENGLISH))
-    private val shieldIcon = ResourceLocation("fdpclient/shield.png")
+    private val shieldIcon = ResourceLocation("fdpclient/misc/shield.png")
 
     private var easingHealth: Float = 0F
     private var lastTarget: Entity? = null

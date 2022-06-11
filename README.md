@@ -1,13 +1,17 @@
 # FDPClient
 [![State-of-the-art Shitcode](https://img.shields.io/static/v1?label=State-of-the-art&message=Shitcode&color=7B5804)](https://github.com/trekhleb/state-of-the-art-shitcode)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/UnlegitMC/FDPClient)
-![GitHub lines of code](https://tokei.rs/b1/github/UnlegitMC/FDPClient)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/laoshuikaixue/FDPClient)
+![GitHub lines of code](https://tokei.rs/b1/github/laoshuikaixue/FDPClient)
+![GitHub Star](https://img.shields.io/github/stars/laoshuikaixue/FDPClient?style=flat-square)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FSteamTools-Team%2FSteamTools%2Fbadge%3Fref%3Ddevelop&style=flat-square)](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)
+[![Release Download](https://img.shields.io/github/downloads/laoshuikaixue/FDPClient/total?style=flat-square)](https://github.com/laoshuikaixue/FDPClient/releases)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a41ae7bde63c143e426a/maintainability)](https://codeclimate.com/github/UnlegitMC/FDPClient/maintainability)
 ![Minecraft](https://img.shields.io/badge/game-Minecraft-brightgreen)  
-A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
+[![Bilibili](https://img.shields.io/badge/bilibili-老水开学-blue.svg?style=flat-square&logo=bilibili)](https://space.bilibili.com/516771561)
+[![YouTube](https://img.shields.io/badge/YouTube-LaoShui-blue.svg?style=flat-square&logo=youtube)](https://www.youtube.com/channel/UC0mJv6_9CMao8sT1we0zeDA)
+[![QQ群](https://img.shields.io/badge/QQ群-1028574302-blue.svg?style=flat-square&color=12b7f5)](https://jq.qq.com/?_wv=1027&k=6gx9GOp5)
 
-Latest: [github-actions](https://github.com/laoshuikaixue/FDPClient/actions/workflows/build.yml?query=event%3Apush)  
-QQ Group: [1028574302](https://jq.qq.com/?_wv=1027&k=PNxmBQTu)
+A free mixin-based injection hacked-client for Minecraft using Minecraft Forge based on LiquidBounce.
 
 ## Issues
 If you notice any bugs or missing features, you can let us know by opening an issue [here](https://github.com/laoshuikaixue/FDPClientissues).

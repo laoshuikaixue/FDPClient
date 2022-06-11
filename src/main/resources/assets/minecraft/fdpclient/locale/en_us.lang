@@ -332,6 +332,9 @@ module.NameProtect.description=Changes playernames clientside
 module.NameTags.name=NameTags
 module.NameTags.description=Changes the scale of the nametags so you can always read them
 
+module.NewNameTag.name=NewNameTag
+module.NewNameTag.description=Changes the scale of the nametag so you can always read them
+
 module.NoBob.name=NoBob
 module.NoBob.description=Disables the view bobbing effect
 

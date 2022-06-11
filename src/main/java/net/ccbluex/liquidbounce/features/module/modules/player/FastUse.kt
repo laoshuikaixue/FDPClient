@@ -22,10 +22,12 @@ import net.minecraft.network.play.client.C03PacketPlayer
 @ModuleInfo(name = "FastUse", category = ModuleCategory.PLAYER)
 class FastUse : Module() {
 
-    private val modeValue = ListValue("Mode", arrayOf("NCP","Instant", "Timer", "CustomDelay", "DelayedInstant", "MinemoraTest", "AAC", "NewAAC", "AACv4_2"), "DelayedInstant")
+    private val modeValue = ListValue("Mode", arrayOf("NCP","Instant", "Timer", "CustomDelay", "CustomDelay2", "DelayedInstant", "MinemoraTest", "AAC", "NewAAC", "AACv4_2"), "DelayedInstant")
     private val timerValue = FloatValue("Timer", 1.22F, 0.1F, 2.0F).displayable { modeValue.equals("Timer") }
     private val durationValue = IntegerValue("InstantDelay", 14, 0, 35).displayable { modeValue.equals("DelayedInstant") }
     private val delayValue = IntegerValue("CustomDelay", 0, 0, 300).displayable { modeValue.equals("CustomDelay") }
+    private val customSpeedValue = IntegerValue("CustomSpeed", 2, 0, 35).displayable { modeValue.equals("customdelay") }
+    private val customTimer = FloatValue("CustomTimer", 1.1f, 0.5f, 2f).displayable { modeValue.equals("customdelay") }
 
     private val msTimer = MSTimer()
     private var usedTimer = false
@@ -118,6 +120,20 @@ class FastUse : Module() {
                     }
 
                     mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))
+                    msTimer.reset()
+                }
+
+                "customdelay2" -> {
+                    mc.timer.timerSpeed = customTimer.get()
+                    usedTimer = true
+
+                    if (!msTimer.hasTimePassed(delayValue.get().toLong()))
+                        return
+
+                    repeat(customSpeedValue.get()) {
+                        mc.netHandler.addToSendQueue(C03PacketPlayer(mc.thePlayer.onGround))
+                    }
+
                     msTimer.reset()
                 }
             }

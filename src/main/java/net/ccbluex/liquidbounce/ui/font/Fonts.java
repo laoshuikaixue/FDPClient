@@ -122,6 +122,9 @@ public class Fonts {
     @FontDetails(fontName = "MiSansNormal Regular", fontSize = 40, fileName = "MiSans-Light.ttf")
     public static GameFontRenderer fontMiSansLight40;
 
+    @FontDetails(fontName = "ICON", fontSize = 20, fileName = "stylesicons.ttf")
+    public static GameFontRenderer fontstylesicon20;
+
 
 //    @FontDetails(fontName = "Huge", fontSize = 60, fileName = "regular.ttf")
 //    public static GameFontRenderer font60;
