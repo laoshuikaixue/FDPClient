@@ -26,7 +26,6 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
 
-
 @ModuleInfo(name = "AntiVoid", category = ModuleCategory.PLAYER)
 class AntiVoid : Module() {
     private val modeValue = ListValue("Mode", arrayOf("Blink", "TPBack", "MotionFlag", "PacketFlag", "GroundSpoof", "OldHypixel", "Jartex", "OldCubecraft", "OldWatchdog", "OldWatchdog2", "VulCanFLag"), "Blink")
@@ -34,6 +33,7 @@ class AntiVoid : Module() {
     private val resetMotionValue = BoolValue("ResetMotion", false).displayable { modeValue.equals("Blink") }
     private val startFallDistValue = FloatValue("BlinkStartFallDistance", 2F, 0F, 5F).displayable { modeValue.equals("Blink") }
     private val autoScaffoldValue = BoolValue("BlinkAutoScaffold", true).displayable { modeValue.equals("Blink") }
+    private val motionflagValue = FloatValue("MotionFlag-MotionY", 1.0F, 0.0F, 5.0F).displayable { modeValue.equals("MotionFlag") }
     private val voidOnlyValue = BoolValue("OnlyVoid", true)
 
     private val packetCache = ArrayList<C03PacketPlayer>()
@@ -89,7 +89,7 @@ class AntiVoid : Module() {
             "motionflag" -> {
                 if (!voidOnlyValue.get() || checkVoid()) {
                     if (mc.thePlayer.fallDistance > maxFallDistValue.get() && !tried) {
-                        mc.thePlayer.motionY += 1
+                        mc.thePlayer.motionY += motionflagValue.get()
                         mc.thePlayer.fallDistance = 0.0F
                         tried = true
                     }
@@ -176,20 +176,22 @@ class AntiVoid : Module() {
             }
 
             "vulcanflag" -> {
-                if (mc.thePlayer.fallDistance - mc.thePlayer.motionY > 3) {
-                    mc.thePlayer.motionY = 0.0
-                    mc.thePlayer.fallDistance = 0.0f
-                    mc.thePlayer.motionX *= 0.6
-                    mc.thePlayer.motionZ *= 0.6
-                    needSpoof = true
-                }
+                if (!voidOnlyValue.get() || checkVoid()) {
+                    if (mc.thePlayer.fallDistance - mc.thePlayer.motionY > 3) {
+                        mc.thePlayer.motionY = 0.0
+                        mc.thePlayer.fallDistance = 0.0f
+                        mc.thePlayer.motionX *= 0.6
+                        mc.thePlayer.motionZ *= 0.6
+                        needSpoof = true
+                    }
 
-                if (mc.thePlayer.fallDistance.toInt() / 3 > packet1Count) {
-                    packet1Count = mc.thePlayer.fallDistance.toInt() / 3
-                    packetModify = true
-                }
-                if (mc.thePlayer.onGround) {
-                    packet1Count = 0
+                    if (mc.thePlayer.fallDistance.toInt() / 3 > packet1Count) {
+                        packet1Count = mc.thePlayer.fallDistance.toInt() / 3
+                        packetModify = true
+                    }
+                    if (mc.thePlayer.onGround) {
+                        packet1Count = 0
+                    }
                 }
             }
 

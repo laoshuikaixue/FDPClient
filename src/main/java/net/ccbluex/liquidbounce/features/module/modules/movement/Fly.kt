@@ -56,7 +56,10 @@ class Fly : Module() {
     var launchYaw = 0f
     var launchPitch = 0f
 
+    var antiDesync = false
+
     override fun onEnable() {
+        antiDesync = false
         if (mc.thePlayer.onGround && fakeDamageValue.get()) {
             val event = PacketEvent(S19PacketEntityStatus(mc.thePlayer, 2.toByte()), PacketEvent.Type.RECEIVE)
             LiquidBounce.eventManager.callEvent(event)
@@ -75,6 +78,7 @@ class Fly : Module() {
     }
 
     override fun onDisable() {
+        antiDesync = false
         mc.thePlayer.capabilities.isFlying = false
         mc.thePlayer.capabilities.flySpeed = 0.05f
         mc.thePlayer.noClip = false

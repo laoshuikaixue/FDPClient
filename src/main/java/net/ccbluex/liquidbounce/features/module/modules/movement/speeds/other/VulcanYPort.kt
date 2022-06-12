@@ -1,40 +1,42 @@
 package net.ccbluex.liquidbounce.features.module.modules.movement.speeds.vulcan
 
-import net.ccbluex.liquidbounce.event.MotionEvent
 import net.ccbluex.liquidbounce.features.module.modules.movement.speeds.SpeedMode
 import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.minecraft.client.settings.GameSettings
 
-class VulcanHop : SpeedMode("VulcanHop") {
-
+class VulcanYPort : SpeedMode("VulcanYPort") {
+	
     private var wasTimer = false
+    private var ticks = 0
 
-    override fun onMotion(event: MotionEvent) {
-        if (wasTimer) {
+    override fun onUpdate() {
+         ticks++
+         if (wasTimer) {
             mc.timer.timerSpeed = 1.00f
             wasTimer = false
         }
-        if (Math.abs(mc.thePlayer.movementInput.moveStrafe) < 0.1f) {
-            mc.thePlayer.jumpMovementFactor = 0.026499f
-        }else {
-            mc.thePlayer.jumpMovementFactor = 0.0244f
+        mc.thePlayer.jumpMovementFactor = 0.0245f
+        if (!mc.thePlayer.onGround && ticks > 3 && mc.thePlayer.motionY > 0) {
+            mc.thePlayer.motionY = -0.27
         }
-        mc.gameSettings.keyBindJump.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
 
+        mc.gameSettings.keyBindJump.pressed = GameSettings.isKeyDown(mc.gameSettings.keyBindJump)
         if (MovementUtils.getSpeed() < 0.215f && !mc.thePlayer.onGround) {
             MovementUtils.strafe(0.215f)
         }
         if (mc.thePlayer.onGround && MovementUtils.isMoving()) {
+            ticks = 0
             mc.gameSettings.keyBindJump.pressed = false
             mc.thePlayer.jump()
-            if (!mc.thePlayer.isAirBorne) {
+	    if (!mc.thePlayer.isAirBorne) {
                 return //Prevent flag with Fly
             }
-            mc.timer.timerSpeed = 1.25f
+            mc.timer.timerSpeed = 1.4f
             wasTimer = true
-            MovementUtils.strafe()
-            if(MovementUtils.getSpeed() < 0.5f) {
-                MovementUtils.strafe(0.4849f)
+            if(MovementUtils.getSpeed() < 0.48f) {
+                MovementUtils.strafe(0.48f)
+            }else{
+                MovementUtils.strafe((MovementUtils.getSpeed()*0.985).toFloat())
             }
         }else if (!MovementUtils.isMoving()) {
             mc.timer.timerSpeed = 1.00f

@@ -9,6 +9,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook
 
 class Vulcan3 : SpeedMode("Vulcan3") {
     private var offGroundTicks = 0
+
     override fun onEnable() {
         offGroundTicks = 0
     }
