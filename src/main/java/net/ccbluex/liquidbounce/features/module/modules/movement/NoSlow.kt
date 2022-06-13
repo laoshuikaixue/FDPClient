@@ -33,7 +33,7 @@ import kotlin.math.sqrt
 
 @ModuleInfo(name = "NoSlow", category = ModuleCategory.MOVEMENT)
 class NoSlow : Module() {
-    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "NoPacket", "LiquidBounce", "Custom", "Watchdog", "OldWatchDog", "OldHypixel", "NCP", "AAC", "AAC5", "Matrix", "Vulcan"), "Vanilla")
+    private val modeValue = ListValue("PacketMode", arrayOf("Vanilla", "NoPacket", "LiquidBounce", "Custom", "Watchdog", "OldWatchDog", "OldHypixel", "NCP", "AAC", "AAC5", "Matrix", "Vulcan", "Medusa"), "Vanilla")
     private val blockForwardMultiplier = FloatValue("BlockForwardMultiplier", 1.0F, 0.2F, 1.0F)
     private val blockStrafeMultiplier = FloatValue("BlockStrafeMultiplier", 1.0F, 0.2F, 1.0F)
     private val consumeForwardMultiplier = FloatValue("ConsumeForwardMultiplier", 1.0F, 0.2F, 1.0F)
@@ -306,6 +306,12 @@ class NoSlow : Module() {
                     mc.thePlayer.motionY = lastMotionY * teleportDecreasePercentValue.get()
                     mc.thePlayer.motionZ = lastMotionZ * teleportDecreasePercentValue.get()
                 }
+            }
+        }
+
+        if (modeValue.equals("Medusa")) {
+            if (mc.thePlayer.isUsingItem || mc.thePlayer.isBlocking) {
+                PacketUtils.sendPacketNoEvent(C0BPacketEntityAction(mc.thePlayer,C0BPacketEntityAction.Action.STOP_SPRINTING))
             }
         }
     }
