@@ -414,28 +414,6 @@ public final class RotationUtils extends MinecraftInstance implements Listenable
         ));
     }
 
-    public static VecRotation searchCenter2(final AxisAlignedBB bb,
-                                            final boolean predict, final boolean throughWalls, final float distance) {
-        final Vec3 eyes = mc.thePlayer.getPositionEyes(1F);
-        VecRotation vecRotation = null;
-        for(double xSearch = 0.25D; xSearch < 0.85D; xSearch += 0.2D)
-            for (double ySearch = 0.25D; ySearch < 1D; ySearch += 0.1D)
-                for (double zSearch = 0.25D; zSearch < 0.85D; zSearch += 0.2D) {
-                    final Vec3 vec3 = new Vec3(bb.minX + (bb.maxX - bb.minX) * xSearch,
-                            bb.minY + (bb.maxY - bb.minY) * ySearch, bb.minZ + (bb.maxZ - bb.minZ) * zSearch);
-                    final Rotation rotation = toRotation(vec3, predict);
-                    final double vecDist = eyes.distanceTo(vec3);
-                    if (vecDist > distance)
-                        continue;
-                    if (throughWalls || isVisible(vec3)) {
-                        final VecRotation currentVec = new VecRotation(vec3, rotation);
-                        if (vecRotation == null || (getRotationDifference(currentVec.getRotation()) < getRotationDifference(vecRotation.getRotation())))
-                            vecRotation = currentVec;
-                    }
-                }
-        return vecRotation;
-    }
-
 //    @NotNull
 //    public static Rotation limitAngleChangeHumanizing(final Rotation currentRotation, final Rotation targetRotation, final float turnSpeed) {
 //        float yawDiff = ((float) Rotations.INSTANCE.apply(1-(getAngleDifference(targetRotation.getYaw(), currentRotation.getYaw())/180d)))*180f;

@@ -71,7 +71,12 @@ class Sprint : Module() {
                         mc.netHandler.addToSendQueue(C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING))
                         mc.netHandler.addToSendQueue(C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING))
                     }
-                    "minemora" -> mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.0000013, mc.thePlayer.posZ)
+                    "minemora" -> {
+                        if (mc.thePlayer.onGround) {
+                            mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.0000013, mc.thePlayer.posZ)
+                            mc.thePlayer.motionY = 0.0
+                        }
+                    }
                     "limitspeed" -> {
                         if (!allDirectionsLimitSpeedGround.get() || mc.thePlayer.onGround) {
                             MovementUtils.limitSpeedByPercent(allDirectionsLimitSpeedValue.get())
@@ -94,8 +99,7 @@ class Sprint : Module() {
         if (noPacket.get() && packet is C0BPacketEntityAction && (packet.action == C0BPacketEntityAction.Action.START_SPRINTING || packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING)) {
             event.cancelEvent()
         }
-        if (
-            noStopServerSide.get() && packet is C0BPacketEntityAction && packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING) {
+        if (noStopServerSide.get() && packet is C0BPacketEntityAction && packet.action == C0BPacketEntityAction.Action.STOP_SPRINTING) {
             event.cancelEvent()
         }
     }

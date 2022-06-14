@@ -15,16 +15,19 @@ import net.ccbluex.liquidbounce.features.module.ModuleInfo
 import net.ccbluex.liquidbounce.utils.EntityUtils
 import net.ccbluex.liquidbounce.utils.PathUtils
 import net.ccbluex.liquidbounce.utils.RaycastUtils
+import net.ccbluex.liquidbounce.utils.PacketUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
 import net.ccbluex.liquidbounce.utils.render.RenderUtils
 import net.ccbluex.liquidbounce.utils.timer.MSTimer
+import net.ccbluex.liquidbounce.utils.MovementUtils
 import net.ccbluex.liquidbounce.value.BoolValue
 import net.ccbluex.liquidbounce.value.FloatValue
 import net.ccbluex.liquidbounce.value.IntegerValue
 import net.ccbluex.liquidbounce.value.ListValue
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.network.play.client.C03PacketPlayer
-import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
+import net.minecraft.entity.player.PlayerCapabilities
+import net.minecraft.network.play.client.*
+import net.minecraft.network.play.client.C03PacketPlayer.*
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
@@ -40,6 +43,7 @@ class InfiniteAura : Module() {
     private val distValue = IntegerValue("Distance", 30, 20, 100)
     private val moveDistanceValue = FloatValue("MoveDistance", 5F, 2F, 15F)
     private val noRegenValue = BoolValue("NoRegen", true)
+    private val noLagBackValue = BoolValue("NoLagback", true)
     private val swingValue = BoolValue("Swing", true).displayable { modeValue.equals("Aura") }
     private val pathRenderValue = BoolValue("PathRender", true)
     private val colorRedValue = IntegerValue("ColorRed", 0, 0, 255).displayable { pathRenderValue.get() && !colorRainbowValue.get() }
@@ -66,35 +70,33 @@ class InfiniteAura : Module() {
     override fun onDisable() {
         timer.reset()
         points.clear()
+        thread?.stop()
     }
 
     @EventTarget
     fun onUpdate(event: UpdateEvent) {
         if (!timer.hasTimePassed(getDelay().toLong())) return
+        if (thread?.isAlive == true) return
         when (modeValue.get().lowercase()) {
             "aura" -> {
-                if (thread == null || !thread!!.isAlive) {
-                    thread = thread {
-                        // do it async because a* pathfinding need some time
-                        doTpAura()
-                    }
-                    points.clear()
-                    timer.reset()
-                } else {
-                    timer.reset()
+                thread = thread(name = "InfiniteAura") {
+                    // do it async because a* pathfinding need some time
+                    doTpAura()
                 }
+                points.clear()
+                timer.reset()
             }
 
             "click" -> {
-                if (mc.gameSettings.keyBindAttack.isKeyDown && (thread == null || !thread!!.isAlive)) {
-                    thread = thread {
+                if (mc.gameSettings.keyBindAttack.isKeyDown) {
+                    thread = thread(name = "InfiniteAura") {
                         // do it async because a* pathfinding need some time
                         val entity = RaycastUtils.raycastEntity(distValue.get().toDouble()) { entity -> entity != null && EntityUtils.isSelected(entity, true) } ?: return@thread
                         if (mc.thePlayer.getDistanceToEntity(entity) <3) {
                             return@thread
                         }
 
-                        hit(entity as EntityLivingBase)
+                        hit(entity as EntityLivingBase, true)
                     }
                     timer.reset()
                 }
@@ -112,24 +114,28 @@ class InfiniteAura : Module() {
 
         var count = 0
         for (entity in targets) {
-            count++
-            if (count > targetsValue.get()) break
 
-            hit(entity as EntityLivingBase)
+            if(hit(entity as EntityLivingBase)) {
+                count++
+            }
+            if (count > targetsValue.get()) break
         }
     }
 
-    private fun hit(entity: EntityLivingBase) {
+    private fun hit(entity: EntityLivingBase, force: Boolean = false): Boolean {
         val path = PathUtils.findBlinkPath(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, entity.posX, entity.posY, entity.posZ, moveDistanceValue.get().toDouble())
+        if (path.isEmpty()) return false
+        val lastDistance = path.last().let { entity.getDistance(it.xCoord, it.yCoord, it.zCoord) }
+        if(!force && lastDistance > 10) return false // pathfinding has failed
 
         path.forEach {
             mc.netHandler.addToSendQueue(C04PacketPlayerPosition(it.xCoord, it.yCoord, it.zCoord, true))
             points.add(it)
         }
 
-//            val it=Vec3(entity.posX,entity.posY,entity.posZ)
-//            mc.netHandler.addToSendQueue(C04PacketPlayerPosition(it.xCoord,it.yCoord,it.zCoord,true))
-//            points.add(it)
+        if(lastDistance > 3) {
+            mc.netHandler.addToSendQueue(C04PacketPlayerPosition(entity.posX, entity.posY, entity.posZ, true))
+        }
 
         if (swingValue.get()) {
             mc.thePlayer.swingItem()
@@ -141,6 +147,8 @@ class InfiniteAura : Module() {
             mc.netHandler.addToSendQueue(C04PacketPlayerPosition(vec.xCoord, vec.yCoord, vec.zCoord, true))
         }
         mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, true))
+
+        return true
     }
 
     @EventTarget
@@ -151,6 +159,19 @@ class InfiniteAura : Module() {
         val isMovePacket = (event.packet is C04PacketPlayerPosition || event.packet is C03PacketPlayer.C06PacketPlayerPosLook)
         if (noRegenValue.get() && event.packet is C03PacketPlayer && !isMovePacket) {
             event.cancelEvent()
+        }
+        if (noLagBackValue.get() && event.packet is S08PacketPlayerPosLook) {
+            val capabilities = PlayerCapabilities()
+            capabilities.allowFlying = true
+            mc.netHandler.addToSendQueue(C13PacketPlayerAbilities(capabilities)) // Packet C13
+
+            val x = event.packet.getX() - mc.thePlayer.posX
+            val y = event.packet.getY() - mc.thePlayer.posY
+            val z = event.packet.getZ() - mc.thePlayer.posZ
+            val diff = Math.sqrt(x * x + y * y + z * z)
+            event.cancelEvent() // cancel
+            PacketUtils.sendPacketNoEvent(C06PacketPlayerPosLook(event.packet.getX(), event.packet.getY(), event.packet.getZ(), event.packet.getYaw(), event.packet.getPitch(), true))
+
         }
     }
 
@@ -222,7 +243,4 @@ class InfiniteAura : Module() {
             GL11.glColor4f(1F, 1F, 1F, 1F)
         }
     }
-
-    override val tag: String
-        get() = modeValue.get()
 }

@@ -1,4 +1,4 @@
-package net.ccbluex.liquidbounce.features.module.modules.player;
+package net.ccbluex.liquidbounce.features.module.modules.player
 
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.UpdateEvent
