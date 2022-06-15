@@ -202,4 +202,10 @@ object ColorUtils {
     fun toRGB(f: Float, f2: Float, f3: Float, f4: Float): Int {
         return toRGB((f * 255.0f).toInt(), (f2 * 255.0f).toInt(), (f3 * 255.0f).toInt(), (f4 * 255.0f).toInt())
     }
+
+    fun getColor(hueoffset: Float, saturation: Float, brightness: Float): Int {
+        val speed = 4500f
+        val hue = System.currentTimeMillis() % speed.toInt() / speed
+        return Color.HSBtoRGB(hue - hueoffset / 54, saturation, brightness)
+    }
 }

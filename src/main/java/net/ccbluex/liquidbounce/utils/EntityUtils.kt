@@ -75,11 +75,11 @@ object EntityUtils : MinecraftInstance() {
         return LiquidBounce.fileManager.friendsConfig.isFriend(entity)
     }
 
-    private fun isAnimal(entity: Entity): Boolean {
+    fun isAnimal(entity: Entity): Boolean {
         return entity is EntityAnimal || entity is EntitySquid || entity is EntityGolem || entity is EntityVillager || entity is EntityBat
     }
 
-    private fun isMob(entity: Entity): Boolean {
+    fun isMob(entity: Entity): Boolean {
         return entity is EntityMob || entity is EntitySlime || entity is EntityGhast || entity is EntityDragon
     }
 

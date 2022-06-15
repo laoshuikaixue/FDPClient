@@ -11,6 +11,8 @@ import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.MathUtils;
 import net.ccbluex.liquidbounce.utils.MinecraftInstance;
 import net.ccbluex.liquidbounce.utils.block.BlockUtils;
+import net.ccbluex.liquidbounce.utils.particles.Particle;
+import net.ccbluex.liquidbounce.utils.particles.Vec3;
 import net.ccbluex.liquidbounce.utils.render.glu.DirectTessCallback;
 import net.ccbluex.liquidbounce.utils.render.glu.VertexData;
 import net.minecraft.block.Block;
@@ -25,6 +27,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
@@ -43,15 +46,14 @@ import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.*;
+
 import static java.lang.Math.*;
-import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
-import static net.minecraft.client.renderer.GlStateManager.disableBlend;
 import static net.ccbluex.liquidbounce.utils.render.GLUtils.glDisable;
 import static net.ccbluex.liquidbounce.utils.render.GLUtils.glEnable;
+import static net.minecraft.client.renderer.GlStateManager.disableBlend;
+import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
 
 public final class RenderUtils extends MinecraftInstance {
@@ -1931,5 +1933,87 @@ public final class RenderUtils extends MinecraftInstance {
             return new Vector3d(vector.get(0) / getResolution().getScaleFactor(), (Display.getHeight() - vector.get(1)) / getResolution().getScaleFactor(), vector.get(2));
         }
         return null;
+    }
+
+    public static void drawFilledCircleNoGL(final int x, final int y, final double r, final int c, final int quality) {
+        final float f = ((c >> 24) & 0xff) / 255F;
+        final float f1 = ((c >> 16) & 0xff) / 255F;
+        final float f2 = ((c >> 8) & 0xff) / 255F;
+        final float f3 = (c & 0xff) / 255F;
+
+        GL11.glColor4f(f1, f2, f3, f);
+        GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+
+        for (int i = 0; i <= 360 / quality; i++) {
+            final double x2 = Math.sin(((i * quality * Math.PI) / 180)) * r;
+            final double y2 = Math.cos(((i * quality * Math.PI) / 180)) * r;
+            GL11.glVertex2d(x + x2, y + y2);
+        }
+
+        GL11.glEnd();
+    }
+
+    public static void renderParticles(final List<Particle> particles) {
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        int i = 0;
+        try {
+            for (final Particle particle : particles) {
+                i++;
+                final Vec3 v = particle.position;
+                boolean draw = true;
+
+                final double x = v.xCoord - (mc.getRenderManager()).renderPosX;
+                final double y = v.yCoord - (mc.getRenderManager()).renderPosY;
+                final double z = v.zCoord - (mc.getRenderManager()).renderPosZ;
+
+                final double distanceFromPlayer = mc.thePlayer.getDistance(v.xCoord, v.yCoord - 1, v.zCoord);
+                int quality = (int) (distanceFromPlayer * 4 + 10);
+
+                if (quality > 350)
+                    quality = 350;
+
+                if (!isInViewFrustrum(new EntityEgg(mc.theWorld, v.xCoord, v.yCoord, v.zCoord)))
+                    draw = false;
+
+                if (i % 10 != 0 && distanceFromPlayer > 25)
+                    draw = false;
+
+                if (i % 3 == 0 && distanceFromPlayer > 15)
+                    draw = false;
+
+                if (draw) {
+                    GL11.glPushMatrix();
+                    GL11.glTranslated(x, y, z);
+
+                    final float scale = 0.04F;
+                    GL11.glScalef(-scale, -scale, -scale);
+
+                    GL11.glRotated(-mc.getRenderManager().playerViewY, 0.0D, 1.0D, 0.0D);
+                    GL11.glRotated(mc.getRenderManager().playerViewX, mc.gameSettings.thirdPersonView == 2 ? -1.0D : 1.0D, 0.0D, 0.0D);
+                    final Color c = new Color(ColorUtils.INSTANCE.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
+                    drawFilledCircleNoGL(0, 0, 0.7, c.hashCode(), quality);
+
+                    if (distanceFromPlayer < 4)
+                        drawFilledCircleNoGL(0, 0, 1.4, new Color(c.getRed(), c.getGreen(), c.getBlue(), 50).hashCode(), quality);
+
+                    if (distanceFromPlayer < 20)
+                        drawFilledCircleNoGL(0, 0, 2.3, new Color(c.getRed(), c.getGreen(), c.getBlue(), 30).hashCode(), quality);
+
+                    GL11.glScalef(0.8F, 0.8F, 0.8F);
+                    GL11.glPopMatrix();
+                }
+            }
+        } catch (final ConcurrentModificationException ignored) {
+        }
+
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+
+        GL11.glColor3d(255, 255, 255);
     }
 }

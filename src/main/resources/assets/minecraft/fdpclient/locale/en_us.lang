@@ -607,3 +607,9 @@ module.FastBow.description=Turns your bow into a machine gun
 
 module.DuelInfo.name=DuelInfo
 module.DuelInfo.description=Show the info in duel
+
+module.Particles.name=Particles
+module.Particles.description=Particles
+
+module.NoRender.name=NoRender
+module.NoRender.description=NoRender

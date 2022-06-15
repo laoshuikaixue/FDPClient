@@ -21,6 +21,7 @@ import net.ccbluex.liquidbounce.launch.EnumLaunchFilter
 import net.ccbluex.liquidbounce.launch.LaunchFilterInfo
 import net.ccbluex.liquidbounce.launch.LaunchOption
 import net.ccbluex.liquidbounce.script.ScriptManager
+import net.ccbluex.liquidbounce.sound.TipSoundManager
 import net.ccbluex.liquidbounce.ui.cape.GuiCapeManager
 import net.ccbluex.liquidbounce.ui.client.NewGuiWelcome
 import net.ccbluex.liquidbounce.ui.client.hud.HUD
@@ -28,7 +29,6 @@ import net.ccbluex.liquidbounce.ui.client.keybind.KeyBindManager
 import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.ui.font.FontsGC
 import net.ccbluex.liquidbounce.ui.i18n.LanguageManager
-import net.ccbluex.liquidbounce.sound.TipSoundManager
 import net.ccbluex.liquidbounce.utils.ClassUtils
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.InventoryUtils
@@ -50,7 +50,7 @@ object LiquidBounce {
     const val S = "Shui"
     const val WEBSITE = "https://github.com/laoshuikaixue/FDPClient"
     const val CLIENT_NAME = "FDPClient"
-    const val COLORED_NAME = "§c§lFDP§6§lClient"
+    const val COLORED_NAME = "§7[§b!§7] §b§lFDPCLIENT §c» "
     const val CLIENT_CREATOR = "CCBlueX & UnlegitMC"
     const val CLIENT_WEBSITE = "FDPClient.Club"
     const val MINECRAFT_VERSION = "1.8.9"
