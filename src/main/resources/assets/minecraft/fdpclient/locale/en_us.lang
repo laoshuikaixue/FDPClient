@@ -613,3 +613,6 @@ module.Particles.description=Particles
 
 module.NoRender.name=NoRender
 module.NoRender.description=NoRender
+
+module.ItemMagnet.name=ItemMagnet
+module.ItemMagnet.description=ItemMagnet

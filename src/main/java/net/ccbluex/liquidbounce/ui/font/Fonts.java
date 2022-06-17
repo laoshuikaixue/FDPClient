@@ -9,6 +9,7 @@ import com.google.gson.*;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.FileUtils;
+import net.ccbluex.liquidbounce.utils.misc.HttpUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 
@@ -17,6 +18,8 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class Fonts {
 
@@ -139,24 +142,10 @@ public class Fonts {
 
         ClientUtils.INSTANCE.logInfo("Loading Fonts.");
 
+        downloadFonts();
+
         for(GameFontRenderer it : getCustomFonts()) {
             it.close();
-        }
-
-        initFonts();
-
-        for(final Field field : Fonts.class.getDeclaredFields()) {
-            try {
-                field.setAccessible(true);
-                final FontDetails fontDetails = field.getAnnotation(FontDetails.class);
-
-                if(fontDetails!=null) {
-                    if(!fontDetails.fileName().isEmpty())
-                        field.set(null,new GameFontRenderer(getFont(fontDetails.fileName(), fontDetails.fontSize())));
-                }
-            }catch(final IllegalAccessException e) {
-                e.printStackTrace();
-            }
         }
 
         try {
@@ -164,40 +153,95 @@ public class Fonts {
 
             final File fontsFile = new File(LiquidBounce.fileManager.getFontsDir(), "fonts.json");
 
-            if(fontsFile.exists()) {
+            if (fontsFile.exists()) {
                 final JsonElement jsonElement = new JsonParser().parse(new BufferedReader(new FileReader(fontsFile)));
 
-                if(jsonElement instanceof JsonNull)
+                if (jsonElement instanceof JsonNull)
                     return;
 
                 final JsonArray jsonArray = (JsonArray) jsonElement;
 
-                for(final JsonElement element : jsonArray) {
-                    if(element instanceof JsonNull)
+                for (final JsonElement element : jsonArray) {
+                    if (element instanceof JsonNull)
                         return;
 
                     final JsonObject fontObject = (JsonObject) element;
 
                     CUSTOM_FONT_RENDERERS.add(new GameFontRenderer(getFont(fontObject.get("fontFile").getAsString(), fontObject.get("fontSize").getAsInt())));
                 }
-            }else{
+            } else {
                 fontsFile.createNewFile();
 
                 final PrintWriter printWriter = new PrintWriter(new FileWriter(fontsFile));
                 printWriter.println(new GsonBuilder().setPrettyPrinting().create().toJson(new JsonArray()));
                 printWriter.close();
             }
-        }catch(final Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
         ClientUtils.INSTANCE.logInfo("Loaded Fonts. (" + (System.currentTimeMillis() - l) + "ms)");
     }
 
-    private static void initFonts() {
+    private static void downloadFonts() {
         try {
-            initSingleFont("regular.ttf","assets/minecraft/fdpclient/font/regular.ttf");
-        }catch(IOException e) {
+            final File outputFile = new File(LiquidBounce.fileManager.getFontsDir(), "fdpclient-fonts.zip");
+            final File Comfortaa = new File(LiquidBounce.fileManager.getFontsDir(), "Comfortaa.ttf");
+            final File GEETYPEXiYuanGBTFlash = new File(LiquidBounce.fileManager.getFontsDir(), "GEETYPE-XiYuanGBT-Flash.ttf");
+            final File GoogleSans = new File(LiquidBounce.fileManager.getFontsDir(), "GoogleSans.ttf");
+            final File MiSansLight = new File(LiquidBounce.fileManager.getFontsDir(), "MiSans-Light.ttf");
+            final File MiSansNormal = new File(LiquidBounce.fileManager.getFontsDir(), "MiSans-Normal.ttf");
+            final File regular = new File(LiquidBounce.fileManager.getFontsDir(), "regular.ttf");
+            final File RobotoBold = new File(LiquidBounce.fileManager.getFontsDir(), "Roboto-Bold.ttf");
+            final File SFTHIN = new File(LiquidBounce.fileManager.getFontsDir(), "SFTHIN.ttf");
+            final File sfui = new File(LiquidBounce.fileManager.getFontsDir(), "sfui.ttf");
+            final File stylesicons = new File(LiquidBounce.fileManager.getFontsDir(), "stylesicons.ttf");
+            final File tahoma = new File(LiquidBounce.fileManager.getFontsDir(), "tahoma.ttf");
+            final File WhitneyBook = new File(LiquidBounce.fileManager.getFontsDir(), "Whitney-Book.ttf");
+            final File WhitneyLight = new File(LiquidBounce.fileManager.getFontsDir(), "Whitney-Light.ttf");
+
+            if (!outputFile.exists() || !Comfortaa.exists() || !GEETYPEXiYuanGBTFlash.exists() || !GoogleSans.exists() || !MiSansLight.exists() ||
+                    !MiSansNormal.exists() || !regular.exists() || !RobotoBold.exists() || !SFTHIN.exists() || !sfui.exists() || !stylesicons.exists() ||
+                    !tahoma.exists() || !WhitneyBook.exists() || WhitneyLight.exists()
+            ) {
+                ClientUtils.INSTANCE.logInfo("Downloading fonts...");
+                HttpUtils.download("https://pan.bilnn.com/api/v3/file/sourcejump/3nB4k7HD/mnu4dU14NfDz-PlcE4rKMDS2eHrJc97Oj_OtgbK6T9E*", outputFile);
+                ClientUtils.INSTANCE.logInfo("Extract fonts...");
+                extractZip(outputFile.getPath(), LiquidBounce.fileManager.getFontsDir().getPath());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void extractZip(final String zipFile, final String outputFolder) {
+        final byte[] buffer = new byte[1024];
+
+        try {
+            final File folder = new File(outputFolder);
+
+            if(!folder.exists()) folder.mkdir();
+
+            final ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
+
+            ZipEntry zipEntry = zipInputStream.getNextEntry();
+            while (zipEntry != null) {
+                File newFile = new File(outputFolder + File.separator + zipEntry.getName());
+                new File(newFile.getParent()).mkdirs();
+
+                FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+
+                int i;
+                while ((i = zipInputStream.read(buffer)) > 0)
+                    fileOutputStream.write(buffer, 0, i);
+
+                fileOutputStream.close();
+                zipEntry = zipInputStream.getNextEntry();
+            }
+
+            zipInputStream.closeEntry();
+            zipInputStream.close();
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

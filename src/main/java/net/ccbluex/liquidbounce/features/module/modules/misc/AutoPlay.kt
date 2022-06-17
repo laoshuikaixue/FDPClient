@@ -146,6 +146,11 @@ class AutoPlay : Module() {
                                 }
                             }
                         }
+                        if (text.contains(mc.getSession().username + " has been")) {
+                            queueAutoPlay {
+                                mc.thePlayer.sendChatMessage("/play skywars-normal-solo")
+                            }
+                        }
                     }
                 }
                 "hypixel" -> {

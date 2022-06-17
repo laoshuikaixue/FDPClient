@@ -586,3 +586,6 @@ module.FastBow.description=把你的弓变成机关枪
 
 module.DuelInfo.name=决斗信息
 module.DuelInfo.description=显示决斗信息
+
+module.ItemMagnet.name=掉落物磁铁
+module.ItemMagnet.description=ItemMagnet

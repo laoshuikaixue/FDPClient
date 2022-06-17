@@ -31,7 +31,7 @@ import org.lwjgl.opengl.Display
 @ModuleInfo(name = "Criticals", category = ModuleCategory.COMBAT)
 class Criticals : Module() {
 
-    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "AACV5", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi", "MatrixSemi"), "packet")
+    val modeValue = ListValue("Mode", arrayOf("NewPacket", "Packet", "Packet2", "Packet3", "Packet4", "NCPPacket", "MiPacket", "Hypixel", "Hypixel2", "Hypixel3", "Hypixel4", "AACPacket", "AAC4.3.11OldHYT", "AAC5.0.4", "AACV5", "Blocksmc", "NoGround", "TPHop", "FakeCollide", "Mineplex", "More", "TestMinemora", "Motion", "Hover", "Non-Calculable", "Invalid", "VulcanSemi", "MatrixSemi"), "packet")
     private val motionValue = ListValue("MotionMode", arrayOf("RedeSkyLowHop", "Hop", "Jump", "LowJump", "MinemoraTest"), "Jump")
     private val hoverValue = ListValue("HoverMode", arrayOf("AAC4", "AAC4Other", "OldRedesky", "Normal1", "Normal2", "Minis", "Minis2", "TPCollide", "2b2t"), "AAC4")
     private val hoverNoFall = BoolValue("HoverNoFall", true).displayable { modeValue.equals("Hover") }
@@ -148,6 +148,12 @@ class Criticals : Module() {
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.09858, mc.thePlayer.posZ, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.04114514, mc.thePlayer.posZ, false))
                     mc.netHandler.addToSendQueue(C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.025, mc.thePlayer.posZ, false))
+                }
+
+                "blocksmc" -> {
+                    sendCriticalPacket(yOffset = 0.0825080378093, ground = false)
+                    sendCriticalPacket(yOffset = 0.0215634532004, ground = false)
+                    sendCriticalPacket(yOffset = 0.1040220332227, ground = false)
                 }
 
                 "hypixel" -> {
