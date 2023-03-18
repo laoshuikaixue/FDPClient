@@ -5,7 +5,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
     id "net.minecraftforge.gradle.forge"
     id "org.spongepowered.mixin"
-    id "com.gorylenko.gradle-git-properties" version "2.4.0"
+    id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
 
 repositories {
@@ -13,7 +13,6 @@ repositories {
     mavenCentral()
     maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
     maven { url = "https://jitpack.io/" }
-    maven { url = "https://repo.getfdp.today/" }
 }
 
 def releaseTime() {
@@ -47,6 +46,7 @@ configurations {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.26'
     include("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
         exclude module: "guava"
@@ -70,7 +70,7 @@ dependencies {
         exclude module: "jna-platform"
     }
     include("com.jagrosh:DiscordIPC:0.4")
-    include("me.liuli:Elixir:1.2.1") {
+    include("com.github.SkidderMC:elixir-2:1.2.4") {
         exclude module: "kotlin-stdlib"
         exclude module: "authlib"
     }
